@@ -1,0 +1,13 @@
+:root {
+    --nav-height: 70px; /*You HAVE To Give A Default Fallback Value*/
+}
+
+body::before {
+  display:block;
+  content: '';
+  height: 96px;
+}
+
+.alert-cstm {
+  margin-top: calc(var(--nav-height) + 50);
+}
