@@ -1,11 +1,12 @@
 :root {
-    --nav-height: 70px; /*You HAVE To Give A Default Fallback Value*/
-}
-
+    --nav-height: 70px;
+  }
+  
 body::before {
+  /* --nav-height: 70px; */
   display:block;
   content: '';
-  height: 96px;
+  height: var(--nav-height);
 }
 
 .alert-cstm {
