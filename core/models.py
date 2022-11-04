@@ -113,7 +113,7 @@ class Seat(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
+    #hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
 
     name = models.CharField(max_length=20)
     
@@ -161,7 +161,7 @@ class Review(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
+    #movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
 
     rating = models.IntegerField(
         validators=[
@@ -173,3 +173,12 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+
+class Genre(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+
+    name = models.CharField(max_length=10)
+
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
