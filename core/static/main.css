@@ -12,3 +12,22 @@ body::before {
 .alert-cstm {
   margin-top: calc(var(--nav-height) + 50);
 }
+
+/* #id_birth_day, #id_birth_month, #id_birth_year {
+  min-width: 100% !important;
+} */
+
+/* #div_id_birth div  > * {
+  width: 33%;
+} */
+#div_id_birth div {
+  display: flex;
+  align-self: center;
+  
+}
+/* #div_id_birth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+} */

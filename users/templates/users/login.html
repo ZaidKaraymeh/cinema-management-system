@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="" style="min-height:90vh;" >
+<div class="p-0 m-0" style="" >
     {% if form.errors %}
         <div class="alert alert-danger">
             {{ form.errors }}
@@ -13,12 +13,10 @@
         <fieldset class="form-group" > 
             <legend> Log in </legend>
             <div class="row justify-content-center">
-                <div class="col-12">
+                <div class="col-6">
                     {{ form.username|as_crispy_field }}
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12">
+                <div class="col-6">
                     {{ form.password|as_crispy_field }}
                 </div>
             </div>
