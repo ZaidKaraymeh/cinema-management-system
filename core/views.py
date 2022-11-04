@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from users.models import CustomUser
 from django.contrib import messages
-# Create your views here.
-
+from django.core.paginator import Paginator
 from .forms import MovieForm
 from .models import *
 
@@ -15,7 +14,12 @@ def home(request):
 
 
 def list_movies(request):
-    movies = Movie.objects.all()
+    list_movies = Movie.objects.all()
+
+    paginator = Paginator(list_movies, 10)
+    page_number = request.GET.get('page')
+    movies = paginator.get_page(page_number)
+
     context = {
         "movies": movies,
     }
@@ -29,7 +33,8 @@ def add_movie(request):
     if request.method == "POST":
         movie_form = MovieForm(request.POST)
         if movie_form.is_valid():
-            movie = movie_form.save()
+            movie = movie_form.save(commit=False)
+            movie.save()
             messages.success(request, f"{movie.name} has been added successfuly!")
             return redirect('add_movie')
     else:

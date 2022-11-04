@@ -11,7 +11,6 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = f"{form.cleaned_data.get('first_name')}{form.cleaned_data.get('last_name')}"
-            user.birth_date = form.cleaned_data['birth']
 
             user.save()
             messages.success(

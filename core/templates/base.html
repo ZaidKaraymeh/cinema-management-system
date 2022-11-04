@@ -108,7 +108,7 @@
 
           </nav>
     </header>
-    <main id="main" class="container">
+    <main id="main" class="container" style="min-height:100vh;">
       <div class="row">
         <div class="col  overflow-hidden">
           <div class="row">
@@ -123,6 +123,12 @@
         </div>
       </div>
     </main>
+
+    {% block footer %}
+      <footer class="bg-dark footer"  style="min-height:200px">
+
+      </footer>
+    {% endblock footer %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

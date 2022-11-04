@@ -34,10 +34,10 @@ class Movie(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    trailer = models.FileField(upload_to='movies', max_length=100)
-    thumbnail = models.FileField(upload_to='thumbnail', max_length=100)
+    trailer = models.FileField(upload_to='movies', max_length=100, null=True)
+    thumbnail = models.FileField(upload_to='thumbnail', max_length=100, null=True)
     
-    release_date = models.DateField(auto_now=False, auto_now_add=False)
+    release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
 
     genres = models.ManyToManyField("core.Genre")
     name = models.CharField(max_length=255)
