@@ -2,7 +2,8 @@ from .forms import RegisterForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 # Create your views here.
-
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 def register(request):
     if request.method == "POST":

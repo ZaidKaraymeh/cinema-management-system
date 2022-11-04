@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+ {% block content %}
+<div class="" style="" >
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <fieldset class="form-group" > 
+            <legend> Add Movie </legend>
+            <div class="row">
+                <div class="col-12">
+                    {{movie_form|crispy}}
+                </div>
+            </div>
+            {% comment %} <div class="row justify-content-center">
+                <div class="col-6">
+                    {{ form.email|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.phone_number|as_crispy_field }}
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    {{ form.user_type|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.birth|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6">
+                </div>
+                <div class="col-6">
+                    <span></span>
+                </div>
+            </div> {% endcomment %}
+        </fieldset>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-info" > Add Movie </button>
+        </div>
+    </form>
+</div>
+    
+
+{%endblock content %}

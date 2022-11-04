@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.db import models
-from users.models import User
+from users.models import CustomUser
+from django.conf import settings
 import uuid
 from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
@@ -33,17 +34,21 @@ class Movie(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
+    trailer = models.FileField(upload_to='movies', max_length=100)
+    thumbnail = models.FileField(upload_to='thumbnail', max_length=100)
+    
+    release_date = models.DateField(auto_now=False, auto_now_add=False)
+
     genres = models.ManyToManyField("core.Genre")
-
     name = models.CharField(max_length=255)
-
+    description = models.TextField(max_length=1500, null=True)
     """
         Calculate Average
         ((n)*old_average + new_rating )/(n+1)
         increment n
     """
     rating_average = models.DecimalField(
-        max_digits=2, decimal_places=1,
+        default= Decimal(0), max_digits=2, decimal_places=1,
         validators=[
             MaxValueValidator(5),
             MinValueValidator(0)
@@ -90,7 +95,7 @@ class Ticket(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     movie_schedule = models.ForeignKey("core.MovieSchedule", on_delete=models.CASCADE)
     movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
     hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
@@ -149,7 +154,7 @@ class Seat(models.Model):
 class Balance(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     balance = models.DecimalField(max_digits=6, decimal_places=3)
 
 
@@ -160,7 +165,7 @@ class Balance(models.Model):
 class Topup(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     balance = models.ForeignKey("core.Balance", on_delete=models.CASCADE)
 
     amount = models.DecimalField(max_digits=6, decimal_places=3)
@@ -172,7 +177,8 @@ class Topup(models.Model):
 class Checkout(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,
+                             on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=6, decimal_places=3)
     
     movies = models.ManyToManyField("core.Movie", related_name="checkout_movies")
@@ -200,7 +206,8 @@ class Review(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,
+                             on_delete=models.CASCADE)
     #movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
 
     rating = models.IntegerField(
@@ -222,3 +229,7 @@ class Genre(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return self.name
+    

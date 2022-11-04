@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import User
+from .models import CustomUser
 from django.contrib.auth.forms import AuthenticationForm
 
 class LoginForm(AuthenticationForm):
@@ -21,7 +21,7 @@ class RegisterForm(UserCreationForm):
         label='Birth Date', widget=forms.SelectDateWidget(years=range(2012, 1950, -1)))
     class Meta:
         # Interacts with User model
-        model = User
+        model = CustomUser
         # What fields to show and in which order
         fields = ["first_name", "last_name", "email",
                   "password1", "password2", "user_type", 
