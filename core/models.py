@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from users.models import User
 import uuid
@@ -104,6 +105,17 @@ class Ticket(models.Model):
             MaxValueValidator(100),
             MinValueValidator(0)
         ])
+
+    @property
+    def final_price(self):
+        """
+            VIP tickets are 1.5 more than normal tickets from Decimal(1.5) 
+        """
+        if self.seat.type == "VIP":
+            return round(self.price - self.price * Decimal(self.discount/100) * Decimal(1.5), 3)
+        
+        return round(self.price - self.price * Decimal(self.discount/100), 3)
+
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
