@@ -156,6 +156,7 @@ class Balance(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+
 class Topup(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -165,6 +166,33 @@ class Topup(models.Model):
     amount = models.DecimalField(max_digits=6, decimal_places=3)
     is_approved = models.BooleanField()
     
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+class Checkout(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=6, decimal_places=3)
+    
+    movies = models.ManyToManyField("core.Movie", related_name="checkout_movies")
+
+    BENEFIT = 'BNF'
+    PAYPAL = "PAL"
+    CREDIT_CARD = "CRC"
+    PAYMENT_TYPE_CHOICES = [
+        (BENEFIT, "Benefit"),
+        (PAYPAL, "Paypal"),
+        (CREDIT_CARD, "Credit Card"),
+    ]
+
+    payment_type = models.CharField(
+        max_length=15,
+        choices=PAYMENT_TYPE_CHOICES,
+        default=BENEFIT,
+
+    )
+
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
