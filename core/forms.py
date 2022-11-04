@@ -15,3 +15,10 @@ class MovieForm(forms.ModelForm):
         widgets = {
             'release_date': DateInput()
         }
+
+    def __init__(self, *args, **kwargs):
+        # first call parent's constructor
+        super(MovieForm, self).__init__(*args, **kwargs)
+        # there's a `fields` property now
+        self.fields['trailer'].required = False
+        self.fields['thumbnail'].required = False

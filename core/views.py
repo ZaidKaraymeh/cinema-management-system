@@ -36,7 +36,7 @@ def add_movie(request):
             movie = movie_form.save(commit=False)
             movie.save()
             messages.success(request, f"{movie.name} has been added successfuly!")
-            return redirect('add_movie')
+            return redirect('list_movies')
     else:
         movie_form = MovieForm()
 
@@ -44,3 +44,29 @@ def add_movie(request):
         "movie_form": movie_form,
     }
     return render(request, "add_movie.html", context)
+
+def edit_movie(request, movie_id):
+    user = CustomUser.objects.get(id=request.user.id)
+    movie = Movie.objects.get(id=movie_id)
+
+    if request.method == "POST":
+        movie_form = MovieForm(request.POST, instance=movie)
+        if movie_form.is_valid():
+            movie = movie_form.save(commit=False)
+            movie.save()
+            messages.info(request, f"{movie.name} has been Edited successfuly!")
+            return redirect('list_movies')
+    else:
+        movie_form = MovieForm(instance=movie)
+
+    context = {
+        "movie_form": movie_form,
+    }
+    return render(request, "edit_movie.html", context)
+
+def delete_movie(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    movie.delete()
+    messages.error(request, f"{movie.name} has been Deleted successfuly!")
+
+    return redirect('list_movies')
