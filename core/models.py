@@ -112,7 +112,7 @@ class MovieSchedule(models.Model):
 
     movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
     hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
-
+    slot = models.ForeignKey("core.Slot", on_delete=models.CASCADE)
     playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
