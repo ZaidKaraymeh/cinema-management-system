@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="" style="" >
+    {% if schedule_form.errors %}
+        <div class="alert alert-danger">
+            {{ schedule_form.errors }}
+        </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <fieldset class="form-group" > 
+            <legend> Add Movie Schedule </legend>
+            <div class="row">
+                <div class="col-12">
+                    {{schedule_form.movie|as_crispy_field}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{schedule_form.hall|as_crispy_field}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{schedule_form.slots|as_crispy_field}}
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-info" > Add Movie </button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

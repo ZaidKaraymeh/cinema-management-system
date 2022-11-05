@@ -21,13 +21,18 @@ class Venue(models.Model):
 class Hall(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    venue = models.ForeignKey("core.Venue", on_delete=models.CASCADE)
+    #venue = models.ForeignKey("core.Venue", on_delete=models.CASCADE)
 
     seats = models.ManyToManyField("core.Seat")
-    name = models.CharField(max_length=20)
     slots = models.ManyToManyField("core.Slot")
+
+    name = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
 
 class Slot(models.Model):
     id = models.UUIDField(
@@ -55,7 +60,10 @@ class Slot(models.Model):
         default=EIGHT_AM,
 
     )
-    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.slot
+    
 
 
 class Movie(models.Model):
@@ -105,6 +113,10 @@ class Movie(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    def __str__(self):
+        return self.name
+    
+
 
 class MovieSchedule(models.Model):
     id = models.UUIDField(
@@ -112,8 +124,8 @@ class MovieSchedule(models.Model):
 
     movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
     hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
-    slot = models.ForeignKey("core.Slot", on_delete=models.CASCADE)
-    playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
+    slot = models.ForeignKey("core.Slot", on_delete=models.CASCADE, null=True)
+    #playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -269,6 +281,7 @@ class Coupon(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     
+    code = models.CharField(max_length=20)
     discount = models.IntegerField(
         default=0,
         validators=[
