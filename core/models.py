@@ -25,9 +25,37 @@ class Hall(models.Model):
 
     seats = models.ManyToManyField("core.Seat")
     name = models.CharField(max_length=20)
-
+    slots = models.ManyToManyField("core.Slot")
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+class Slot(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    
+    EIGHT_AM = '8:00'
+    ELEVEN_AM = "11:00"
+    TWO_PM = '14:00'
+    FIVE_PM = '17:00'
+    EIGHT_PM = '20:00'
+    ELEVEN_PM = '23:00'
+    SLOT_TIME_CHOICES = [
+        (EIGHT_AM, "8:00"),
+        (ELEVEN_AM, "11:00"),
+        (TWO_PM, "14:00"),
+        (FIVE_PM, "17:00"),
+        (EIGHT_PM, "20:00"),
+        (ELEVEN_PM, "23:00"),
+    ]
+
+
+    slot = models.CharField(
+        max_length=8,
+        choices=SLOT_TIME_CHOICES,
+        default=EIGHT_AM,
+
+    )
+    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
 
 
 class Movie(models.Model):
@@ -36,7 +64,8 @@ class Movie(models.Model):
 
     trailer = models.FileField(upload_to='movies', max_length=100, null=True)
     thumbnail = models.FileField(upload_to='thumbnail', max_length=100, null=True)
-    
+    price = models.DecimalField(max_digits=6, decimal_places=3)
+
     release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
 
     genres = models.ManyToManyField("core.Genre")
@@ -84,7 +113,6 @@ class MovieSchedule(models.Model):
     movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
     hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
 
-    price = models.DecimalField(max_digits=6, decimal_places=3)
     playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -104,22 +132,7 @@ class Ticket(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=3)
     playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
-    discount = models.IntegerField(
-        default=0,
-        validators=[
-            MaxValueValidator(100),
-            MinValueValidator(0)
-        ])
-
-    @property
-    def final_price(self):
-        """
-            VIP tickets are 1.5 more than normal tickets from Decimal(1.5) 
-        """
-        if self.seat.type == "VIP":
-            return round(self.price - self.price * Decimal(self.discount/100) * Decimal(1.5), 3)
-        
-        return round(self.price - self.price * Decimal(self.discount/100), 3)
+    
 
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -198,6 +211,24 @@ class Checkout(models.Model):
         default=BENEFIT,
 
     )
+    discount =  models.ForeignKey("core.Coupon", on_delete=models.CASCADE)
+
+    @property
+    def final_price(self):
+        """
+            VIP tickets are 1.5 more than normal tickets from Decimal(1.5) 
+        """
+
+        final : Decimal = Decimal('0')
+
+        for movie in self.movies.all():
+
+            if movie.seat.type == "VIP":
+                final += movie.price - movie.price * Decimal(self.discount.discount/100) * Decimal(1.5)
+            else:
+                final += movie.price - movie.price * Decimal(self.discount.discount/100)
+        
+        return round(final, 3)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -232,4 +263,19 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Coupon(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     
+    discount = models.IntegerField(
+        default=0,
+        validators=[
+            MaxValueValidator(100),
+            MinValueValidator(0)
+        ])
+    count = models.IntegerField(default=0)
+    ends_at = models.DateTimeField(auto_now_add=False, auto_now=False)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)

@@ -1,5 +1,6 @@
 from decimal import Decimal
 import math as m
+
 def add_new_average(rating_average, count, value):
     avg = round(((count*rating_average) + value)/(count + 1), 1)
     #rounded = m.ceil(avg * 10) / 10
