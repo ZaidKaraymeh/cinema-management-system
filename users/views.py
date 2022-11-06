@@ -9,10 +9,7 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.username = f"{form.cleaned_data.get('first_name')}{form.cleaned_data.get('last_name')}"
-
-            user.save()
+            form.save()
             messages.success(
                 request, f"Your account has been created! You are now able to log in ")
             return redirect("login")

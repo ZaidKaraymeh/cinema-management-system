@@ -8,7 +8,7 @@ from .models import *
 import json
 from django.http import HttpResponse
 def home(request):
-    user = CustomUser.objects.get(id=request.user.id)
+    user = CustomUser.objects.get(id=request.user)
 
     
     return render(request, "admin_home.html")

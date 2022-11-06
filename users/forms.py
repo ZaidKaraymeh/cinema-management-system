@@ -10,6 +10,10 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class LoginForm(AuthenticationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 
@@ -20,7 +24,7 @@ class LoginForm(AuthenticationForm):
 
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    
     class Meta:
         # Interacts with User model
         model = CustomUser

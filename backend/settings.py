@@ -141,3 +141,5 @@ MESSAGE_TAGS = {
  }
 
 CORS_ALLOW_ALL_ORIGINS = True
+AUTH_USER_MODEL = 'users.CustomUser'
+""" AUTHENTICATION_BACKENDS = ["users.backends.EmailOrPhoneNumberModelBackend"] """
