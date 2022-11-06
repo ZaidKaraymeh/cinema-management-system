@@ -18,9 +18,17 @@ def subtract_new_average(rating_average, count, value):
 #print(subtract_new_average(4.3, 3, 4))
 
 
-def get_time_slots(hall: Hall):
-    hall_slots = hall.slots.all()
-    slots = Slot.objects.all()
+def get_time_slots(hall: Hall, date: str):
+    timings = ['8:00', '11:00', '14:00', '17:00', '20:00', '23:00']
+
+    for time in timings:
+        slot, created = Slot.objects.get_or_create(
+            slot=time,
+            date_reserved=date
+        )
+
+    hall_slots = hall.slots.filter(date_reserved=date)
+    slots = Slot.objects.filter(date_reserved=date)
     combined = []
     for x in hall_slots:
         combined.append(x)
@@ -35,3 +43,4 @@ def get_time_slots(hall: Hall):
         ) for slot in unique_slots
     ]
     return SLOT_CHOICES
+

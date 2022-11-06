@@ -26,23 +26,28 @@ class MovieForm(forms.ModelForm):
 
 
 class SlotForm(forms.ModelForm):
+    slots = forms.ChoiceField(choices=[], widget=forms.Select())
     class Meta:
         model = Slot
-        fields = ['slot']
+        fields = ['slots']
+
+    def __init__(self, *args, **kwargs):
+        super(SlotForm, self).__init__(*args, **kwargs)
+        self.fields['slots'].choices = []
+
+
 
 class MovieScheduleForm(forms.ModelForm):
-    slots = forms.ChoiceField(label="")
+    date = forms.DateField(widget=DateInput(
+        attrs={'onchange': 'changeFunc(this.value);'}))
 
     class Meta:
         model = MovieSchedule
-        fields = ['movie', 'slots', 'hall']
+        fields = ['movie',  'hall', 'date']
 
         widgets = {
-            'hall': forms.Select(attrs={'onchange': 'changeFunc(this.value);'})
+            'hall': forms.Select(attrs={'onchange': 'changeFunc(this.value);'}),
         }
     
-    def __init__(self, *args, **kwargs):
-        super(MovieScheduleForm, self).__init__(*args, **kwargs)
-        self.fields['slots'].choices = []
 
         
