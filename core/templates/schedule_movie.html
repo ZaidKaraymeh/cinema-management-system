@@ -6,6 +6,7 @@
     {% if schedule_form.errors %}
         <div class="alert alert-danger">
             {{ schedule_form.errors }}
+            {{ schedule_form.non_field_errors }}
         </div>
     {% endif %}
     <form method="POST">
@@ -20,12 +21,17 @@
             </div>
             <div class="row">
                 <div class="col-12">
+                    {{schedule_form.date|as_crispy_field}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
                     {{schedule_form.hall|as_crispy_field}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    {{schedule_form.slots|as_crispy_field}}
+                    {{slot_form.slots|as_crispy_field}}
                 </div>
             </div>
         </fieldset>

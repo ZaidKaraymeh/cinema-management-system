@@ -5,6 +5,8 @@ from django.conf import settings
 import uuid
 from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
+import datetime
+
 
 
 class Venue(models.Model):
@@ -38,6 +40,8 @@ class Slot(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     
+    # _id = models.IntegerField()
+    
     EIGHT_AM = '8:00'
     ELEVEN_AM = "11:00"
     TWO_PM = '14:00'
@@ -54,6 +58,7 @@ class Slot(models.Model):
     ]
 
 
+
     slot = models.CharField(
         max_length=8,
         choices=SLOT_TIME_CHOICES,
@@ -61,9 +66,22 @@ class Slot(models.Model):
 
     )
 
+    date_reserved = models.DateField(
+        auto_now_add=False, auto_now=False, default=datetime.date.today)
+
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
     def __str__(self):
         return self.slot
-    
+
+    """ def save(self, *args, **kwargs):
+        self.object_list = Slot.objects.order_by('_id')
+        if len(self.object_list) == 0:  # if there are no objects
+            self._id = 1
+        else:
+            self._id = self.object_list.last()._id + 1
+        super(Slot, self).save() """
+        
 
 
 class Movie(models.Model):
@@ -116,6 +134,7 @@ class Movie(models.Model):
     def __str__(self):
         return self.name
     
+
 
 
 class MovieSchedule(models.Model):
