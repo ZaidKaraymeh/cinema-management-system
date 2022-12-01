@@ -17,7 +17,7 @@
                     <p class="text-center h1 fw-bold mb-4 pb-2 pb-md-0 mb-md-5">
                     Log Into Your Account
                     </p>
-                    <form method="POST">
+                    <form method="POST" id='loginForm'>
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -44,3 +44,35 @@
     </div>
 </div>
 {%endblock content %}
+{% block scripts %}
+<script>
+    var loginForm = '#loginForm';
+
+    $(loginForm).submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var data = form.serialize();
+        $.ajax({
+            url: "{% url 'login' %}",
+            type: "POST",
+            data: $(loginForm).serialize(),
+            success: function(data) {
+                alert(data['success']);
+                if (!(data['success'])) {
+                    // Here we replace the form, for the
+                    $(loginForm).replaceWith(data['form_html']);
+                }
+                else {
+                    // Here you can show the user a success message or do whatever you need
+                    $(loginForm).find('.success-message').show();
+                }
+            },
+            error: function () {
+                $(loginForm).find('.error-message').show()
+            }
+        });
+    });
+    
+</script>
+{% endblock scripts %}

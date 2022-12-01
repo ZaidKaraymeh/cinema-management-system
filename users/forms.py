@@ -21,6 +21,7 @@ class LoginForm(AuthenticationForm):
         self.fields['password'].widget.attrs['style'] = 'height:50px;'
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
+        
 
 
 class RegisterForm(UserCreationForm):
