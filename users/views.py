@@ -32,8 +32,4 @@ def login_ajax(request):
         # You could actually save through AJAX and return a success code here
         form.save()
         return HttpResponse(json.dumps({"success": True}))
-
-    ctx = {}
-    ctx.update(csrf(request))
-    form_html = render_crispy_form(form, context=ctx)
     return HttpResponse(json.dumps({'success': False}))
