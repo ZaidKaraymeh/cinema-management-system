@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.template.context_processors import csrf
 from crispy_forms.utils import render_crispy_form
+from django.http import HttpResponse
+import json
 # Create your views here.
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
@@ -24,14 +26,14 @@ def register(request):
     return render(request, "users/register.html", context)
 
 # for AJAX login validation
-def AJAXlogin(request):
+def login_ajax(request):
     form = LoginForm(request.POST or None)
     if form.is_valid():
         # You could actually save through AJAX and return a success code here
         form.save()
-        return {'success': True}
+        return HttpResponse(json.dumps({"success": True}))
 
     ctx = {}
     ctx.update(csrf(request))
     form_html = render_crispy_form(form, context=ctx)
-    return {'success': False, 'form_html': form_html}
+    return HttpResponse(json.dumps({'success': False}))

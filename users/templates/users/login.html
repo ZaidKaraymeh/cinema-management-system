@@ -17,6 +17,17 @@
                     <p class="text-center h1 fw-bold mb-4 pb-2 pb-md-0 mb-md-5">
                     Log Into Your Account
                     </p>
+                    <!--Error Message-->
+                    <div class="row">
+                        <div
+                          id="alert-error"
+                          class="alert alert-danger alert-dismissible fade show"
+                          role="alert text-center"
+                          style="display: none"
+                        >
+                            Wrong email and / or wrong password. Please try again.
+                        </div>
+                      </div>
                     <form method="POST" id='loginForm'>
                         {% csrf_token %}
                         <div class="row">
@@ -34,7 +45,7 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <div class="d-flex justify-content-center">
                             <input class="btn btn-primary" type="submit" value="Log In" />
                         </div>
                     </form>
@@ -46,33 +57,35 @@
 {%endblock content %}
 {% block scripts %}
 <script>
-    var loginForm = '#loginForm';
+    let loginForm = '#loginForm';
+    let alert = '#alert-error';
+
+    $(".form-control").keyup(function () {
+        $(alert).hide();
+    });
 
     $(loginForm).submit(function(e) {
         e.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
-        var data = form.serialize();
+        let form = $(this);
         $.ajax({
-            url: "{% url 'login' %}",
+            url: "{% url 'login_ajax' %}",
             type: "POST",
-            data: $(loginForm).serialize(),
+            data: $(form).serialize(),
             success: function(data) {
-                alert(data['success']);
+                console.log(data['success']);
+                // if login failed
                 if (!(data['success'])) {
-                    // Here we replace the form, for the
-                    $(loginForm).replaceWith(data['form_html']);
+                    $(alert).show();
                 }
                 else {
-                    // Here you can show the user a success message or do whatever you need
-                    $(loginForm).find('.success-message').show();
+                    // Submit the form
+                    form.submit();
                 }
             },
             error: function () {
-                $(loginForm).find('.error-message').show()
+                $(form).find(alert).show();
             }
         });
-    });
-    
+    });  
 </script>
 {% endblock scripts %}
