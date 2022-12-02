@@ -1,8 +1,6 @@
 from .forms import RegisterForm, LoginForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.template.context_processors import csrf
-from crispy_forms.utils import render_crispy_form
 from django.http import HttpResponse
 import json
 # Create your views here.
