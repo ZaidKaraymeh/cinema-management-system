@@ -21,6 +21,7 @@ class LoginForm(AuthenticationForm):
         self.fields['password'].widget.attrs['style'] = 'height:50px;'
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
+        
 
 
 class RegisterForm(UserCreationForm):
@@ -32,6 +33,15 @@ class RegisterForm(UserCreationForm):
         fields = ["first_name", "last_name", "email",
                   "password1", "password2", "user_type", 
                   "birth_date", "phone_number"]
+        '''labels = {
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "email": "Email",
+            "phone_number": "Phone Number",
+            "password1": "Password",
+            "password2": "Confirm Password",
+            "birth_date": "Birth Date",
+        }'''
         widgets = {
             'birth_date': DateInput()
         }
