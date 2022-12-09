@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from users.models import CustomUser
+from .models import Movie
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import *
@@ -13,7 +14,14 @@ def home(request):
 
     user = request.user
 
-    return render(request, "home.html")
+    # last 10 records of movies
+    movies = Movie.objects.all().reverse()[:10]
+
+    context = {
+        'movies':movies
+    }
+
+    return render(request, "home.html", context)
 
 
 

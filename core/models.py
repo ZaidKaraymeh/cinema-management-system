@@ -109,7 +109,7 @@ class Movie(models.Model):
             MinValueValidator(0)
         ])
     rating_count = models.IntegerField(default=0)
-    reviews = models.ManyToManyField("core.Review")
+    reviews = models.ManyToManyField("core.Review", blank=True)
     """
         Check if user found in users_rated, 
         if user not in users_rated, 
