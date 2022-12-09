@@ -7,11 +7,13 @@ from .utils.helpers import *
 from .models import *
 import json
 from django.http import HttpResponse
-def home(request):
-    user = CustomUser.objects.get(id=request.user)
 
-    
-    return render(request, "admin_home.html")
+
+def home(request):
+
+    user = request.user
+
+    return render(request, "home.html")
 
 
 

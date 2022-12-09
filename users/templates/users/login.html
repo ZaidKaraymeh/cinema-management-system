@@ -28,7 +28,7 @@
                             Wrong email and / or wrong password. Please try again.
                         </div>
                       </div>
-                    <form method="POST" id='loginForm'>
+                    <form method="POST" >
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -55,37 +55,3 @@
     </div>
 </div>
 {%endblock content %}
-{% block scripts %}
-<script>
-    let loginForm = '#loginForm';
-    let alert = '#alert-error';
-
-    $(".form-control").keyup(function () {
-        $(alert).hide();
-    });
-
-    $(loginForm).submit(function(e) {
-        e.preventDefault();
-        let form = $(this);
-        $.ajax({
-            url: "{% url 'login_ajax' %}",
-            type: "POST",
-            data: $(form).serialize(),
-            success: function(data) {
-                console.log(data['success']);
-                // if login failed
-                if (!(data['success'])) {
-                    $(alert).show();
-                }
-                else {
-                    // Submit the form
-                    form.submit();
-                }
-            },
-            error: function () {
-                $(form).find(alert).show();
-            }
-        });
-    });  
-</script>
-{% endblock scripts %}

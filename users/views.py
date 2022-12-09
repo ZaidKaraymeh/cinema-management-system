@@ -24,10 +24,10 @@ def register(request):
     return render(request, "users/register.html", context)
 
 # for AJAX login validation
-def login_ajax(request):
-    form = LoginForm(request.POST or None)
-    if form.is_valid():
-        # You could actually save through AJAX and return a success code here
-        form.save()
-        return HttpResponse(json.dumps({"success": True}))
-    return HttpResponse(json.dumps({'success': False}))
+# def login_ajax(request):
+#     form = LoginForm(request.POST or None)
+#     if form.is_valid():
+#         # You could actually save through AJAX and return a success code here
+#         form.save()
+#         return HttpResponse(json.dumps({"success": True}))
+#     return HttpResponse(json.dumps({'success': False}))
