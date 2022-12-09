@@ -25,7 +25,6 @@ class LoginForm(AuthenticationForm):
 
 
 class RegisterForm(UserCreationForm):
-    
     class Meta:
         # Interacts with User model
         model = CustomUser

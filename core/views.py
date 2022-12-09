@@ -27,6 +27,17 @@ def home(request):
     return render(request, "home.html", context)
 
 
+def movie_details(request, movie_id):
+    try:
+        movie = Movie.objects.get(id=movie_id)
+        context = {
+            'movie':movie
+        }
+
+        return render(request, 'movie_details.html', context)
+    except:
+        return redirect('home')
+
 
 def list_movies(request):
     list_movies = Movie.objects.all()
