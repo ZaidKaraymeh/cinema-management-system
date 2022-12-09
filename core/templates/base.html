@@ -111,7 +111,7 @@
       </nav>
     </header>
 
-    <main id="main" class="p-0 m-0" style="min-height:100vh;">
+    <main id="main" class="p-0 m-0 overflow-hidden" style="min-height:100vh;">
       {% if messages %} {% for message in messages %}
       <div
         id="alert-cstm"
@@ -131,7 +131,7 @@
     </main>
 
     {% block footer %}
-    <footer class="bg-dark footer" style="min-height: 200px"></footer>
+    <footer class="bg-dark footer text-white text-center" style="min-height: 200px">footer here :o</footer>
     {% endblock footer %}
 
     <!-- Optional JavaScript -->

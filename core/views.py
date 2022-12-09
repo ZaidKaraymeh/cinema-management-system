@@ -15,10 +15,12 @@ def home(request):
     user = request.user
 
     # last 10 records of movies
-    movies = Movie.objects.all().reverse()[:10]
+    movies_featured = Movie.objects.all().reverse()[:3]
+    movies = Movie.objects.all()
 
     context = {
-        'movies':movies
+        'movies':movies_featured,
+        'movies_list': movies
     }
 
     return render(request, "home.html", context)
@@ -65,7 +67,7 @@ def add_movie(request):
 
 
 def edit_movie(request, movie_id):
-    user = CustomUser.objects.get(id=request.user.id)
+    user = request.user
     movie = Movie.objects.get(id=movie_id)
 
     if request.method == "POST":

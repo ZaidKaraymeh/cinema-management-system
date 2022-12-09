@@ -1,47 +1,89 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="container-fluid p-0 m-0">
-    <div id="carouselExampleCaptions" style="" class="carousel slide w-100" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            {% for movie in movies %}
-            {% if forloop.counter0 == 0 %}
-            
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter0}}"></button>
-            {% else  %}
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter0}}"></button>
-            {% endif %}
-            {% endfor %}
+{% extends 'base.html' %} {% block content %}
+<div class="container-fluid p-0 m-0 bg-white">
+  <div
+    id="carouselExampleCaptions"
+    style=""
+    class="carousel slide w-100"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-indicators">
+      {% for movie in movies %} {% if forloop.counter0 == 0 %}
+
+      <button
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide-to="{{forloop.counter0}}"
+        class="active"
+        aria-current="true"
+        aria-label="Slide {{forloop.counter0}}"
+      ></button>
+      {% else %}
+      <button
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide-to="{{forloop.counter0}}"
+        aria-label="Slide {{forloop.counter0}}"
+      ></button>
+      {% endif %} {% endfor %}
+    </div>
+    <div class="carousel-inner">
+      {% for movie in movies %} {% if forloop.counter0 == 0 %}
+
+      <div class="carousel-item active" style="max-height: 70vh">
+        <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="..." />
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-white">{{movie.name}}</h5>
+          <p>{{movie.release_date}}</p>
+          <a href="#" class="btn btn-light">Book Now</a>
         </div>
-        <div class="carousel-inner">
-            {% for movie in movies %}
-            {% if forloop.counter0 == 0 %}
-            
-            <div class="carousel-item active" style="max-height:70vh;" >
-                <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5 class="text-white" >{{movie.name}}</h5>
-                    <p>{{movie.release_date}}</p>                    
-                </div>
-            </div>
-            {% else  %}
-            <div class="carousel-item" style="max-height:70vh;">
-                <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5 class="text-white" >{{movie.name}}</h5>
-                    <p>{{movie.release_date}}</p>
-                </div>
-            </div>
-            {% endif  %}
-            {% endfor %}
-        </div>
-        <button class="carousel-control-prev bg-dark" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-          <i class="fa-solid fa-arrow-left fa-xl"></i>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next bg-dark" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-            <i class="fa-solid fa-arrow-right fa-xl"></i>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
+      {% else %}
+      <div class="carousel-item" style="max-height: 70vh">
+        <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="..." />
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-white">{{movie.name}}</h5>
+          <p>{{movie.release_date}}</p>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+    <button
+      class="carousel-control-prev bg-dark"
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide="prev"
+    >
+      <i class="fa-solid fa-arrow-left fa-xl"></i>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next bg-dark"
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide="next"
+    >
+      <i class="fa-solid fa-arrow-right fa-xl"></i>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="row p-2 pb-5 pt-0">
+      <h2 class=" p-4 text-bg-dark">Browse Movies</h2>
+      {% for movie in movies_list %}
+      <div class="col-xl-4 col-md-6 col-sm-12 py-2">
+        <a href="#" style="color:inherit">
+            <div class="card bg-dark text-white shadow-lg ">
+                <img src="{{movie.thumbnail.url}}" class="card-img " alt="..." />
+                <div class="card-img-overlay card-movie d-flex flex-column align-items-star justify-content-end">
+                    <h5 class="card-title ">{{movie.name}}</h5>
+                    <p class="card-text">
+                        {{movie.description|truncatechars:50}}
+                    </p>
+                    <p class="card-text">{{movie.release_date}}</p>
+                </div>
+            </div>
+        </a>
+      </div>
+      {% endfor %}
+  </div>
 </div>
 {% endblock content %}
