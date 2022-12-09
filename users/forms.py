@@ -31,7 +31,7 @@ class RegisterForm(UserCreationForm):
         model = CustomUser
         # What fields to show and in which order
         fields = ["first_name", "last_name", "email",
-                  "password1", "password2", "user_type", 
+                  "password1", "password2", 
                   "birth_date", "phone_number"]
         '''labels = {
             "first_name": "First Name",
@@ -57,7 +57,6 @@ class RegisterForm(UserCreationForm):
         self.fields['email'].widget.attrs['style'] = 'width:100%; height:50px;'
         self.fields['password1'].widget.attrs['style'] = 'width:100%; height:50px;'
         self.fields['password2'].widget.attrs['style'] = 'width:100%; height:50px;'
-        self.fields['user_type'].widget.attrs['style'] = 'width:100%; height:50px;'
         self.fields['birth_date'].widget.attrs['style'] = 'height:50px;'
         self.fields['phone_number'].widget.attrs['style'] = 'width:100%; height:50px;'
         self.fields['first_name'].widget.attrs['class'] = 'form-control'
@@ -65,7 +64,6 @@ class RegisterForm(UserCreationForm):
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['user_type'].widget.attrs['class'] = 'form-select'
         self.fields['birth_date'].widget.attrs['class'] = 'form-control'
         self.fields['phone_number'].widget.attrs['class'] = 'form-control'
 
