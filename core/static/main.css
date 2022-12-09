@@ -1,3 +1,6 @@
+/* Social media icons */
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
 *  {
   margin: 0;
   padding: 0;
@@ -59,4 +62,19 @@ body::before {
 
 .card-movie:hover {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+footer {
+  padding: 15px 0;
+}
+
+/* .footer-item {
+  font-size: 1.5rem;
+} */
+
+.footer-item:not(:first-child) {
+  margin-left: 10px;
+  padding-left: 20px;
+  border-left: 2px solid #FFFFFF;
 }
