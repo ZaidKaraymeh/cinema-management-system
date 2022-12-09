@@ -25,11 +25,7 @@
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
 
     <link rel="stylesheet" href="{% static 'main.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% if request.user.is_authenticated %}
     <title>
       {% block logged_user_type %}{% endblock logged_user_type %} - Cineco -
@@ -115,29 +111,23 @@
       </nav>
     </header>
 
-    <main id="main" class="container" style="min-height: 100vh">
-      <div class="row">
-        <div class="col overflow-hidden">
-          <div class="row">
-            {% if messages %} {% for message in messages %}
-            <div
-              id="alert-cstm"
-              class="alert alert-{{ message.tags }} alert-dismissible fade show"
-              role="alert text-center"
-            >
-              {{message}}
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-            </div>
+    <main id="main" class="p-0 m-0" style="min-height:100vh;">
+      {% if messages %} {% for message in messages %}
+      <div
+        id="alert-cstm"
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert text-center"
+      >
+        {{message}}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
 
-            {% endfor %} {% endif %} {% block content %} {% endblock content %}
-          </div>
-        </div>
-      </div>
+      {% endfor %} {% endif %} 
+      {% block content %} {% endblock content %}
     </main>
 
     {% block footer %}

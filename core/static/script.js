@@ -2,7 +2,7 @@
 
 document.documentElement.style.setProperty(
   "--nav-height",
-  document.getElementById("navbar_cstm").offsetHeight + 20 + "px"
+  document.getElementById("navbar_cstm").offsetHeight + "px"
 );
 
 
