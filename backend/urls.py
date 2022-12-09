@@ -38,6 +38,7 @@ urlpatterns = [
     path('checkout/', payments_views.checkout, name="checkout" ), 
     path('userfeedback/', payments_views.userfeedback, name="userfeedback" ),
     path('contactUs/', payments_views.contactUs, name="contactUs" ),
+    path('', include('django_prometheus.urls')),
 
 
     
