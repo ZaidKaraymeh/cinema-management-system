@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     "corsheaders",
     'crispy_forms',
     'users',
-    'core'
+    'core',
+    'payments'
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
@@ -142,4 +144,6 @@ MESSAGE_TAGS = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_BALANCE_MODEL = 'payments.balance'
+
 """ AUTHENTICATION_BACKENDS = ["users.backends.EmailOrPhoneNumberModelBackend"] """

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex flex-column justify-content-center align-items-center" style="min-height:90vh;" >
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <html>
+      <head>
+        <title>Top-Up</title>
+    
+        <style>
+          body, div, p { 
+          padding: 0;
+          margin: 0;
+          outline: none;
+          font-family: Roboto, Arial, sans-serif;
+          font-size: 16px;
+          color: #666;
+          }
+          body {
+          
+          background-size:cover;
+          }
+          h1 {
+          margin: 0 0 10px 0;
+          font-weight: 1000;
+          }
+          .main-block {
+          display: flex;
+          width: 100%;
+          padding: 150px 0; 
+          border-radius: 5px;
+          box-shadow: 1px 1px 8px 0px #666; 
+          background: #fff;
+          }
+          .block-item {
+          width: 50%;
+          padding: 20px; 
+          }
+          .block-item.right {
+          border-left: 1px solid #aaa;
+          }
+          i {
+          width: 50px;
+          font-size: 24px;
+          }
+          .btn {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 40px;
+          margin: 10px 0;
+          outline: none;
+          border: 0;
+          border-radius: 5px;
+          box-shadow: 2px 2px 2px #666;
+          background: #e8e8e8;
+          color: #fff;
+          cursor: pointer;
+          }
+          .btn:hover {
+          transform: scale(1.03);
+          }
+          .btn span {
+          font-size: 16px;
+          }
+          .paypal {
+          background: #3a589e;
+          }
+          .creditcard {
+          background: #429cd6;
+          }
+          .debitcard{
+          background: #d34836;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="main-block">
+          <div class="block-item left">
+            <h1>Top-Up with</h1>
+            
+          </div>
+          <div class="block-item right">
+            <button class="btn paypal" ><i class=""></i><span>Paypal</span></button>
+            <button class="btn creditcard" ><i class=""></i><span>Credit card</span></button>
+            <button class="btn debitcard" ><i class=""></i><span>Debit card</span></button>
+            </div>
+        </div> 
+      </body>
+    </html>
+</div>
+{%endblock content %}
