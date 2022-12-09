@@ -18,6 +18,8 @@ from django.urls import path, include
 
 from django.contrib.auth import views as auth_views
 from users import views as user_views
+from payments import views as payments_views
+
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,6 +32,16 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path('register/', user_views.register, name="register"),
     # path('login_ajax/', user_views.login_ajax, name="login_ajax"),
+    path('balance/', payments_views.balance, name="balance" ),
+    path('payment_successfull/', payments_views.payment_successfull, name="payment_successfull" ), 
+    path('topUp/', payments_views.topUp, name="topUp" ),   
+    path('checkout/', payments_views.checkout, name="checkout" ), 
+    path('userfeedback/', payments_views.userfeedback, name="userfeedback" ),
+    path('contactUs/', payments_views.contactUs, name="contactUs" ),
+
+
+    
     path('', include('core.urls')),
     #path('profile/', user_views.profile, name="profile"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

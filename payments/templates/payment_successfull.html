@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+  </head>
+    <style>
+        .button {   
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+            
+        .button:hover {background-color: #3e8e41}
+            
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .buttoncontainer{
+            text-align: center;
+        }
+            
+        body {
+        text-align: center;
+        padding: 40px 0;
+        background: #EBF0F5;
+        }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      i {
+        color: #b6c56a;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+    </style>
+    
+    <body>  
+      <div class="card">
+            <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                <i class="checkmark">✓</i>
+            </div>
+            <h1>Payment Completed Successfully</h1> 
+            <br/><br />
+            <div>   
+                <p>
+                    <div class='table'>
+                        <div class='cell'>
+                            <form id="login" action="index.html">                            
+                                <label>Checkout ID:</label>
+                                <input size="25" maxlength="25" />
+                                <br /><br />
+                                <br />
+                                <label>Total Amount Paid:</label>
+                                <input  size="25" maxlength="25" />
+                                <br />                           
+                            </form>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div>
+        <br/><br />
+        <div id="buttoncontainer" class="form-group">
+            <button type="submit" class="button" > Email </button> 
+            <button type="submit" class="button" > Print </button>
+            <button type="submit" class="button" > Close </button>
+            <br/><br />
+        </div>
+    </div>
+    </body>
+</html>
+{%endblock content %}
