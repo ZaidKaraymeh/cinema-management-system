@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<!DOCTYPE html>
+<div class="d-flex flex-column justify-content-center align-items-center" style="min-height:90vh;" >
+  {% if form.errors %}
+    <div class="alert alert-danger">
+        {{ form.errors }}
+    </div>
+  {% endif %}
+<br/><br>
 <html>
   <head>
     <title>Online Feedback Form</title>
@@ -55,7 +60,7 @@
       margin-bottom: 22px;
       }
       span {
-      color: red;
+      color: rgb(255, 255, 255);
       }
       th, td {
       width: 21%;

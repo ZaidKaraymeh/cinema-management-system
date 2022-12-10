@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-def payment_successfull(request):
-    return render(request, 'payment_successfull.html')
+def payment_successful(request):
+    return render(request, 'payment_successful.html')
 
 def balance(request):
     return render(request, 'balance.html')
