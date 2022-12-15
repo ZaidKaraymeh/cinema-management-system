@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
   <!-- Corousel -->
-  <div id="carouselExampleCaptions" class="carousel slide w-100" data-bs-ride="carousel">
+  <div id="carouselExampleCaptions" class="carousel slide w-100 mt-5" data-bs-ride="carousel">
     <div class="carousel-indicators">
       {% for movie in movies %} 
         {% if forloop.counter0 == 0 %}
@@ -46,7 +46,7 @@
       {% endfor %}
     </div>
     <button
-      class="carousel-control-prev bg-dark"
+      class="carousel-control-prev"
       type="button"
       data-bs-target="#carouselExampleCaptions"
       data-bs-slide="prev"
@@ -55,7 +55,7 @@
       <span class="visually-hidden">Previous</span>
     </button>
     <button
-      class="carousel-control-next bg-dark"
+      class="carousel-control-next"
       type="button"
       data-bs-target="#carouselExampleCaptions"
       data-bs-slide="next"
@@ -66,8 +66,8 @@
   </div>
 
   <!-- Movies -->
-  <div class="row p-2 pb-5 pt-0">
-      <h2 class=" p-4 text-bg-dark">Browse Movies</h2>
+  <div class="row p-2 pb-5">
+      <h2 class="p-4 border-top border-dark border-2">Browse Movies</h2>
       {% for movie in movies_list %}
       <div class="col-xl-4 col-md-6 col-sm-12 py-2">
         <a href="#" style="color:inherit">
