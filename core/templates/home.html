@@ -29,7 +29,7 @@
           <div class="carousel-item active" style="max-height: 70vh">
             <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="..." />
             <div class="carousel-caption d-none d-md-block">
-              <h5 class="text-white">{{movie.name}}</h5>
+              <h5 class="text-white">{{movie.title}}</h5>
               <p>{{movie.release_date}}</p>
               <a href="#" class="btn btn-light">Book Now</a>
             </div>
@@ -38,7 +38,7 @@
           <div class="carousel-item" style="max-height: 70vh">
             <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="..." />
             <div class="carousel-caption d-none d-md-block">
-              <h5 class="text-white">{{movie.name}}</h5>
+              <h5 class="text-white">{{movie.title}}</h5>
               <p>{{movie.release_date}}</p>
             </div>
           </div>
@@ -74,7 +74,7 @@
             <div class="card bg-dark text-white shadow-lg ">
                 <img src="{{movie.thumbnail.url}}" class="card-img " alt="..." />
                 <div class="card-img-overlay card-movie d-flex flex-column align-items-star justify-content-end">
-                    <h5 class="card-title ">{{movie.name}}</h5>
+                    <h5 class="card-title ">{{movie.title}}</h5>
                     <p class="card-text">
                         {{movie.description|truncatechars:50}}
                     </p>

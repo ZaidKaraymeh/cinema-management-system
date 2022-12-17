@@ -95,7 +95,7 @@ class Movie(models.Model):
     release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
 
     genres = models.ManyToManyField("core.Genre")
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     description = models.TextField(max_length=1500, null=True)
     """
         Calculate Average

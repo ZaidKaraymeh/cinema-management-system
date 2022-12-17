@@ -52,9 +52,10 @@ def list_movies(request):
 
 
 def add_movie(request):
-    if request.user.is_authenticated:
+    # Make sure that the user is admin
+    if request.user.is_authenticated and request.user.user_type=="ADM":
         user = CustomUser.objects.get(email=request.user)
-   
+        
         if request.method == "POST":
             movie_form = MovieForm(request.POST)
             if movie_form.is_valid():
@@ -67,13 +68,10 @@ def add_movie(request):
             movie_form = MovieForm()
 
         context = {
-            "movie_form": movie_form,
+            "form": movie_form,
         }
         return render(request, "add_movie.html", context)
-    else:
-        context = {
-        }
-        return render(request, "add_movie.html", context)
+    return HttpResponse("Access Denied.")
 
 
 def edit_movie(request, movie_id):
