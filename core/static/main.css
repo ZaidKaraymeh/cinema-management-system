@@ -73,6 +73,10 @@ main {
   margin-top: 40px;
 }
 
+i.fa-2x{
+  color: #FFFFFF;
+}
+
 .footer-item:not(:first-child) {
   margin-left: 10px;
   padding-left: 20px;

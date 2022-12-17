@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 <div class="container py-5 h-100">
   <div class="row justify-content-center align-items-center h-100">
     <div class="col-12 col-lg-9 col-xl-7">
@@ -16,28 +17,39 @@
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
                   {{ form.first_name }}
-                  <label class="form-label" for="id_first_name"
-                    >First Name</label
-                  >
+                  <label class="form-label" for="id_first_name">First Name</label>
                 </div>
               </div>
               <div class="col-md-6 mb-4">
-                {{ form.last_name|as_crispy_field }}
+                <div class="form-outline">
+                  {{ form.last_name }}
+                  <label class="form-label" for="id_last_name">Last Name</label>
+                </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-4">
-                {{ form.email|as_crispy_field }}
+                <div class="form-outline">
+                  {{ form.email }}
+                  <label class="form-label" for="id_email">Email</label>
+                </div>
+                
               </div>
               <div class="col-md-6 mb-4">
-                {{ form.phone_number|as_crispy_field }}
+                <div class="form-outline">
+                  {{ form.phone_number }}
+                  <label class="form-label" for="id_phone_number">Phone number</label>
+                </div>
               </div>
             </div>
 
             <div class="row mb-5">
               <div class="col-6">
-                {{ form.password1|as_crispy_field }}
+                <div class="form-outline">
+                  {{ form.password1 }}
+                  <label class="form-label" for="id_password1">Password</label>
+                </div>
                 <small class="text-left">
                   Must have a minimum of 8 characters containing at least
                   one uppercase (A-Z), one lowercase (a-z) and a number
@@ -45,7 +57,10 @@
                 </small>
               </div>
               <div class="col-6">
-                {{ form.password2|as_crispy_field }}
+                <div class="form-outline">
+                  {{ form.password2 }}
+                  <label class="form-label" for="id_password2">Password Confirmation</label>
+                </div>
                 <small class="text-left">
                   Enter the same password as before, for verification.
                 </small>
@@ -54,14 +69,9 @@
 
             <div class="row">
               <div class="col-md-6 mb-4">
-                  {{ form.birth_date|as_crispy_field }}
-              </div>
-              <div class="col-md-6 mb-4">
                 <div class="form-outline">
-                  <input type="text" id="form12" class="form-control" />
-                  <label class="form-label" for="form12"
-                    >Example label</label
-                  >
+                  {{ form.birth_date }}
+                  <label class="form-label" for="id_birth_date">Birth Date</label>
                 </div>
               </div>
             </div>

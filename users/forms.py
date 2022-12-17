@@ -17,8 +17,8 @@ class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 
-        self.fields['username'].widget.attrs['style'] = 'height:50px;'
-        self.fields['password'].widget.attrs['style'] = 'height:50px;'
+        self.fields['username'].widget.attrs['style'] = 'height:40px;'
+        self.fields['password'].widget.attrs['style'] = 'height:40px;'
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         
@@ -52,19 +52,21 @@ class RegisterForm(UserCreationForm):
             self.fields[fieldname].help_text = None
 
         self.fields['first_name'].widget.attrs['style'] = 'width:100%; height:40px;'
-        self.fields['last_name'].widget.attrs['style'] = 'width:100%; height:50px;'
-        self.fields['email'].widget.attrs['style'] = 'width:100%; height:50px;'
-        self.fields['password1'].widget.attrs['style'] = 'width:100%; height:50px;'
-        self.fields['password2'].widget.attrs['style'] = 'width:100%; height:50px;'
-        self.fields['birth_date'].widget.attrs['style'] = 'height:50px;'
-        self.fields['phone_number'].widget.attrs['style'] = 'width:100%; height:50px;'
-        self.fields['first_name'].widget.attrs['class'] = 'form-control d-flex justify-content-center align-items-center text-center'
-        self.fields['last_name'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['birth_date'].widget.attrs['class'] = 'form-control'
-        self.fields['phone_number'].widget.attrs['class'] = 'form-control'
+        self.fields['last_name'].widget.attrs['style'] = 'width:100%; height:40px;'
+        self.fields['email'].widget.attrs['style'] = 'width:100%; height:40px;'
+        self.fields['password1'].widget.attrs['style'] = 'width:100%; height:40px;'
+        self.fields['password2'].widget.attrs['style'] = 'width:100%; height:40px;'
+        self.fields['birth_date'].widget.attrs['style'] = 'height:40px;'
+        self.fields['phone_number'].widget.attrs['style'] = 'width:100%; height:40px;'
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+        # self.fields['first_name'].widget.attrs['class'] = 'form-control'
+        # self.fields['last_name'].widget.attrs['class'] = 'form-control'
+        # self.fields['email'].widget.attrs['class'] = 'form-control'
+        # self.fields['password1'].widget.attrs['class'] = 'form-control'
+        # self.fields['password2'].widget.attrs['class'] = 'form-control'
+        # self.fields['birth_date'].widget.attrs['class'] = 'form-control'
+        # self.fields['phone_number'].widget.attrs['class'] = 'form-control'
 
 """
 class UserUpdateForm(forms.ModelForm):

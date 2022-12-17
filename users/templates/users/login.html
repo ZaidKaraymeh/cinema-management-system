@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 {% block content %}
 <div class="container py-5 h-100">
     <div class="row justify-content-center align-items-center h-100">
@@ -32,10 +31,16 @@
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                {{ form.username|as_crispy_field }}
+                                <div class="form-outline">
+                                    {{ form.username }}
+                                    <label class="form-label" for="id_username">Email</label>
+                                </div>
                             </div>
                             <div class="col-md-6 mb-4">
-                                {{ form.password|as_crispy_field }}
+                                <div class="form-outline">
+                                    {{ form.password }}
+                                    <label class="form-label" for="id_password">Password</label>
+                                </div>
                             </div>
                         </div>
                         <div class="row text-muted mb-4">
