@@ -74,18 +74,20 @@
               </li>
               {% elif request.user.user_type == 'ADM' %}
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  href="#"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >Movie</a
-                >
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"aria-expanded="false">
+                  Movie
+                </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{% url 'add_movie' %}">Add</a>
-                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="{% url 'add_movie' %}">Add a Movie</a>
+                  <a class="dropdown-item" href="{% url 'list_movies' %}">Movies List</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"aria-expanded="false">
+                  Profile
+                </a>
+                <div class="dropdown-menu">
                   <a class="dropdown-item" href="#">Something else here</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
@@ -98,7 +100,7 @@
       </nav>
     </header>
     <!-- Main -->
-    <main id="main" class="p-0 m-0 overflow-hidden" style="min-height:100vh;">
+    <main id="main" class="p-0 m-0 overflow-hidden">
       {% if messages %} {% for message in messages %}
       <div
         id="alert-cstm"
