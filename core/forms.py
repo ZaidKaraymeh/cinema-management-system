@@ -38,7 +38,6 @@ class MovieForm(forms.ModelForm):
         #self.fields['genres'].widget.attrs['class'] = 'form-check'
         self.fields['trailer'].widget.attrs['class'] = 'form-control'
         self.fields['thumbnail'].widget.attrs['class'] = 'form-control'
-        # multiple selections for genres
 
 
 
