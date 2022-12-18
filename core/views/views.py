@@ -81,13 +81,14 @@ def edit_movie(request, movie_id):
         if movie_form.is_valid():
             movie = movie_form.save(commit=False)
             movie.save()
-            messages.info(request, f"{movie.name} has been Edited successfuly!")
+            messages.info(request, f"{movie.title} has been Edited successfuly!")
             return redirect('list_movies')
     else:
         movie_form = MovieForm(instance=movie)
 
     context = {
-        "movie_form": movie_form,
+        "form": movie_form,
+        "movie": movie,
     }
     return render(request, "edit_movie.html", context)
 
