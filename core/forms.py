@@ -24,14 +24,13 @@ class MovieForm(forms.ModelForm):
         super(MovieForm, self).__init__(*args, **kwargs)
         # there's a `fields` property now
         self.fields['trailer'].required = False
-        self.fields['thumbnail'].required = False
         # style the fields
         self.fields['title'].widget.attrs['style'] = 'width:100%; height:40px;'
         self.fields['release_date'].widget.attrs['style'] = 'width:100%; height:40px;'
         self.fields['description'].widget.attrs['style'] = 'width:100%; height:250px;'
         self.fields['genres'].widget.attrs['style'] = 'background-color: #CCC5C5; border: 1px solid #CCC5C5;'
-        self.fields['trailer'].widget.attrs['style'] = 'width:100%; height:40px; background-color: #CCC5C5!important;'
-        self.fields['thumbnail'].widget.attrs['style'] = 'width:100%; height:40px; background-color: #CCC5C5!important;'
+        self.fields['trailer'].widget.attrs['style'] = 'width:100%; height:50px; background-color: #CCC5C5!important;'
+        self.fields['thumbnail'].widget.attrs['style'] = 'width:100%; height:50px; background-color: #CCC5C5!important;'
 
         self.fields['title'].widget.attrs['class'] = 'form-control'
         self.fields['release_date'].widget.attrs['class'] = 'form-control'
