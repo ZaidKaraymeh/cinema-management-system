@@ -89,7 +89,7 @@ class Movie(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
     trailer = models.FileField(upload_to='movies', max_length=100, null=True)
-    thumbnail = models.FileField(upload_to='thumbnail', max_length=100, null=True)
+    thumbnail = models.FileField(upload_to='thumbnail', max_length=100, null=False)
     price = models.DecimalField(max_digits=6, decimal_places=3)
 
     release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)

@@ -56,7 +56,7 @@
                 {{ form.errors }}
             </div>
             {% endif %}
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="row">
                 <div class="col-md-6 mb-4">
@@ -89,13 +89,13 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6 mb-4">                  
-                    <label class="form-label" for="id_trailer">Trailer</label>
-                    {{ form.trailer }}
-                </div>
                 <div class="col-md-6 mb-4">
                     <label class="form-label" for="id_thumbnail">Thumbnail</label>
                     {{ form.thumbnail }}
+                </div>
+                <div class="col-md-6 mb-4">                  
+                    <label class="form-label" for="id_trailer">Trailer</label>
+                    {{ form.trailer }}
                 </div>
               </div>
 

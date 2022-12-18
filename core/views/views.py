@@ -54,10 +54,8 @@ def list_movies(request):
 def add_movie(request):
     # Make sure that the user is admin
     if request.user.is_authenticated and request.user.user_type=="ADM":
-        user = CustomUser.objects.get(email=request.user)
-        
         if request.method == "POST":
-            movie_form = MovieForm(request.POST)
+            movie_form = MovieForm(request.POST, request.FILES)
             if movie_form.is_valid():
                 movie = movie_form.save(commit=False)
                 movie.price = Decimal('3.0')
@@ -96,7 +94,7 @@ def edit_movie(request, movie_id):
 def delete_movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     movie.delete()
-    messages.error(request, f"{movie.name} has been Deleted successfuly!")
+    messages.error(request, f"{movie.title} has been Deleted successfuly!")
 
     return redirect('list_movies')
 
