@@ -62,7 +62,7 @@ def add_movie(request):
                 movie = movie_form.save(commit=False)
                 movie.price = Decimal('3.0')
                 movie.save()
-                messages.success(request, f"{movie.name} has been added successfuly!")
+                messages.success(request, f"{movie.title} has been added successfuly!")
                 return redirect('list_movies')
         else:
             movie_form = MovieForm()

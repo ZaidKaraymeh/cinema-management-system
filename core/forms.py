@@ -6,7 +6,10 @@ from django.contrib.admin.widgets import AdminDateWidget
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class MovieForm(forms.ModelForm):
+    genres = forms.ModelMultipleChoiceField(queryset=Genre.objects.all(), widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = Movie
         fields = ["title", "release_date", "description", "genres", "trailer", "thumbnail"]
@@ -14,8 +17,7 @@ class MovieForm(forms.ModelForm):
         
         widgets = {
             'release_date': DateInput(),
-            #'genres': forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=model.genres, required=True)
-        }
+        }    
 
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
@@ -27,14 +29,14 @@ class MovieForm(forms.ModelForm):
         self.fields['title'].widget.attrs['style'] = 'width:100%; height:40px;'
         self.fields['release_date'].widget.attrs['style'] = 'width:100%; height:40px;'
         self.fields['description'].widget.attrs['style'] = 'width:100%; height:250px;'
-        self.fields['genres'].widget.attrs['style'] = 'width:100%; background-color: #CCC5C5!important;'
+        self.fields['genres'].widget.attrs['style'] = 'background-color: #CCC5C5; border: 1px solid #CCC5C5;'
         self.fields['trailer'].widget.attrs['style'] = 'width:100%; height:40px; background-color: #CCC5C5!important;'
         self.fields['thumbnail'].widget.attrs['style'] = 'width:100%; height:40px; background-color: #CCC5C5!important;'
 
         self.fields['title'].widget.attrs['class'] = 'form-control'
         self.fields['release_date'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
-        self.fields['genres'].widget.attrs['class'] = 'form-select'
+        #self.fields['genres'].widget.attrs['class'] = 'form-check'
         self.fields['trailer'].widget.attrs['class'] = 'form-control'
         self.fields['thumbnail'].widget.attrs['class'] = 'form-control'
         # multiple selections for genres

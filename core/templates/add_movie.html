@@ -109,3 +109,9 @@
     </div>
   </div>
 {%endblock content %}
+{% block scripts %}
+<script>
+  $('#id_genres').addClass('form-check');
+  $("input:checkbox").addClass('form-check-input');
+</script>
+{% endblock scripts %}
