@@ -56,22 +56,16 @@
             </ul>
             <ul class="navbar-nav d-flex">
               {% if not request.user.is_authenticated %}
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  aria-current="page"
-                  href="{% url 'register' %}"
-                  >Register</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  aria-current="page"
-                  href="{% url 'login' %}"
-                  >Login</a
-                >
-              </li>
+              {% if request.resolver_match.url_name != 'login' %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+                </li>
+              {% endif %}
+              {% if request.resolver_match.url_name != 'register' %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'register' %}">Register</a>
+                </li>
+              {% endif %}
               {% elif request.user.user_type == 'ADM' %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"aria-expanded="false">
