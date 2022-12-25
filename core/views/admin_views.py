@@ -13,7 +13,7 @@ from django.http import HttpResponse
 
 def dashboard(request):
 
-    return render(request, 'admin/dashboard.html')
+    return render(request, 'admin/admin/dashboard.html')
 
 def list_movies(request):
     list_movies = Movie.objects.all()
@@ -26,7 +26,7 @@ def list_movies(request):
         "movies": movies,
     }
 
-    return render(request, 'list_movies.html', context)
+    return render(request, 'admin/list_movies.html', context)
 
 
 def add_movie(request):
@@ -47,7 +47,7 @@ def add_movie(request):
         context = {
             "form": movie_form,
         }
-        return render(request, "add_movie.html", context)
+        return render(request, "admin/add_movie.html", context)
     return HttpResponse("Access Denied.")
 
 
@@ -70,7 +70,7 @@ def edit_movie(request, movie_id):
         "form": movie_form,
         "movie": movie,
     }
-    return render(request, "edit_movie.html", context)
+    return render(request, "admin/edit_movie.html", context)
 
 
 def delete_movie(request, movie_id):
@@ -88,7 +88,7 @@ def list_schedule_movies(request):
         'movie_schedules': movie_schedules
     }
 
-    return render(request, 'list_movies_scheduled.html', context)
+    return render(request, 'admin/list_movies_scheduled.html', context)
 
 
 def schedule_movie(request):
@@ -119,7 +119,7 @@ def schedule_movie(request):
         'slot_form': slot_form,
     }
 
-    return render(request, 'schedule_movie.html', context)
+    return render(request, 'admin/schedule_movie.html', context)
 
 
 def slots_available_json(request, hall_id, date):
