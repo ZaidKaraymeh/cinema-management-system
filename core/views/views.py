@@ -52,28 +52,23 @@ def list_movies(request):
 
 
 def add_movie(request):
-    if request.user.is_authenticated:
-        user = CustomUser.objects.get(email=request.user)
-   
-        if request.method == "POST":
-            movie_form = MovieForm(request.POST)
-            if movie_form.is_valid():
-                movie = movie_form.save(commit=False)
-                movie.price = Decimal('3.0')
-                movie.save()
-                messages.success(request, f"{movie.name} has been added successfuly!")
-                return redirect('list_movies')
-        else:
-            movie_form = MovieForm()
+    user = request.user
 
-        context = {
-            "movie_form": movie_form,
-        }
-        return render(request, "add_movie.html", context)
+    if request.method == "POST":
+        movie_form = MovieForm(request.POST)
+        if movie_form.is_valid():
+            movie = movie_form.save(commit=False)
+            movie.price = Decimal('3.0')
+            movie.save()
+            messages.success(request, f"{movie.name} has been added successfuly!")
+            return redirect('list_movies')
     else:
-        context = {
-        }
-        return render(request, "add_movie.html", context)
+        movie_form = MovieForm()
+
+    context = {
+        "movie_form": movie_form,
+    }
+    return render(request, "add_movie.html", context)
 
 
 def edit_movie(request, movie_id):
