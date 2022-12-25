@@ -2,7 +2,40 @@
 {% block content %}
 
 <div class="container">
-    
+    <div class="row mt-5">
+        <div class="col-xl-7">
+            <img style=" max-width: 100%;" src="{{movie.thumbnail.url}}" alt="">
+        </div>
+        <div class="col-xl-5">
+            <h3 class=" border-bottom border-dark pb-2" >{{movie.title}}</h3>
+            <div class="my-3" >
+                <h4>Genres</h4>
+                <div class="d-flex gap-3" >
+                    {% for genre in movie.genres.all %}
+                        <span class="badge fs-5 {% if forloop.counter|divisibleby:2 %} text-bg-primary {% else %} text-bg-info  {% endif %}  ">{{genre.name}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <h4 class="my-4">Movie Time: {{movie.duration}} mins</h4>
+            <div>
+                <h4 class="my-4">About</h4>
+                <p>{{movie.description|truncatechars:500}}</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="row my-2">
+        <h3>Movie Schedules</h3>
+        <div class="col-xl-12">
+            <div class="d-flex gap-3" >
+                    {% for schedule in movie_schedules %}
+                        <a href="#">
+                         <span class="badge p-2 fs-4 {% if forloop.counter|divisibleby:2 %} text-bg-primary {% else %} text-bg-info  {% endif %}  "> {{schedule.slot.slot}}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

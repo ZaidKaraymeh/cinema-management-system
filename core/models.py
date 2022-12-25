@@ -93,7 +93,7 @@ class Movie(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=3)
 
     release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
-
+    duration = models.CharField(max_length=4, default="60")
     genres = models.ManyToManyField("core.Genre")
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1500, null=True)
