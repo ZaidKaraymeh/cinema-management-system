@@ -43,7 +43,7 @@
               <h3>
                 <a
                   class="text-decoration-none text-light"
-                  href="{% url 'home' %}"
+                  href="{% url 'dashboard' %}"
                   >Cinema Management System
                 </a>
               </h3>
@@ -59,8 +59,11 @@
                 >Log In</a
               >
               {% endif %}
-              <a class="text-decoration-none text-light p-4" href="#Login"
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_customers' %}"
                 >Customers</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_employees' %}"
+                >Employees</a
               >
               <a class="text-decoration-none text-light p-4" href="{% url 'list_movies' %}"
                 >Movies</a
@@ -68,7 +71,7 @@
               <a class="text-decoration-none text-light p-4" href="{% url 'list_schedule_movies' %}"
                 >Movie Schedules</a
               >
-              <a class="text-decoration-none text-light p-4" href="#ContactUs"
+              <a class="text-decoration-none text-light p-4" href="{% url 'home' %}"
                 >User View</a
               >
               {% if request.user.is_authenticated %}

@@ -15,4 +15,8 @@ urlpatterns = [
          name="list_schedule_movies"),
     path('staff/slots/<str:hall_id>/<str:date>',
          admin_views.slots_available_json, name="slots_available_json"),
+    path('staff/customers',
+         admin_views.list_customers, name="list_customers"),
+    path('staff/employees',
+         admin_views.list_employees, name="list_employees"),
 ]

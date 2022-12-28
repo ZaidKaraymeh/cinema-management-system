@@ -136,3 +136,29 @@ def slots_available_json(request, hall_id, date):
     response = json.dumps(dict(slot_choices))
 
     return HttpResponse(response)
+
+def list_customers(request):
+    customers = CustomUser.objects.filter(user_type='CTM')
+    paginator = Paginator(customers, 10)
+    page_number = request.GET.get('page')
+    customers = paginator.get_page(page_number)
+
+    context = {
+        'customers': customers,
+    }
+    return render(request, 'admin/list_customers.html', context)
+
+def list_employees(request):
+    employees = CustomUser.objects.filter(user_type='ADM')
+    paginator = Paginator(employees, 10)
+    page_number = request.GET.get('page')
+    employees = paginator.get_page(page_number)
+
+    context = {
+        'employees': employees,
+    }
+    return render(request, 'admin/list_employees.html', context)
+
+# Todo 
+def view_customer_ticket_history(request):
+    pass
