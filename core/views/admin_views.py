@@ -86,6 +86,10 @@ def delete_movie(request, movie_id):
 def list_schedule_movies(request):
     movie_schedules = MovieSchedule.objects.all()
 
+    paginator = Paginator(movie_schedules, 10)
+    page_number = request.GET.get('page')
+    movie_schedules = paginator.get_page(page_number)
+
     context = {
         'movie_schedules': movie_schedules
     }
