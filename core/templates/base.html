@@ -25,14 +25,7 @@
 
     <link rel="stylesheet" href="{% static 'main.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {% if request.user.is_authenticated %}
-    <title>
-      {% block logged_user_type %}{% endblock logged_user_type %} - Cineco -
-      {{request.user}}
-    </title>
-    {% else %}
     <title>Cineco</title>
-    {%endif%}
   </head>
 
   <body class="body" style="background-color: #eee;">
@@ -63,36 +56,25 @@
             </ul>
             <ul class="navbar-nav d-flex">
               {% if not request.user.is_authenticated %}
+              {% if request.resolver_match.url_name != 'login' %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+                </li>
+              {% endif %}
+              {% if request.resolver_match.url_name != 'register' %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'register' %}">Register</a>
+                </li>
+              {% endif %}
+              {% elif request.user.user_type == 'ADM' %}
               <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  aria-current="page"
-                  href="{% url 'register' %}"
-                  >Register</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  aria-current="page"
-                  href="{% url 'login' %}"
-                  >Login</a
-                >
-              </li>
-              {% else %}
+                  <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  href="#"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >Dropdown</a
-                >
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"aria-expanded="false">
+                  Profile
+                </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
                   <a class="dropdown-item" href="#">Something else here</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
@@ -104,9 +86,8 @@
         </div>
       </nav>
     </header>
-
     <!-- Main -->
-    <main id="main" class="p-0 m-0 overflow-hidden" style="min-height:100vh;">
+    <main id="main" class="p-0 m-0 overflow-hidden">
       {% if messages %} {% for message in messages %}
       <div
         id="alert-cstm"

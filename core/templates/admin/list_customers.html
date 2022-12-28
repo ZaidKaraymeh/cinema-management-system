@@ -1,0 +1,108 @@
+{% extends 'dashboard_base.html' %} {% block content_admin %}
+<section class="row">
+  <h2 class="text-center mt-4 py-0">Customers</h2>
+  <div class="col p-4 d-flex justify-content-end align-items-start gap-2 py-0">
+    <a class="btn btn-dark mx-2" href="{% url 'register' %}"> Add Customer </a>
+    <a class="btn btn-dark mr-2" href="#"> Export </a>
+    <a class="btn btn-primary" href="#"> Back </a>
+  </div>
+</section>
+<div class="table-responsive m-0 p-0">
+  <table class="table table-striped table-bordered border-dark">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center" scope="col">#</th>
+        <th class="text-center" scope="col">Name</th>
+        <th class="text-center" scope="col">Email</th>
+        <th class="text-center" scope="col">Phone Number</th>
+        <th class="text-center" scope="col">Ticket History</th>
+        <th class="text-center" scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customers %}
+      <tr>
+        <th class="text-center">{{forloop.counter}}</th>
+        <th class="text-center">
+          {{customer.first_name}} {{customer.last_name}}
+        </th>
+        <th class="text-center">{{customer.email}}</th>
+        <th class="text-center">{{customer.phone_number}}</th>
+        <th class="text-center">
+          <a class="btn btn-dark text-center" href="#"> View History </a>
+        </th>
+        <th class="text-center d-flex justify-content-center gap-2">
+          <div class="dropdown">
+            <a
+              class="btn btn-primary dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Actions
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Edit</a></li>
+              <li><a class="dropdown-item" href="#">Delete</a></li>
+            </ul>
+          </div>
+        </th>
+      </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="deleteModal{{forloop.counter}}"
+        tabindex="-1"
+        aria-labelledby="deleteModal{{forloop.counter}}Label"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModal{{forloop.counter}}Label">
+                Delete Confirmation
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">Are you sure you want to delete ?</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <a href="" class="btn btn-primary">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div
+    class="col d-flex align-items-center justify-content-center"
+    role="group"
+  >
+    {% if movies.has_previous %}
+    <a class="btn btn-dark mx-2" href="?page={{ movies.previous_page_number }}"
+      >Previous</a
+    >
+    {% endif %} {% if movies.has_next %}
+    <a class="btn btn-dark" href="?page={{ movies.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content_admin %}

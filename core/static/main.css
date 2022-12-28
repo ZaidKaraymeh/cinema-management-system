@@ -17,6 +17,11 @@ body::before {
   height: var(--nav-height);
 }
 
+#main{
+  min-height:80vh;
+}
+
+
 .alert-cstm {
   margin-top: calc(var(--nav-height) + 50);
 }

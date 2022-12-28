@@ -36,7 +36,7 @@
           </div>
         {% else %}
           <div class="carousel-item" style="max-height: 70vh">
-            <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="..." />
+            <img src="{{movie.thumbnail.url}}" class="d-block w-100" alt="{{movie.title}}" />
             <div class="carousel-caption d-none d-md-block">
               <h5 class="text-white">{{movie.title}}</h5>
               <p>{{movie.release_date}}</p>
@@ -70,7 +70,7 @@
       <h2 class="p-4 border-top border-dark border-2">Browse Movies</h2>
       {% for movie in movies_list %}
       <div class="col-xl-4 col-md-6 col-sm-12 py-2">
-        <a href="#" style="color:inherit">
+        <a href="{% url 'movie_details' movie.id %}" style="color:inherit">
             <div class="card bg-dark text-white shadow-lg ">
                 <img src="{{movie.thumbnail.url}}" class="card-img " alt="..." />
                 <div class="card-img-overlay card-movie d-flex flex-column align-items-star justify-content-end">
