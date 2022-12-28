@@ -13,7 +13,9 @@ from django.http import HttpResponse
 
 def dashboard(request):
 
-    return render(request, 'admin/admin/dashboard.html')
+    return render(request, 'admin/dashboard.html')
+
+
 
 def list_movies(request):
     list_movies = Movie.objects.all()
@@ -26,7 +28,7 @@ def list_movies(request):
         "movies": movies,
     }
 
-    return render(request, 'admin/list_movies.html', context)
+    return render(request, 'admin/movies.html', context)
 
 
 def add_movie(request):
