@@ -18,7 +18,7 @@ def dashboard(request):
 
 
 def list_movies(request):
-    list_movies = Movie.objects.all()
+    list_movies = Movie.objects.all().order_by('created_at')
 
     paginator = Paginator(list_movies, 10)
     page_number = request.GET.get('page')

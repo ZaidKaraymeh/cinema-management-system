@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from django.contrib.messages import constants as messages
 from pathlib import Path
 import os
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'core',
     'payments',
     'django_prometheus',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -150,3 +153,17 @@ AUTH_USER_MODEL = 'users.CustomUser'
 AUTH_BALANCE_MODEL = 'payments.balance'
 
 """ AUTHENTICATION_BACKENDS = ["users.backends.EmailOrPhoneNumberModelBackend"] """
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name="hzlozofjp",
+    api_key="293651895622711",
+    api_secret="VWoDKs96pCdN1yBQRfXIWNm7XH4"
+)
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "hzlozofjp",
+    "API_KEY": "293651895622711",
+    "API_SECRET": "VWoDKs96pCdN1yBQRfXIWNm7XH4"
+}
