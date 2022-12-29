@@ -111,7 +111,7 @@ def schedule_movie(request):
             hall = movie_schedule.hall.slots.add(movie_schedule.slot)
             movie_schedule.save()
             messages.success(
-                request, f"{movie_schedule.movie.name} has been scheduled successfuly!")
+                request, f"{movie_schedule.movie.title} has been scheduled successfuly!")
             return redirect('list_schedule_movies')
         else:
             print("form is not valid")

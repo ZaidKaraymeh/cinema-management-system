@@ -17,11 +17,11 @@ slotsBox.appendChild(opt)
 async function changeFunc(event) {
   var selectBox = document.getElementById("id_hall");
   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  
+  console.log("fired")
   var date = document.getElementById("id_date");
 
 
-  var res = await fetch(`http://localhost:8000/slots/${selectedValue}/${date.value}`, {
+  var res = await fetch(`http://localhost:8000/staff/slots/${selectedValue}/${date.value}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
