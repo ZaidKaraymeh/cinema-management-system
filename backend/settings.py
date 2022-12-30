@@ -94,6 +94,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# import dj_database_url
+# DATABASES = {'default': dj_database_url.config(
+#     default='postgresql://postgres:ngNG0q1yYg3l6JJf5NzM@containers-us-west-56.railway.app:6324/railway')}
 
 
 # Password validation

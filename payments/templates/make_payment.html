@@ -1,0 +1,17 @@
+<h1>Make payment</h1>
+
+<form method="post" action="{% url 'make_payment' %}">
+    {% csrf_token %}
+    <label for="amount">Enter amount:</label>
+    <input type="text" name="amount" id="amount">
+    <label for="payment_method">Select payment method:</label>
+    <select name="payment_method" id="payment_method">
+        <option value="credit_card">Credit card</option>
+        <option value="paypal">PayPal</option>
+    </select>
+    <input type="submit" value="Make payment">
+</form>
+
+<h2>Your balance: {{ user_balance }}</h2>
+<p>Amount paid: {{ amount }}</p>
+<p>Payment method: {{ payment_method }}</p>

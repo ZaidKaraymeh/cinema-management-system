@@ -1,0 +1,12 @@
+
+<h1>Add funds</h1>
+
+<form method="post" action="{% url 'add_funds' %}">
+    {% csrf_token %}
+    <label for="amount">Enter amount:</label>
+    <input type="text" name="amount" id="amount">
+    <input type="submit" value="Add funds">
+</form>
+
+<h2>Your balance: {{ user_balance }}</h2>
+<p>Amount added: {{ amount }}</p>

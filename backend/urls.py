@@ -32,13 +32,16 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path('register/', user_views.register, name="register"),
     # path('login_ajax/', user_views.login_ajax, name="login_ajax"),
-    path('balance/', payments_views.balance, name="balance" ),
+    path('userbalance/', payments_views.userbalance, name="userbalance" ),
     path('payment_successful/', payments_views.payment_successful, name="payment_successful" ), 
     path('topUp/', payments_views.topUp, name="topUp" ),   
     path('checkout/', payments_views.checkout, name="checkout" ), 
     path('userfeedback/', payments_views.userfeedback, name="userfeedback" ),
-    path('contactUs/', payments_views.contactUs, name="contactUs" ),
+    path('contact/', payments_views.contact, name="contact" ),
     path('', include('django_prometheus.urls')),
+    path('purchase_ticket/', payments_views.purchase_ticket, name="purchase_ticket" ),
+    path('add_funds/', payments_views.add_funds, name="add_funds" ),
+    path('make_payment/', payments_views.make_payment, name="make_payment" ),
 
 
     

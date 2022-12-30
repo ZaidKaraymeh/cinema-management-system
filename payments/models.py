@@ -1,12 +1,30 @@
-# from django.db import models
-
-# # Create your models here.
-
-# class balance(models.Model):
-#     pass
-
-
 from django.db import models
 
 class balance(models.Model):
     pass
+
+class Contact(models.Model):
+    msg_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=70, default="")
+    phone = models.CharField(max_length=70, default="")
+    desc = models.CharField(max_length=500, default="")
+    # timeStamp =models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class feedback(models.Model):
+    sno = models.AutoField(primary_key=True)
+    fname = models.CharField(max_length=50)
+    lname = models.CharField(max_length=50)
+    email = models.CharField(max_length=70)
+    point1 = models.CharField(max_length=70)
+    point2 = models.CharField(max_length=70)
+    point3 = models.CharField(max_length=70)
+    point4 = models.CharField(max_length=70)
+    point5 = models.CharField(max_length=70)
+    comment = models.CharField(max_length=1000)
+
+
+

@@ -110,14 +110,15 @@
   </head>
   <body>
     <div class="testbox">
-      <form action="/">
+      <form action="/userfeedback/" method="post">
+        {% csrf_token %} 
         <h1>Online Feedback Form</h1>
         <p>Thank you for taking the time to fill in our online feedback form. By providing us your feedback, you are helping us understand what we do well and what improvements we need to implement.</p>
         <h4>Name</h4>
-        <input class="first-name" type="text" name="name" placeholder="First" />
-        <input type="text" name="name" placeholder="Last" />
+        <input class="first-name" type="text" id="fname" name="fname" placeholder="First" />
+        <input type="text" id="lname" name="lname" placeholder="Last" />
         <h4>Email<span>*</span></h4>
-        <input type="text"/>
+        <input type="text" id="email" name="email"/>
         <h4>How satisfied were you with:<span>*</span></h4>
         <table>
           <tr>
@@ -129,42 +130,42 @@
           </tr>
           <tr>
             <td class="first-col">Key point #1</td>
-            <td><input type="radio" value="none" name="point#1" /></td>
-            <td><input type="radio" value="none" name="point#1" /></td> 
-            <td><input type="radio" value="none" name="point#1" /></td>
-            <td><input type="radio" value="none" name="point#1" /></td>
+            <td><input type="radio" value="Very Satisfied" id="point1" name="point1" /></td>
+            <td><input type="radio" value="Satisfied" id="point1" name="point1" /></td> 
+            <td><input type="radio" value="Unsatisfied" id="point1" name="point1" /></td>
+            <td><input type="radio" value="Very Unsatisfied" id="point1" name="point1" /></td>
           </tr>
           <tr>
             <td class="first-col">Key point #2</td>
-            <td><input type="radio" value="none" name="point#2" /></td>
-            <td><input type="radio" value="none" name="point#2" /></td>
-            <td><input type="radio" value="none" name="point#2" /></td>
-            <td><input type="radio" value="none" name="point#2" /></td>
+            <td><input type="radio" value="Very Satisfied" name="point2" /></td>
+            <td><input type="radio" value="Satisfied" name="point2" /></td>
+            <td><input type="radio" value="Unsatisfied" name="point2" /></td>
+            <td><input type="radio" value="Very Unsatisfied" name="point2" /></td>
           </tr>
           <tr>
             <td class="first-col">Key point #3</td>
-            <td><input type="radio" value="none" name="point#3" /></td>
-            <td><input type="radio" value="none" name="point#3" /></td>
-            <td><input type="radio" value="none" name="point#3" /></td>
-            <td><input type="radio" value="none" name="point#3" /></td>
+            <td><input type="radio" value="Very Satisfied" name="point3" /></td>
+            <td><input type="radio" value="Satisfied" name="point3" /></td>
+            <td><input type="radio" value="Unsatisfied" name="point3" /></td>
+            <td><input type="radio" value="Very Unsatisfied" name="point3" /></td>
           </tr>
           <tr>
             <td class="first-col">Key point #4</td>
-            <td><input type="radio" value="none" name="point#4" /></td>
-            <td><input type="radio" value="none" name="point#4" /></td>
-            <td><input type="radio" value="none" name="point#4" /></td>
-            <td><input type="radio" value="none" name="point#4" /></td>
+            <td><input type="radio" value="Very Satisfied" name="point4" /></td>
+            <td><input type="radio" value="Satisfied" name="point4" /></td>
+            <td><input type="radio" value="Unsatisfied" name="point4" /></td>
+            <td><input type="radio" value="Very Unsatisfied" name="point4" /></td>
           </tr>
           <tr>
             <td class="first-col">Key point #5</td>
-            <td><input type="radio" value="none" name="point#5" /></td>
-            <td><input type="radio" value="none" name="point#5" /></td>
-            <td><input type="radio" value="none" name="point#5" /></td>
-            <td><input type="radio" value="none" name="point#5" /></td>
+            <td><input type="radio" value="Very Satisfied" name="point5" /></td>
+            <td><input type="radio" value="Satisfied" name="point5" /></td>
+            <td><input type="radio" value="Unsatisfied" name="point5" /></td>
+            <td><input type="radio" value="Very Unsatisfied" name="point5" /></td>
           </tr>
         </table>
         <h4>Feel free to add any other comments or suggestions:</h4>
-        <textarea rows="5"></textarea>
+        <textarea id="comment" name="comment" rows="5"></textarea>
         <small>* The information given within the Feedback Form will be used for service improvement only and are strictly confidential.</small>
         <div class="btn-block">
           <button type="submit" href="/">Send Feedback</button>

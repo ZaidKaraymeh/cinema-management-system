@@ -25,8 +25,8 @@ class Hall(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     #venue = models.ForeignKey("core.Venue", on_delete=models.CASCADE)
 
-    seats = models.ManyToManyField("core.Seat")
-    slots = models.ManyToManyField("core.Slot")
+    seats = models.ManyToManyField("core.Seat", blank=True)
+    slots = models.ManyToManyField("core.Slot", blank=True)
 
     name = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -141,8 +141,8 @@ class MovieSchedule(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
-    hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
+    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE, blank=True)
+    hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE, blank=True)
     slot = models.ForeignKey("core.Slot", on_delete=models.CASCADE, null=True)
     #playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 

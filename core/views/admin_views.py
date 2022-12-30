@@ -111,7 +111,7 @@ def schedule_movie(request):
             hall = movie_schedule.hall.slots.add(movie_schedule.slot)
             movie_schedule.save()
             messages.success(
-                request, f"{movie_schedule.movie.name} has been scheduled successfuly!")
+                request, f"{movie_schedule.movie.title} has been scheduled successfuly!")
             return redirect('list_schedule_movies')
         else:
             print("form is not valid")
@@ -127,6 +127,13 @@ def schedule_movie(request):
 
     return render(request, 'admin/schedule_movie.html', context)
 
+
+def delete_movie_schedule(request, schedule_id):
+    schedule = MovieSchedule.objects.get(id=schedule_id)
+    schedule.delete()
+    messages.error(request, f"{schedule.movie.name} has been Deleted successfuly!")
+
+    return redirect('list_movies')
 
 def slots_available_json(request, hall_id, date):
     hall = Hall.objects.get(id=hall_id)
