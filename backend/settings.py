@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-!!-!wx3%to%_w7m%(oy(=c!ofzjb4f$ve)6ejh94s7h=5_)xjf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = "/"
 
@@ -170,3 +170,6 @@ CLOUDINARY_STORAGE = {
     "API_KEY": "293651895622711",
     "API_SECRET": "VWoDKs96pCdN1yBQRfXIWNm7XH4"
 }
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')

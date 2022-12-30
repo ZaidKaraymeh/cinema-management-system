@@ -1,0 +1,88 @@
+/* Social media icons */
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+*  {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+    --nav-height: 70px;
+  }
+  
+body::before {
+  /* --nav-height: 70px; */
+  display:block;
+  content: '';
+  height: var(--nav-height);
+}
+
+#main{
+  min-height:80vh;
+}
+
+
+.alert-cstm {
+  margin-top: calc(var(--nav-height) + 50);
+}
+
+/* #id_birth_day, #id_birth_month, #id_birth_year {
+  min-width: 100% !important;
+} */
+
+/* #div_id_birth div  > * {
+  width: 33%;
+} */
+#div_id_birth div {
+  display: flex;
+  align-self: center;
+  
+}
+/* #div_id_birth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+} */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.card-movie:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+footer {
+  padding: 15px 0;
+}
+
+main {
+  margin-top: 40px;
+}
+
+i.fa-2x{
+  color: #FFFFFF;
+}
+
+.footer-item:not(:first-child) {
+  margin-left: 10px;
+  padding-left: 20px;
+  border-left: 2px solid #FFFFFF;
+}
