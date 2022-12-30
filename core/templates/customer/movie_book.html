@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% block style %}
+{% extends 'base.html' %} {% block style %} 
 <style>
   .layout {
     display: flex;
@@ -83,8 +82,9 @@
     box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
   }
 </style>
-{% endblock style %}
-{% block content %}
+{% endblock style %} {% block content %}
+
+{% load tags %}
 <div class="layout">
   <div class="movie-container my-4 h1">
     <label>Choose your seat</label>
@@ -104,88 +104,61 @@
       <small>Occupied</small>
     </li>
   </ul>
-
   <div class="seats-container">
     <div class="screen ms-auto"></div>
-    
-    <div class="d-flex">
-      <div class="fs-3 mx-2">A</div>
-      <div class="seats-row ms-auto">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="fs-3 mx-2">A</div>
-      <div class="seats-row ms-auto">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="fs-3 mx-2">B</div>
-      <div class="seats-row ms-auto">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="fs-3 mx-2">B</div>
-      <div class="seats-row ms-auto">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="fs-3 mx-2">C</div>
-      <div class="seats-row ms-auto">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="fs-3 mx-2">C</div>
-      <div class="seats-row ms-auto">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
-  </div>
 
-{% endblock content %}
+    {% for row in 'AABBCC' %}
+    <div class="d-flex">
+      <div class="fs-3 mx-2">{{row}}</div>
+      <div class="seats-row">
+        {% for seat in movie_schedule.hall.seats.all|in_row:forloop.counter %}
+        <div 
+          id="{{seat.id}}" onclick="toggleSeat(this)" class="seat {% if seat in movie_schedule.reserved_seats.all or movie_schedule.selected_seats.all %} occupied {% endif %}"
+        ></div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+    <a href="#asdasdasd" class="btn btn-primary d-block" onclick="proceedToCheckout()">
+      Proceed to Checkout
+
+    </a>
+  </div>
+  
+</div>
+  {% endblock content %}
+  {% block scripts %}
+  <script>
+    const selectedSeats = [];
+    const toggleSeat = (seat) => {
+      if (seat.classList.contains('occupied')) {
+        return;
+      }
+      seat.classList.toggle('selected');
+      if (seat.classList.contains('selected')) {
+        selectedSeats.push(seat.id);
+      } else {
+        selectedSeats.splice(selectedSeats.indexOf(seat.id), 1);
+      }
+      console.log(selectedSeats);
+    };
+
+    const proceedToCheckout = () => {
+      if (selectedSeats.length === 0) {
+        alert('Please select at least one seat');
+        return;
+      }
+      const url = new URL(window.location.href);
+      const movieScheduleId = url.searchParams.get('movie_schedule_id');
+      const urlParams = new URLSearchParams();
+
+
+
+      const data = JSON.stringify(selectedSeats);
+      urlParams.append('movie_schedule_id', movieScheduleId);
+      urlParams.append('seats', selectedSeats);
+      window.location.href = `/customer/checkout?${urlParams.toString()}`;
+    };
+  </script>
+
+  {% endblock scripts %}

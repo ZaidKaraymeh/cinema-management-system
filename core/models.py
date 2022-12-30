@@ -136,7 +136,7 @@ class Movie(models.Model):
     
 
 
-
+# schedule.hall.seats.all()
 class MovieSchedule(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -144,20 +144,23 @@ class MovieSchedule(models.Model):
     movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE, blank=True)
     hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE, blank=True)
     slot = models.ForeignKey("core.Slot", on_delete=models.CASCADE, null=True)
+    reserved_seats = models.ManyToManyField("core.Seat", blank=True)
+    selected_seats = models.ManyToManyField("core.Seat", blank=True, related_name="selected_seats")
     #playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
 
+"""
+
+"""
 class Ticket(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     movie_schedule = models.ForeignKey("core.MovieSchedule", on_delete=models.CASCADE)
-    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
-    hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
     seat = models.ForeignKey("core.Seat", on_delete=models.CASCADE)
 
     price = models.DecimalField(max_digits=6, decimal_places=3)

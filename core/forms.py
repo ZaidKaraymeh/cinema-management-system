@@ -67,4 +67,9 @@ class MovieScheduleForm(forms.ModelForm):
         }
     
 
+class HallForm(forms.ModelForm):
+
+    class Meta:
+        model = Hall
+        fields = ['name']
         
