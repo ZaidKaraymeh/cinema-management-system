@@ -47,6 +47,7 @@ urlpatterns = [
     
     path('', include('core.urls.urls')),
     path('', include('core.urls.admin_urls')),
+    path('', include('core.urls.customer_urls')),
     #path('profile/', user_views.profile, name="profile"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

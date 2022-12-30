@@ -109,6 +109,19 @@ DATABASES = {
 # db_config['ENGINE'] = 'django.db.backends.postgresql'
 # DATABASES = {
 #     "default": db_config
+# import dj_database_url
+# DATABASES = {'default': dj_database_url.config(
+#     default='postgresql://postgres:TestCase_12@cinema.cyasctqrrxl8.me-south-1.rds.amazonaws.com:5432/cinema')}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': "postgres",
+#         'USER': "postgres",
+#         'PASSWORD': "TestCase_12",
+#         'HOST': "cinema.cyasctqrrxl8.me-south-1.rds.amazonaws.com",
+#         'PORT': '5432',
+#     }   
 # }
 
 # Password validation
