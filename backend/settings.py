@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'payments',
     'django_prometheus',
     'cloudinary',
-    "corsheaders",
 ]
 
 MIDDLEWARE = [
