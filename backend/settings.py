@@ -96,19 +96,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# import dj_database_url
-# DATABASES = {'default': dj_database_url.config(
-#     default='postgresql://postgres:ngNG0q1yYg3l6JJf5NzM@containers-us-west-56.railway.app:6324/railway')}
-
 import dj_database_url
-#SECURE_SSL_REDIRECT = True
+DATABASES = {'default': dj_database_url.config(
+    default='postgresql://postgres:ngNG0q1yYg3l6JJf5NzM@containers-us-west-56.railway.app:6324/railway')}
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-db_config = dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
-db_config['ENGINE'] = 'django.db.backends.postgresql'
-DATABASES = {
-    "default": db_config
-}
+# import dj_database_url
+# #SECURE_SSL_REDIRECT = True
+
+# DATABASE_URL = os.getenv("DATABASE_URL")
+# db_config = dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
+# db_config['ENGINE'] = 'django.db.backends.postgresql'
+# DATABASES = {
+#     "default": db_config
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
