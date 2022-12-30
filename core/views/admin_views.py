@@ -8,6 +8,7 @@ from ..utils.helpers import *
 from ..models import *
 import json
 from django.http import HttpResponse
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 
@@ -30,7 +31,7 @@ def list_movies(request):
 
     return render(request, 'admin/movies.html', context)
 
-
+@staff_member_required()
 def add_movie(request):
     # Make sure that the user is admin
     if request.user.is_authenticated and request.user.user_type == "ADM":
@@ -135,6 +136,14 @@ def delete_movie_schedule(request, schedule_id):
 
     return redirect('list_movies')
 
+# delete hall
+def delete_hall(request, hall_id):
+    hall = Hall.objects.get(id=hall_id)
+    hall.delete()
+    messages.error(request, f"{hall.name} has been Deleted successfuly!")
+
+    return redirect('list_halls')
+
 def slots_available_json(request, hall_id, date):
     hall = Hall.objects.get(id=hall_id)
 
@@ -169,3 +178,48 @@ def list_employees(request):
 # Todo 
 def view_customer_ticket_history(request):
     pass
+
+
+def list_halls(request):
+
+    halls = Hall.objects.all()
+    paginator = Paginator(halls, 10)
+    page_number = request.GET.get('page')
+    halls = paginator.get_page(page_number)
+
+    context = {
+        'halls': halls,
+    }
+
+    return render(request, 'admin/list_halls.html', context)
+
+def add_hall(request):
+
+    classes = ['A', 'A', 'B', 'B', 'C', 'C']
+
+    if request.method == 'POST':
+        hall_form = HallForm(request.POST)
+        if hall_form.is_valid():
+            hall = hall_form.save(commit=False)
+            hall.save()
+            for obj in classes:
+                for count in range(1, 9):
+                    seat = Seat.objects.create(
+                        name=f"{obj}{count}",
+                        type = "VIP" if obj == "A" else "NRM"
+                    )
+                    hall.save()
+                    seat.save()
+                    hall.seats.add(seat)
+            messages.success(
+                request, f"{hall.name} has been added successfuly!")
+            return redirect('list_halls')
+    else:
+        hall_form = HallForm()
+    
+    context = {
+        'form': hall_form,
+    }
+
+    return render(request, 'admin/add_hall.html', context)
+

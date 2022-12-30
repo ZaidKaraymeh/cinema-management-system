@@ -19,4 +19,8 @@ urlpatterns = [
          admin_views.list_customers, name="list_customers"),
     path('staff/employees',
          admin_views.list_employees, name="list_employees"),
+    
+
+    path('staff/halls', admin_views.list_halls, name="list_halls"),
+    path('staff/halls/add', admin_views.add_hall, name='add_hall')
 ]

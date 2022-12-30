@@ -6,7 +6,19 @@ from ..utils.helpers import *
 from ..models import *
 
 # Customer Movie Booking
-def customer_movie_booking(request):
+def customer_movie_booking(request, schedule_id):
+    movie_schedule = MovieSchedule.objects.get(id=schedule_id)
+
+    context = {
+        'movie_schedule': movie_schedule
+    }
+
+
+    return render(request, 'customer/movie_book.html', context)
+
+
+
+
 #def customer_movie_booking(request, movie_id):
     # movie = Movie.objects.get(id=movie_id)
     # if request.method == 'POST':
@@ -26,4 +38,3 @@ def customer_movie_booking(request):
     #     'movie': movie
     # }
     #return render(request, 'customer/movie_booking.html', context)
-    return render(request, 'customer/movie_book.html')
