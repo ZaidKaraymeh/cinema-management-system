@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'payments',
     'django_prometheus',
     'cloudinary',
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -200,5 +202,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
 
 

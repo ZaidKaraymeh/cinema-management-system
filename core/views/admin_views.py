@@ -10,6 +10,7 @@ import json
 from django.http import HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 
+from rest_framework.decorators import api_view
 
 
 def dashboard(request):

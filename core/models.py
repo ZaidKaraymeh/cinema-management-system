@@ -160,13 +160,9 @@ class Ticket(models.Model):
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     movie_schedule = models.ForeignKey("core.MovieSchedule", on_delete=models.CASCADE)
-    seat = models.ForeignKey("core.Seat", on_delete=models.CASCADE)
+    seat = models.ForeignKey("core.Seat", on_delete=models.CASCADE, null=True)
 
-    price = models.DecimalField(max_digits=6, decimal_places=3)
-    playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
-
-    
-
+    price = models.DecimalField(max_digits=6, decimal_places=3, default= Decimal(0))
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -175,25 +171,20 @@ class Seat(models.Model):
 
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-
     #hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE)
-
     name = models.CharField(max_length=20)
-    
     NORMAL = 'NRM'
     VIP = "VIP"
     SEAT_TYPE_CHOICES = [
         (NORMAL, "Normal"),
         (VIP, "VIP"),
     ]
-
     type = models.CharField(
         max_length=8,
         choices=SEAT_TYPE_CHOICES,
         default=NORMAL,
 
     )
-
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -201,11 +192,14 @@ class Balance(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    balance = models.DecimalField(max_digits=6, decimal_places=3, default=0, null=True)
+    balance = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal('0'))
 
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.email}  {self.balance}"
 
 
 class Topup(models.Model):
@@ -225,7 +219,7 @@ class Transaction(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(CustomUser,
                              on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=6, decimal_places=3)
+    amount = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal('0'))
     
     tickets = models.ManyToManyField("core.Ticket")
 
@@ -247,24 +241,24 @@ class Transaction(models.Model):
     #     default=BENEFIT,
     # )
 
-    discount =  models.ForeignKey("core.Coupon", on_delete=models.CASCADE)
+    # discount =  models.ForeignKey("core.Coupon", on_delete=models.CASCADE)
 
-    @property
-    def final_price(self):
-        """
-            VIP tickets are 1.5 more than normal tickets from Decimal(1.5) 
-        """
+    # @property
+    # def final_price(self):
+    #     """
+    #         VIP tickets are 1.5 more than normal tickets from Decimal(1.5) 
+    #     """
 
-        final : Decimal = Decimal('0')
+    #     final : Decimal = Decimal('0')
 
-        for movie in self.movies.all():
+    #     for movie in self.movies.all():
 
-            if movie.seat.type == "VIP":
-                final += movie.price - movie.price * Decimal(self.discount.discount/100) * Decimal(1.5)
-            else:
-                final += movie.price - movie.price * Decimal(self.discount.discount/100)
+    #         if movie.seat.type == "VIP":
+    #             final += movie.price - movie.price * Decimal(self.discount.discount/100) * Decimal(1.5)
+    #         else:
+    #             final += movie.price - movie.price * Decimal(self.discount.discount/100)
         
-        return round(final, 3)
+    #     return round(final, 3)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -301,18 +295,18 @@ class Genre(models.Model):
         return self.name
 
 
-class Coupon(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+# class Coupon(models.Model):
+#     id = models.UUIDField(
+#         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     
-    code = models.CharField(max_length=20)
-    discount = models.IntegerField(
-        default=0,
-        validators=[
-            MaxValueValidator(100),
-            MinValueValidator(0)
-        ])
-    count = models.IntegerField(default=0)
-    ends_at = models.DateTimeField(auto_now_add=False, auto_now=False)
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+#     code = models.CharField(max_length=20)
+#     discount = models.IntegerField(
+#         default=0,
+#         validators=[
+#             MaxValueValidator(100),
+#             MinValueValidator(0)
+#         ])
+#     count = models.IntegerField(default=0)
+#     ends_at = models.DateTimeField(auto_now_add=False, auto_now=False)
+#     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)

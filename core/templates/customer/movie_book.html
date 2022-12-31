@@ -233,11 +233,11 @@
       const url = new URL(window.location.href);
       const movieSchedule = "{{movie_schedule.id}}";
       
-      var res = await fetch(`http://localhost:8000/staff/slots/${selectedValue}/${date.data}`, {
+      var res = await fetch(`http://localhost:8000/ticket/${movieSchedule}/{{request.user.id}}`, {
         method: "POST",
-        data: JSON.stringify(selectedSeats),
+        body: JSON.stringify(selectedSeats),
         headers: {
-          Accept: "application/json",
+          'Content-Type': 'application/json'
         },
       }) 
       .then((response) => response.json())
