@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'dashboard_base.html' %}
 {% load crispy_forms_tags %}
-{% block content %}
+{% block content_admin %}
 
 <div class="" style="" >
     {% if schedule_form.errors %}
@@ -41,7 +41,7 @@
     </form>
 </div>
 
-{% endblock content %}
+{% endblock content_admin %}
 
 {% block scripts %}
 <script>

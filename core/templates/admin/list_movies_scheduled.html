@@ -28,20 +28,31 @@
         <th class="text-center">{{movie.slot.date_reserved}}</th>
         <th class="text-center">{{movie.hall.name}}</th>
         <th class="text-center d-flex justify-content-center gap-2">
-          <a
-            class="btn btn-primary text-center"
-            href="#edit"
-          >
-            Edit Movie Schedule
-          </a>
-          <button
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteModal{{forloop.counter}}"
-            class="btn btn-danger"
-          >
-            Delete Movie Schedule
-          </button>
+            <div class="dropdown">
+            <a
+              class="btn btn-primary dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Actions
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'edit_movie' movie.id %}">Edit Movie</a></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal{{forloop.counter}}"
+                  >Delete Movie</a
+                >
+              </li>
+            </ul>
+          </div>
         </th>
       </tr>
       <!-- Modal -->
@@ -77,7 +88,7 @@
                 Close
               </button>
               <a
-                href="#"
+                href="{% url 'delete_movie_schedule' movie.id %}"
                 class="btn btn-primary"
                 >Delete</a
               >

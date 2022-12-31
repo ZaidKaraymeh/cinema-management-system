@@ -133,9 +133,9 @@ def schedule_movie(request):
 def delete_movie_schedule(request, schedule_id):
     schedule = MovieSchedule.objects.get(id=schedule_id)
     schedule.delete()
-    messages.error(request, f"{schedule.movie.name} has been Deleted successfuly!")
+    messages.error(request, f"{schedule.movie.title} has been Deleted successfuly!")
 
-    return redirect('list_movies')
+    return redirect('list_schedule_movies')
 
 # delete hall
 def delete_hall(request, hall_id):
@@ -222,4 +222,3 @@ def add_hall(request):
     }
 
     return render(request, 'admin/add_hall.html', context)
-

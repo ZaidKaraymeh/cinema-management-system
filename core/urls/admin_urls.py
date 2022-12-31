@@ -13,6 +13,8 @@ urlpatterns = [
     path('staff/schedules/add', admin_views.schedule_movie, name="schedule_movie"),
     path('staff/schedules/', admin_views.list_schedule_movies,
          name="list_schedule_movies"),
+    path('staff/schedules/delete/<str:schedule_id>', admin_views.delete_movie_schedule,
+         name="delete_movie_schedule"),
     path('staff/slots/<str:hall_id>/<str:date>',
          admin_views.slots_available_json, name="slots_available_json"),
     path('staff/customers',
