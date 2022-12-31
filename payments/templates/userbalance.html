@@ -137,18 +137,19 @@
             </style>
         </head>
           <body>
-              <form action="/" class="decor">
+              <form action="/userbalance/" method="post" class="decor">
+                {% csrf_token %}
                 <div class="form-left-decoration"></div>
                 <div class="form-right-decoration"></div>
                 <div class="circle"></div>
                 <div class="form-inner">
                   <h1 style="text-align:center">Current Balance</h1>
                     <br /><br />
-                    <label>Balance:</label>
-                      <input  readonly/>
+                    <label>Balance: {{form.balance}}</label>
+                      <input type="number" id="balance" name="balance" readonly/>
                       <br /><br />            
-                    <label>Total Amount:</label>
-                      <input   readonly/>
+                    <label>Total Amount: {{form.amount}}</label>
+                      <input type="number" id="amount" name="amount" readonly/>
                       <br />                                            
                 </div>
               </form>

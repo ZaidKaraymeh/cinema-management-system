@@ -6,133 +6,73 @@
         {{ form.errors }}
     </div>
   {% endif %}
-  <div class="container">
-<html>
-    <head>
-        <title>Credit Card Checkout Form</title>
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-            <style>
-            body {
-                background: #e9e9e7;
-            }
-            
-            p, a, label {
-                font-size: 14px;
-                text-transform: capitalize;
-                color: #070707;
-            }
-            
-            .card-checkout {
-                max-width: 500px;
-                margin: 100px auto;
-                background: #fff;
-                box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-                border-radius: 4px;
-                overflow: hidden;
-            }
-            .card-checkout > .heading {
-                display: inline-block;
-                background: #fff;
-                padding: 24px 32px 0 48px;
-                text-transform: capitalize;
-                font-family: "Lato", sans-serif;
-                letter-spacing: 0.08em;
-            }
-            .card-checkout > .heading > .icon {
-                color: #4692b7;
-                font-size: 1.5em;
-            }
-            .card-checkout > .content {
-                padding: 24px 32px 32px 40px;
-            }
-            
-            .input-group {
-                display: flex;
-                border-radius: 8px;
-                border: 2px solid #ccd7e0;
-                background: #fdfdfc;
-                padding: 0;
-                font-weight: normal;
-                color: #345;
-                width: 270px;
-            }
-            
-            .input-group > .form-control {
-                width: 100%;
-                padding: 12px;
-            }
-            
-            .form-control {
-                border-radius: 16px;
-                border: none;
-                background: #fdfdfc;
-                padding: 8px;
-                font-weight: normal;
-                color: #345;
-            }
-            
-            .button {
-                margin-bottom: 0;
-                font-weight: normal;
-                text-align: center;
-                background-image: none;
-                border: 1px solid transparent;
-                padding: 12px 12px;
-                font-size: 14px;
-                border-radius: 12px;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                color: #fff;
-                background: #a7d0e2;
-                letter-spacing: 0.08em;
-            }
-            .button.-primary {
-                padding: 8px;
-                background: #5ab45a;
-            }
-            </style>
-            <script>
-                window.console = window.console || function(t) {};
-            </script>
-            <script>
-             {
-                window.parent.postMessage("resize", "*");
-                }
-            </script>
-  </head>
-  
-  <body translate="no" data-new-gr-c-s-check-loaded="14.1026.0" data-gr-ext-installed="">
-        <div class="card-checkout">
-            <div class="heading">
-                <h3>payment details</h3>
-                <label>credit card information</label>
-                <i class="icon ion-card"></i>
-            </div>
-            <div class="content">
-                <label>name on the card</label>
-                <div class="input-group">
-                    <input class="form-control" type="text">
-                </div>
-                <label>card number</label>
-                <div class="input-group">
-                    <input class="form-control" type="text">
-                </div>
-                <label>expiration date</label>
-                <div class="input-group">
-                    <input class="form-control" type="text">
-                </div>
-                <label>ccv/cvv</label>
-                <div class="input-group">
-                    <input class="form-control" type="text">
-                </div>
-                <br>
-                <button type="submit"  class="button"><a style="text-decoration: none" href="{% url 'payment_successful' %}">Place Your Order</a></button>
-            </div>
+ 
+{% block title%} Checkout - My Cart{% endblock %}
+<div class="container">
+    <div class="col my-4">
+        <h2>Step 1 - Ticket Booking - Review Your Cart Items</h2>
+        <div id="items">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Movie 1
+                    <span class="badge badge-primary badge-pill">4</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Movie 2
+                    <span class="badge badge-primary badge-pill">1</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Movie 3
+                    <span class="badge badge-primary badge-pill">6</span>
+                </li>
+            </ul>
         </div>
-  </body>
-</html>
+    </div>
+    <div class="col my-4">
+        <h2>Step 2 - Enter Card Details:</h2>
+        <form>
+            <div class="col-lg-6 px-5 py-4">
+
+                <!-- <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Payment</h3> -->
+
+                <form class="mb-5">
+
+                  <div class="form-outline mb-5">
+                    <input type="text" id="typeText" class="form-control form-control-lg" size="17"
+                      value="1234 5678 1234 5678" minlength="19" maxlength="19" />
+                    <label class="form-label" for="typeText">Card Number</label>
+                  </div>
+
+                  <div class="form-outline mb-5">
+                    <input type="text" id="typeName" class="form-control form-control-lg" size="17"
+                      value="Kinza" />
+                    <label class="form-label" for="typeName">Name on card</label>
+                  </div>
+                  <p class="mb-5">Enter name as it appears on card. DO NOT include any special characters or punctuations <a
+                    href="#!">GOT IT</a>.</p>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-5">
+                      <div class="form-outline">
+                        <input type="text" id="typeExp" class="form-control form-control-lg" value="01/22"
+                          size="7" id="exp" minlength="7" maxlength="7" />
+                        <label class="form-label" for="typeExp">Expiration</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                      <div class="form-outline">
+                        <input type="password" id="typeText" class="form-control form-control-lg"
+                          value="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                        <label class="form-label" for="typeText">Cvv</label>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-block btn-lg">Pay</button>
+                  <h5 class="fw-bold mb-5" style="position: absolute; bottom: 0;">
+                    <a href="#!"><i class="fas fa-angle-left me-2"></i>Back to Movie Selection</a>
+                  </h5>
+        </form>
+    </div>
 </div>
-</div>
+
 {%endblock content %}

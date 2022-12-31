@@ -1,27 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Contact, feedback
-# from .forms import TicketPurchaseForm
-# from .forms import balance
+from core.models import Balance, Ticket
+# from .forms import PaymentMethod
 
-# from .forms import TicketForm
-from .forms import PaymentMethod
-from .backend import process_payment
-
-def purchase_ticket(request):
-    # if request.method == 'POST':
-    #     form = TicketForm(request.POST)
-    #     if form.is_valid():
-    #         # Process the payment
-    #         amount = form.cleaned_data['price']
-    #         transaction_id = process_payment(amount)
-    #         form.save()
-    #         # Create a fake payment transaction
-    #         transaction_id = '12345'
-    #         form.save()
-    #         return redirect('ticket_confirmation', transaction_id)
-    # else:
-    #     form = TicketForm()
-    return render(request, 'purchase_ticket.html')
+def ticket_detail(request, ticket_id):
+    ticket = get_object_or_404(Ticket, pk=ticket_id)
+    return render(request, 'ticket_detail.html', {'ticket': ticket})
 
 def ticket_confirmation(request, transaction_id):
     return render(request, 'ticket_confirmation.html', {'transaction_id': transaction_id})
@@ -30,6 +14,15 @@ def payment_successful(request):
     return render(request, 'payment_successful.html')
 
 def userbalance(request):
+    if request.method=="POST":
+        id=request.POST.get('id') 
+        user=request.POST.get('user') 
+        balance=request.POST.get('balance') 
+        # amount=request.POST.get('amount')
+        print(id, user, balance)
+        user=Balance(id=id, user=user, balance=balance)
+        user.save()
+
     # # retrieve user and amount from request
     # user = request.user
     # amount = request.POST.get('amount')
@@ -82,20 +75,11 @@ def contact(request):
         contact.save()
     return render(request, 'contact.html')
 
-def book_ticket(request):
-    return render(request, 'book_ticket.html')
-
-
 def add_funds(request):
-    # retrieve user and amount from request
     user = request.user
     amount = request.POST.get('amount')
-
-    # update user balance
     # user.balance += amount
     user.save()
-
-    # render response
     return render(request, 'add_funds.html', {
         # 'user_balance': user.balance,
         'amount': amount,
@@ -107,22 +91,15 @@ def make_payment(request):
     amount = request.POST.get('amount')
     payment_method = request.POST.get('payment_method')
 
-    # make payment
     if payment_method == 'credit_card':
-        # make payment using credit card
         pass
     elif payment_method == 'paypal':
-        # make payment using PayPal
         pass
     else:
-        # invalid payment method
         pass
-
     # update user balance
     # user.balance -= amount
     user.save()
-
-    # render response
     return render(request, 'make_payment.html', {
         # 'user_balance': user.balance,
         'amount': amount,

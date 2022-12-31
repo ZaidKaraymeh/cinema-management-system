@@ -1,6 +1,4 @@
 from django import forms
-# from .models import Ticket
-
 
 # Defining the user class with a balance attribute
 class balance(forms.Form):
@@ -33,39 +31,39 @@ class balance(forms.Form):
       return False
 
 
-class PaymentMethod:
-    def __init__(self, name, account_number, routing_number):
-        self.name = name
-        self.account_number = account_number
-        self.routing_number = routing_number
+# class PaymentMethod:
+#     def __init__(self, name, account_number, routing_number):
+#         self.name = name
+#         self.account_number = account_number
+#         self.routing_number = routing_number
     
-    def process_payment(self, amount):
-        # print(f"Processing payment of {amount} using {self.}")
-        print(f"Processing payment of {amount} BD")
+#     def process_payment(self, amount):
+#         print(f"Processing payment of {amount} using {self.account_number}")
+#         print(f"Processing payment of {amount} BD")
 
-class CreditCard(PaymentMethod):
-    def __init__(self, name, card_number, expiration_date, cvv):
-        self.card_number = card_number
-        self.expiration_date = expiration_date
-        self.cvv = cvv
-        super().__init__(name, card_number, None)
+# class CreditCard(PaymentMethod):
+#     def __init__(self, name, card_number, expiration_date, cvv):
+#         self.card_number = card_number
+#         self.expiration_date = expiration_date
+#         self.cvv = cvv
+#         super().__init__(name, card_number, None)
     
-    def process_payment(self, amount):
-        # Validate card details before processing payment
-        if self.is_valid():
-            super().process_payment(amount)
-        else:
-            print("Invalid card details. Payment failed.")
+#     def process_payment(self, amount):
+#         # Validate card details before processing payment
+#         if self.is_valid():
+#             super().process_payment(amount)
+#         else:
+#             print("Invalid card details. Payment failed.")
     
-    def is_valid(self):
-        return True
+#     def is_valid(self):
+#         return True
 
-class BankAccount(PaymentMethod):
-    def __init__(self, name, account_number, routing_number):
-        super().__init__(name, account_number, routing_number)
+# class BankAccount(PaymentMethod):
+#     def __init__(self, name, account_number, routing_number):
+#         super().__init__(name, account_number, routing_number)
 
-credit_card = CreditCard("XX", "1234 5678 1234 5678", "01/2023", "123")
-credit_card.process_payment(50)
+# credit_card = CreditCard("XX", "1234 5678 1234 5678", "01/2023", "123")
+# credit_card.process_payment(50)
 
-bank_account = BankAccount("XX", "1234-5678", "123456789")
-bank_account.process_payment(100)
+# bank_account = BankAccount("XX", "1234-5678", "123456789")
+# bank_account.process_payment(100)
