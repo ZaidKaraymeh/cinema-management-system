@@ -64,8 +64,8 @@ class BankAccount(PaymentMethod):
     def __init__(self, name, account_number, routing_number):
         super().__init__(name, account_number, routing_number)
 
-credit_card = CreditCard("XX", "1234 5678 1234 5678", "01/2023", "123")
-credit_card.process_payment(50)
+# credit_card = CreditCard("XX", "1234 5678 1234 5678", "01/2023", "123")
+# credit_card.process_payment(50)
 
-bank_account = BankAccount("XX", "1234-5678", "123456789")
-bank_account.process_payment(100)
+# bank_account = BankAccount("XX", "1234-5678", "123456789")
+# bank_account.process_payment(100)
