@@ -195,7 +195,7 @@ def list_halls(request):
 
 def add_hall(request):
 
-    classes = ['A', 'A', 'B', 'B', 'C', 'C']
+    classes = ['A', 'B', 'C', 'D', 'E', 'F']
 
     if request.method == 'POST':
         hall_form = HallForm(request.POST)
@@ -206,11 +206,13 @@ def add_hall(request):
                 for count in range(1, 9):
                     seat = Seat.objects.create(
                         name=f"{obj}{count}",
-                        type = "VIP" if obj == "A" else "NRM"
+                        type = "VIP" if obj == "A" or obj == "B" else "NRM"
                     )
                     hall.save()
                     seat.save()
+                    print(seat.name + '\t')
                     hall.seats.add(seat)
+                print('\n')
             messages.success(
                 request, f"{hall.name} has been added successfuly!")
             return redirect('list_halls')

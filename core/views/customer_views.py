@@ -8,10 +8,12 @@ from ..models import *
 # Customer Movie Booking
 def customer_movie_booking(request, schedule_id):
     movie_schedule = MovieSchedule.objects.get(id=schedule_id)
+    ordered_seats = movie_schedule.hall.seats.all().order_by('name')
     balance, created = Balance.objects.get_or_create(user=request.user)
 
     context = {
         'movie_schedule': movie_schedule,
+        'ordered_seats': ordered_seats,
         'balance': balance
     }
 

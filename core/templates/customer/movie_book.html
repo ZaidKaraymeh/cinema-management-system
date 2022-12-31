@@ -111,9 +111,9 @@
     <div class="d-flex">
       <div class="fs-3 mx-2">{{row}}</div>
       <div class="seats-row">
-        {% for seat in movie_schedule.hall.seats.all|in_row:forloop.counter %}
+        {% for seat in ordered_seats|in_row:forloop.counter %}
         <div 
-          id="{{seat.id}}" onclick="toggleSeat(this)" class="seat {% if seat in movie_schedule.reserved_seats.all or movie_schedule.selected_seats.all %} occupied {% endif %}"
+          data-type="{{seat.type}}" data-name="{{seat.name}}" data-price="{% if seat.type == 'VIP' %}4.5{% else %}3{%endif%}" id="{{seat.id}}" onclick="toggleSeat(this)" class="seat {% if seat in movie_schedule.reserved_seats.all or movie_schedule.selected_seats.all %} occupied {% endif %}"
         ></div>
         {% endfor %}
       </div>
@@ -121,8 +121,22 @@
     {% endfor %}
   </div>
 
-  
-  <a href="#asdasdasd" class="btn btn-primary d-block" onclick="proceedToCheckout()">
+  <div>
+    <!-- If no seats are selected -->
+    <div class="alert alert-danger" role="alert">
+      Please select at least one seat
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+    </ul>
+  </div>
+
+  <a href="#asdasdasd" class="btn btn-primary d-block disabled" onclick="proceedToCheckout()">
     Proceed to Checkout
   </a>
   
@@ -136,12 +150,24 @@
         return;
       }
       seat.classList.toggle('selected');
+      console.log(seat);
       if (seat.classList.contains('selected')) {
-        selectedSeats.push(seat.id);
+        selectedSeats.push({
+          id: seat.id,
+          type: seat.dataset.type,
+          price: seat.dataset.price,
+        });
       } else {
         selectedSeats.splice(selectedSeats.indexOf(seat.id), 1);
       }
       console.log(selectedSeats);
+      if(selectedSeats.length === 0) {
+        document.querySelector('.btn-primary').classList.add('disabled');
+        document.querySelector('.alert').style.visibility = 'visible';
+      } else {
+        document.querySelector('.btn-primary').classList.remove('disabled');
+        document.querySelector('.alert').style.visibility = 'hidden';
+      }
     };
 
     const proceedToCheckout = () => {
@@ -160,6 +186,8 @@
       urlParams.append('seats', selectedSeats);
       window.location.href = `/customer/checkout?${urlParams.toString()}`;
     };
+
+    // Event listener of 
   </script>
 
   {% endblock scripts %}
