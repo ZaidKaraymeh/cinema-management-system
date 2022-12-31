@@ -208,11 +208,8 @@ def add_hall(request):
                         name=f"{obj}{count}",
                         type = "VIP" if obj == "A" or obj == "B" else "NRM"
                     )
-                    hall.save()
                     seat.save()
-                    print(seat.name + '\t')
                     hall.seats.add(seat)
-                print('\n')
             messages.success(
                 request, f"{hall.name} has been added successfuly!")
             return redirect('list_halls')
