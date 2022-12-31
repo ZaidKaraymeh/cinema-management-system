@@ -105,7 +105,6 @@ def schedule_movie(request):
         slot_form = SlotForm(request.POST)
 
         if schedule_form.is_valid():
-            print("form is valid")
             movie_schedule = schedule_form.save(commit=False)
             movie_schedule.slot = Slot.objects.get(
                 id=slot_form['slots'].value()
@@ -115,9 +114,6 @@ def schedule_movie(request):
             messages.success(
                 request, f"{movie_schedule.movie.title} has been scheduled successfuly!")
             return redirect('list_schedule_movies')
-        else:
-            print("form is not valid")
-
     else:
         schedule_form = MovieScheduleForm(request.POST)
         slot_form = SlotForm()
@@ -128,6 +124,35 @@ def schedule_movie(request):
     }
 
     return render(request, 'admin/schedule_movie.html', context)
+
+#edit schedule movie
+def edit_schedule_movie(request, schedule_id):
+    schedule = MovieSchedule.objects.get(id=schedule_id)
+
+    if request.method == "POST":
+        schedule_form = MovieScheduleForm(request.POST, instance=schedule)
+        slot_form = SlotForm(request.POST)
+
+        if schedule_form.is_valid():
+            movie_schedule = schedule_form.save(commit=False)
+            movie_schedule.slot = Slot.objects.get(
+                id=slot_form['slots'].value()
+            )
+            hall = movie_schedule.hall.slots.add(movie_schedule.slot)
+            movie_schedule.save()
+            messages.info(
+                request, f"{movie_schedule.movie.title} has been Edited successfuly!")
+            return redirect('list_schedule_movies')
+    else:
+        schedule_form = MovieScheduleForm(instance=schedule)
+        slot_form = SlotForm()
+
+    context = {
+        'schedule_form': schedule_form,
+        'slot_form': slot_form,
+    }
+
+    return render(request, 'admin/edit_schedule_movie.html', context)
 
 
 def delete_movie_schedule(request, schedule_id):

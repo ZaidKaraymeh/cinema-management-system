@@ -11,6 +11,8 @@ urlpatterns = [
          admin_views.delete_movie, name="delete_movie"),
     path('staff/movies', admin_views.list_movies, name="list_movies"),
     path('staff/schedules/add', admin_views.schedule_movie, name="schedule_movie"),
+    path('staff/schedules/edit/<str:schedule_id>',
+         admin_views.edit_schedule_movie, name="edit_schedule_movie"),
     path('staff/schedules/', admin_views.list_schedule_movies,
          name="list_schedule_movies"),
     path('staff/schedules/delete/<str:schedule_id>', admin_views.delete_movie_schedule,
