@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block style %}
+<style>
+    .cardWrap {
+        /* width: 27em; */
+        margin: 3em auto;
+        color: #fff;
+        font-family: sans-serif;
+    }
+    .ticketCard {
+        background: linear-gradient(to bottom, #27272b 0%, #27272b 18%, #ecedef 18%, #ecedef 100%);
+        height: 20em;
+        float: left;
+        position: relative;
+        padding: 1em;
+        margin-top: 100px;
+    }
+    .cardLeft {
+        /* width: 16em; */
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    .cardRight {
+        /* width: 6.5em; */
+        border-left: 0.18em dashed #fff;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    .cardRight:before, .cardRight:after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 0.9em;
+        height: 0.9em;
+        background: #fff;
+        border-radius: 50%;
+        left: -0.5em;
+    }
+    .cardRight:before {
+        top: -0.4em;
+    }
+    .cardRight:after {
+        bottom: -0.4em;
+    }
+    h1 {
+        font-size: 1.1em;
+        margin-top: 0;
+    }
+    h1 span {
+        font-weight: normal;
+    }
+    .title, .name, .seat, .time {
+        text-transform: uppercase;
+        font-weight: normal;
+    }
+    .title h2, .name h2, .seat h2, .time h2 {
+        font-size: 0.9em;
+        color: #525252;
+        margin: 0;
+    }
+    .title span, .name span, .seat span, .time span {
+        font-size: 0.7em;
+        color: #a2aeae;
+    }
+    .title {
+        margin: 2em 0 0 0;
+    }
+    .name, .seat {
+        margin: 0.7em 0 0 0;
+    }
+    .time {
+        margin: 0.7em 0 0 1em;
+    }
+    .seat, .time {
+        float: left;
+    }
+    .eye {
+        position: relative;
+        width: 2em;
+        height: 1.5em;
+        background: #fff;
+        margin: 0 auto;
+        border-radius: 1em/0.6em;
+        z-index: 1;
+    }
+    .eye:before, .eye:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border-radius: 50%;
+    }
+    .eye:before {
+        width: 1em;
+        height: 1em;
+        background: #27272b;
+        z-index: 2;
+        left: 8px;
+        top: 4px;
+    }
+    .eye:after {
+        width: 0.5em;
+        height: 0.5em;
+        background: #fff;
+        z-index: 3;
+        left: 12px;
+        top: 8px;
+    }
+    .number {
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .number h3 {
+        color: #27272b;
+        margin: 0.9em 0 0 0;
+        font-size: 2.5em;
+    }
+    .number span {
+        display: block;
+        color: #a2aeae;
+    }
+ 
+</style>
+{% endblock style %}
+{% block content %}
+    <div class="cardWrap">
+        <div class="ticketCard cardLeft">
+            <h1 style="color: white;">CINECO</h1>
+            <div class="title">
+                <h2>How I met your Mother</h2>
+                <span>movie</span>
+            </div>
+            <div class="name">
+                <h2>Vladimir Kudinov</h2>
+                <span>name</span>
+            </div>
+            <div class="seat">
+                <h2>156</h2>
+                <span>seat</span>
+            </div>
+            <div class="time">
+                <h2>12:00</h2>
+                <span>time</span>
+            </div>
+        </div>
+        <div class="ticketCard cardRight">
+            <div class="eye"></div>
+            <div class="number">
+                <h3>156</h3>
+                <span>hall</span>
+            </div>
+            <div class="number">
+                <h3>156</h3>
+                <span>seat</span>
+            </div>
+            <svg id="barcode"></svg>
+        </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script>
+    document.querySelector('body').style.background = '#fff';
+    JsBarcode("#barcode", 'asdqweasdasd',{
+        background: "#ecedef",
+        marginTop: 50,
+        displayValue: false
+    });
+</script>
+{% endblock scripts %}

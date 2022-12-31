@@ -94,6 +94,14 @@ def book_ticket_json(request, schedule_id, user_id):
 
     return JsonResponse({'code': '200', 'balance': balance.balance})
 
+#def tickets(request, transaction_id):
+def tickets(request):
+    # transaction = Transaction.objects.get(id=transaction_id)
+    # context = {
+    #     'transaction': transaction
+    # }
+    #return render(request, 'customer/tickets.html', context)
+    return render(request, 'customer/tickets.html')
 #def customer_movie_booking(request, movie_id):
     # movie = Movie.objects.get(id=movie_id)
     # if request.method == 'POST':
