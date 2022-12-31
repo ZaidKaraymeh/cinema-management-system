@@ -8,9 +8,11 @@ from ..models import *
 # Customer Movie Booking
 def customer_movie_booking(request, schedule_id):
     movie_schedule = MovieSchedule.objects.get(id=schedule_id)
+    balance = Balance.objects.get(user=request.user)
 
     context = {
-        'movie_schedule': movie_schedule
+        'movie_schedule': movie_schedule,
+        'balance': balance
     }
 
 
