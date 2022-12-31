@@ -8,7 +8,7 @@ from ..models import *
 # Customer Movie Booking
 def customer_movie_booking(request, schedule_id):
     movie_schedule = MovieSchedule.objects.get(id=schedule_id)
-    balance = Balance.objects.get(user=request.user)
+    balance, created = Balance.objects.get_or_create(user=request.user)
 
     context = {
         'movie_schedule': movie_schedule,

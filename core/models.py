@@ -90,7 +90,6 @@ class Movie(models.Model):
 
     trailer = models.FileField(upload_to='movies', max_length=100, null=True)
     thumbnail = models.FileField(upload_to='thumbnail', max_length=100, null=False, default='undefined')
-    price = models.DecimalField(max_digits=6, decimal_places=3)
 
     release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
     duration = models.CharField(max_length=4, default="60")
@@ -202,7 +201,7 @@ class Balance(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    balance = models.DecimalField(max_digits=6, decimal_places=3)
+    balance = models.DecimalField(max_digits=6, decimal_places=3, default=0, null=True)
 
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -221,30 +220,33 @@ class Topup(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-class Checkout(models.Model):
+class Transaction(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(CustomUser,
                              on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=6, decimal_places=3)
     
-    movies = models.ManyToManyField("core.Movie", related_name="checkout_movies")
+    tickets = models.ManyToManyField("core.Ticket")
 
-    BENEFIT = 'BNF'
-    PAYPAL = "PAL"
-    CREDIT_CARD = "CRC"
-    PAYMENT_TYPE_CHOICES = [
-        (BENEFIT, "Benefit"),
-        (PAYPAL, "Paypal"),
-        (CREDIT_CARD, "Credit Card"),
-    ]
+    # If the user paid online or in person
+    isPaid = models.BooleanField(default=False)
 
-    payment_type = models.CharField(
-        max_length=15,
-        choices=PAYMENT_TYPE_CHOICES,
-        default=BENEFIT,
+    # BENEFIT = 'BNF'
+    # PAYPAL = "PAL"
+    # CREDIT_CARD = "CRC"
+    # PAYMENT_TYPE_CHOICES = [
+    #     (BENEFIT, "Benefit"),
+    #     (PAYPAL, "Paypal"),
+    #     (CREDIT_CARD, "Credit Card"),
+    # ]
 
-    )
+    # payment_type = models.CharField(
+    #     max_length=15,
+    #     choices=PAYMENT_TYPE_CHOICES,
+    #     default=BENEFIT,
+    # )
+
     discount =  models.ForeignKey("core.Coupon", on_delete=models.CASCADE)
 
     @property
