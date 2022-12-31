@@ -1,6 +1,11 @@
 from django import forms
 
-# Defining the user class with a balance attribute
+
+class TopUpForm(forms.Form):
+    amount = forms.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = forms.ChoiceField(choices=[('credit_card', 'Credit Card'), ('debit_card', 'Debit Card'), ('paypal', 'PayPal')])
+
+
 class balance(forms.Form):
   balance = forms.DecimalField(max_digits=8, decimal_places=2)
   total = forms.DecimalField(

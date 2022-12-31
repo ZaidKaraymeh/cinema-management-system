@@ -41,8 +41,6 @@ urlpatterns = [
     path('', include('django_prometheus.urls')),
     path('add_funds/', payments_views.add_funds, name="add_funds" ),
     path('make_payment/', payments_views.make_payment, name="make_payment" ),
-
-
     
     path('', include('core.urls.urls')),
     path('', include('core.urls.admin_urls')),

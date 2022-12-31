@@ -1,11 +1,36 @@
 from django.shortcuts import render, redirect
 from .models import Contact, feedback
-from core.models import Balance, Ticket
-# from .forms import PaymentMethod
+from core.models import Balance
+from django.core.mail import BadHeaderError, send_mail
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from .forms import TopUpForm
+from .models import TopUpRequest
 
-def ticket_detail(request, ticket_id):
-    ticket = get_object_or_404(Ticket, pk=ticket_id)
-    return render(request, 'ticket_detail.html', {'ticket': ticket})
+def top_up(request):
+    if request.method == 'POST':
+        form = TopUpForm(request.POST)
+        if form.is_valid():
+            top_up_request = TopUpRequest(amount=form.cleaned_data['amount'], payment_method=form.cleaned_data['payment_method'], user=request.user)
+            top_up_request.save()
+            return redirect('top_up_success')
+    else:
+        form = TopUpForm()
+    return render(request, 'top_up.html', {'form': form})
+
+def top_up_success(request):
+    return render(request, 'top_up_success.html')
+
+def top_up_admin(request):
+    top_up_requests = TopUpRequest.objects.filter(approved=False)
+    return render(request, 'top_up_admin.html', {'top_up_requests': top_up_requests})
+
+def top_up_approve(request, top_up_request_id):
+    top_up_request = TopUpRequest.objects.get(id=top_up_request_id)
+    top_up_request.approved = True
+    top_up_request.save()
+    return redirect('top_up_admin')
+
 
 def ticket_confirmation(request, transaction_id):
     return render(request, 'ticket_confirmation.html', {'transaction_id': transaction_id})
@@ -40,7 +65,7 @@ def userbalance(request):
     #     # form = PaymentMethod(request.POST)
     return render(request, 'userbalance.html')
 
-def topUp(request):
+def topUp(request): 
     return render(request, 'topUp.html')
 
 def checkout(request):
@@ -71,9 +96,18 @@ def contact(request):
         desc=request.POST.get('desc')
         print (name, email, phone, desc)
         contact=Contact(name=name, email=email, phone=phone, desc=desc)
-        # Contact.objects.create(name=name, email=email, phone=phone, decs=desc)      
         contact.save()
-    return render(request, 'contact.html')
+        if name and desc and phone and email:
+            try:
+                send_mail(name, 'Your contact form was submitted successfully', 'cinema.admin.bh@gmail.com', ['xx@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+        return HttpResponseRedirect('/contact/')
+    else:
+            return render(request, 'contact.html')
+
+def contactFrom(request):
+    return render(request, 'contactFrom.html')
 
 def add_funds(request):
     user = request.user
