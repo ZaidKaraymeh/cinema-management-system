@@ -22,7 +22,6 @@ def customer_movie_booking(request, schedule_id):
 
 
 
-
 #def customer_movie_booking(request, movie_id):
     # movie = Movie.objects.get(id=movie_id)
     # if request.method == 'POST':
