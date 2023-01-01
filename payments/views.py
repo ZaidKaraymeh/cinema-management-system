@@ -78,6 +78,8 @@ def topup(request):
             obj.balance = balance
             obj.user = user
             obj.save()
+            messages.success(request, "Topup request sent")
+            return redirect('home')
     else:
         topup_form = TopUpForm()
     

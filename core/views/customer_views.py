@@ -1,3 +1,4 @@
+from payments.models import Topup
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from ..models import Movie
@@ -121,3 +122,19 @@ def tickets(request):
     #     'movie': movie
     # }
     #return render(request, 'customer/movie_booking.html', context)
+
+# view transaction histor
+def transaction_history(request):
+    transactions = Transaction.objects.filter(user=request.user)
+    context = {
+        'transactions': transactions
+    }
+    return render(request, 'customer/transaction_history.html', context)
+
+# topup history
+def topup_history(request):
+    topups = Topup.objects.filter(user=request.user)
+    context = {
+        'topups': topups
+    }
+    return render(request, 'customer/topup_history.html', context)

@@ -167,6 +167,10 @@ class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    @property
+    def get_price(self):
+        # type: ignore
+        return Decimal(3) if self.seat.type == "NRM" else Decimal(4.5)
 class Seat(models.Model):
 
     id = models.UUIDField(
