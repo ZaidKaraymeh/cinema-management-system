@@ -3,12 +3,122 @@
  {% block content %}
 
 
- <h2> You have been logged out </h2>
- <div class="border-top pt-3" >
-    <small class="text-muted" > 
-         <a href="{% url 'login'  %}" >Log in Again </a>  
-    </small>
-<div>
+ <section style="background-color: #eee;">
+  <div class="container py-5">
+    <!-- <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+          </ol>
+        </nav>
+      </div>
+    </div> -->
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">{{user.first_name}}  {{user.last_name}}</h5>
+            <p class="text-muted mb-1">
+
+              {{user.get_user_type_display}}
+            </p>
+            <p class="text-muted mb-4">{{user.birth_date}}</p>
+            <!-- <div class="d-flex justify-content-center mb-2">
+              <button type="button" class="btn btn-primary">Follow</button>
+              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            </div> -->
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0 border-0">
+          
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.first_name}}  {{user.last_name}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.email}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.phone_number}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Balance</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">BHD{{balance.balance}}</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4"> Recent Transactions
+                </p>
+                <hr>
+                {% for transaction in transactions %}
+                <div class="row">
+                  <div class="col-sm-2">
+                    <p class="mb-0">ID</p>
+                  </div>
+                  <div class="col-sm-6">
+                    <a href="#" class="text-info text-decoration-none" >
+
+                      <p class=" mb-0">
+                        {{transaction.id}}
+                      </p>
+                    </a>
+                  </div>
+                  <div class="col-sm-4">
+                    <p class="text-muted mb-0">BHD{{transaction.amount}}</p>
+                  </div>
+                </div>
+                <hr>
+                {% endfor %}
+                <p class="mb-4"> 
+                    <a href="#" class="text-info text-decoration-none" >
+                    View All Transactions
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     
 

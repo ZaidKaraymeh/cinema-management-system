@@ -5,8 +5,8 @@ from django.http import HttpResponse
 import json
 # Create your views here.
 from django.conf import settings
-User = settings.AUTH_USER_MODEL
-
+from users.models import CustomUser
+from core.models import Balance, Transaction
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -33,3 +33,16 @@ def register(request):
 #         form.save()
 #         return HttpResponse(json.dumps({"success": True}))
 #     return HttpResponse(json.dumps({'success': False}))
+
+
+def profile(request, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    balance, created = Balance.objects.get_or_create(user=user)
+    transactions = Transaction.objects.filter(user=user).order_by('-created_at')[:4]
+    context = {
+        "user":user,
+        "balance":balance,
+        "transactions":transactions
+    }
+
+    return render(request, "users/profile.html", context)
