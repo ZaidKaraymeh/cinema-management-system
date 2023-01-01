@@ -20,7 +20,7 @@
       <tr>
         <th class="text-center">{{forloop.counter}}</th>
         <th class="text-center">
-          <a href="#d" class="text-info">
+          <a href="{% url 'profile' topup.user.id %}" class="text-info text-decoration-none">
             {{topup.user.email}}
           </a>
         </th>

@@ -12,8 +12,8 @@
     <thead class="table-dark">
       <tr>
         <th class="text-center" scope="col">#</th>
-        <th class="text-center" scope="col">Name</th>
         <th class="text-center" scope="col">Email</th>
+        <th class="text-center" scope="col">Name</th>
         <th class="text-center" scope="col">Phone Number</th>
         <th class="text-center" scope="col">Actions</th>
       </tr>
@@ -23,9 +23,13 @@
       <tr>
         <th class="text-center">{{forloop.counter}}</th>
         <th class="text-center">
+          <a href="{% url 'profile' employee.id %}" class="text-decoration-none text-info">
+            {{employee.email}}
+          </a>
+        </th>
+        <th class="text-center">
           {{employee.first_name}} {{employee.last_name}}
         </th>
-        <th class="text-center">{{employee.email}}</th>
         <th class="text-center">{{employee.phone_number}}</th>
         <th class="text-center d-flex justify-content-center gap-2">
           <div class="dropdown">

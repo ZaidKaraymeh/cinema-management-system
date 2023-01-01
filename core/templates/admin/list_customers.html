@@ -26,7 +26,11 @@
         <th class="text-center">
           {{customer.first_name}} {{customer.last_name}}
         </th>
-        <th class="text-center">{{customer.email}}</th>
+        <th class="text-center">
+          <a href="{% url 'profile' customer.id %}" class="text-decoration-none text-info">
+            {{customer.email}}
+          </a>
+        </th>
         <th class="text-center">{{customer.phone_number}}</th>
         <th class="text-center">
           <a class="btn btn-dark text-center" href="#"> View History </a>
