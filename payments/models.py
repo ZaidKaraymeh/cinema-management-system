@@ -1,4 +1,5 @@
 from django.db import models
+# from django.contrib.auth.models import User
 
 class balance(models.Model):
     pass
@@ -25,6 +26,15 @@ class feedback(models.Model):
     point4 = models.CharField(max_length=70)
     point5 = models.CharField(max_length=70)
     comment = models.CharField(max_length=1000)
+
+
+class TopUpRequest(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(max_length=50)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+
+
 
 
 

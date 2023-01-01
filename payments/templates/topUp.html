@@ -6,11 +6,10 @@
             {{ form.errors }}
         </div>
     {% endif %}
+    <br></br>
     <div class="container">
     <html>
-      <head>
-        <title>Top-Up</title>
-    
+      <head>    
         <style>
           body, div, p { 
           padding: 0;
@@ -76,8 +75,52 @@
           .debitcard{
           background: #d34836;
           }
+          body{
+            background: #f5f5f5
+          }
+          .rounded{
+            border-radius: 1rem
+          }
+          .nav-pills 
+          .nav-link{color: #555}
+          .nav-pills .nav-link.active{color: white}input[type="radio"]{margin-right: 5px}.bold{font-weight:bold}
+
+        .text-center {
+            text-align: center;
+        }
         </style>
       </head>
+      <SCRIPT>
+          $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+          })
+                
+        function debitcard() {
+            var x = document.getElementById('debit-card');
+            if (x.style.display == 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+        function creditcard() {
+            var x = document.getElementById('credit-card');
+            if (x.style.display == 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+        function paypal() {
+            var x = document.getElementById('paypal');
+            if (x.style.display == 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+       
+        </SCRIPT>
       <body>
         <div class="main-block">
           <div class="block-item left">
@@ -85,13 +128,141 @@
             
           </div>
           <div class="block-item right">
-            <button class="btn paypal" ><i class=""></i><span>Paypal</span></button>
-            <button class="btn creditcard" ><i class=""></i><span>Credit card</span></button>
-            <button class="btn debitcard" ><i class=""></i><span>Debit card</span></button>
-            </div>
-        </div> 
+            <button  ONCLICK="paypal()" class="btn paypal" ><i class="fab fa-paypal mr-2"></i><span>Paypal</span></button>
+            <button  ONCLICK="creditcard()" class="btn creditcard" ><i class="fas fa-credit-card mr-2"></i><span>Credit card</span></button>
+            <button  ONCLICK="debitcard()" class="btn debitcard" ><i class="fas fa-credit-card mr-2"></i><span>Debit card</span></button>              
       </body>
     </html>
   </div>
+</div>
+
+<div class="container py-5">
+  <div class="row mb-4">
+      <div 
+      class="col-lg-8 mx-auto text-center">
+      </div>
+  </div> 
+  <div class="row">
+      <!-- <div class="col-lg-6 mx-auto"> -->
+        <div class="card ">
+      <!-- paypal info-->
+      <div id="paypal" STYLE="display:none" class="tab-pane fade show active pt-3">
+        <form role="form" onsubmit="event.preventDefault()">
+          <div class="form-group"> <label for="username">
+                  <h6>Card Owner</h6>
+              </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div>
+          <div class="form-group"> <label for="cardNumber">
+                  <h6>Card number</h6>
+              </label>
+              <div class="input-group"> <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                  <div class="input-group-append"> </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-8">
+                  <div class="form-group"> <label><span class="hidden-xs">
+                              <h6>Expiration Date</h6>
+                          </span></label>
+                      <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                  </div>
+              </div>
+              <div class="col-sm-4">
+                  <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                          <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                      </label> <input type="text" required class="form-control"> </div>
+              </div>
+          </div>
+          <div class="card-footer" > <button class="btn paypal" type="button" > Confirm </button>
+      </form>
+  </div>
+</div> 
+  </div>
+
+<div class="container py-5">
+  <div class="row mb-4">
+      <div 
+      class="col-lg-8 mx-auto text-center">
+      </div>
+  </div> 
+  <div class="row">
+      <!-- <div class="col-lg-6 mx-auto"> -->
+        <div class="card ">
+              <!-- credit card info-->
+            <div id="credit-card" STYLE="display:none" class="tab-pane fade show active pt-3">
+                <form role="form" onsubmit="event.preventDefault()">
+                  <div class="form-group"> <label for="username">
+                          <h6>Card Owner</h6>
+                      </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div>
+                  <div class="form-group"> <label for="cardNumber">
+                          <h6>Card number</h6>
+                      </label>
+                      <div class="input-group"> <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                          <div class="input-group-append"> </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-8">
+                          <div class="form-group"> <label><span class="hidden-xs">
+                                      <h6>Expiration Date</h6>
+                                  </span></label>
+                              <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                          <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                  <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                              </label> <input type="text" required class="form-control"> </div>
+                      </div>
+                  </div>
+                  <div class="card-footer"> <button class="btn creditcard" type="button" > Confirm </button>
+                </form>
+            </div>
+      </div>
+    </div>
+  
+<div class="container py-5">
+  <div class="row mb-4">
+      <div 
+      class="col-lg-8 mx-auto text-center">
+      </div>
+  </div> 
+  <div class="row">
+      <!-- <div class="col-lg-6 mx-auto"> -->
+        <div class="card ">
+
+      <!-- debit card info-->
+      <div id="debit-card" STYLE="display:none" class="tab-pane fade show active pt-3">
+        <form role="form" onsubmit="event.preventDefault()">
+          <div class="form-group"> <label for="username">
+                  <h6>Card Owner</h6>
+              </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div>
+          <div class="form-group"> <label for="cardNumber">
+                  <h6>Card number</h6>
+              </label>
+              <div class="input-group"> <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                  <div class="input-group-append"></div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-8">
+                  <div class="form-group"> <label><span class="hidden-xs">
+                              <h6>Expiration Date</h6>
+                          </span></label>
+                      <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                  </div>
+              </div>
+              <div class="col-sm-4">
+                  <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                          <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                      </label> <input type="text" required class="form-control"> </div>
+              </div>
+          </div>
+          <div class="card-footer"> <button class="btn debitcard" type="button" > Confirm </button>
+      </form>
+  </div>
+</div> 
+</div>
+</div>
+</div>
 </div>
 {%endblock content %}

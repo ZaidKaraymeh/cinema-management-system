@@ -1,27 +1,36 @@
 from django.shortcuts import render, redirect
 from .models import Contact, feedback
-# from .forms import TicketPurchaseForm
-# from .forms import balance
+from core.models import Balance
+from django.core.mail import BadHeaderError, send_mail
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from .forms import TopUpForm
+from .models import TopUpRequest
 
-# from .forms import TicketForm
-from .forms import PaymentMethod
-from .backend import process_payment
+def top_up(request):
+    if request.method == 'POST':
+        form = TopUpForm(request.POST)
+        if form.is_valid():
+            top_up_request = TopUpRequest(amount=form.cleaned_data['amount'], payment_method=form.cleaned_data['payment_method'], user=request.user)
+            top_up_request.save()
+            return redirect('top_up_success')
+    else:
+        form = TopUpForm()
+    return render(request, 'top_up.html', {'form': form})
 
-def purchase_ticket(request):
-    # if request.method == 'POST':
-    #     form = TicketForm(request.POST)
-    #     if form.is_valid():
-    #         # Process the payment
-    #         amount = form.cleaned_data['price']
-    #         transaction_id = process_payment(amount)
-    #         form.save()
-    #         # Create a fake payment transaction
-    #         transaction_id = '12345'
-    #         form.save()
-    #         return redirect('ticket_confirmation', transaction_id)
-    # else:
-    #     form = TicketForm()
-    return render(request, 'purchase_ticket.html')
+def top_up_success(request):
+    return render(request, 'top_up_success.html')
+
+def top_up_admin(request):
+    top_up_requests = TopUpRequest.objects.filter(approved=False)
+    return render(request, 'top_up_admin.html', {'top_up_requests': top_up_requests})
+
+def top_up_approve(request, top_up_request_id):
+    top_up_request = TopUpRequest.objects.get(id=top_up_request_id)
+    top_up_request.approved = True
+    top_up_request.save()
+    return redirect('top_up_admin')
+
 
 def ticket_confirmation(request, transaction_id):
     return render(request, 'ticket_confirmation.html', {'transaction_id': transaction_id})
@@ -30,6 +39,15 @@ def payment_successful(request):
     return render(request, 'payment_successful.html')
 
 def userbalance(request):
+    if request.method=="POST":
+        id=request.POST.get('id') 
+        user=request.POST.get('user') 
+        balance=request.POST.get('balance') 
+        # amount=request.POST.get('amount')
+        print(id, user, balance)
+        user=Balance(id=id, user=user, balance=balance)
+        user.save()
+
     # # retrieve user and amount from request
     # user = request.user
     # amount = request.POST.get('amount')
@@ -47,7 +65,7 @@ def userbalance(request):
     #     # form = PaymentMethod(request.POST)
     return render(request, 'userbalance.html')
 
-def topUp(request):
+def topUp(request): 
     return render(request, 'topUp.html')
 
 def checkout(request):
@@ -78,24 +96,24 @@ def contact(request):
         desc=request.POST.get('desc')
         print (name, email, phone, desc)
         contact=Contact(name=name, email=email, phone=phone, desc=desc)
-        # Contact.objects.create(name=name, email=email, phone=phone, decs=desc)      
         contact.save()
-    return render(request, 'contact.html')
+        if name and desc and phone and email:
+            try:
+                send_mail(name, 'Your contact form was submitted successfully', 'cinema.admin.bh@gmail.com', ['xx@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+        return HttpResponseRedirect('/contact/')
+    else:
+            return render(request, 'contact.html')
 
-def book_ticket(request):
-    return render(request, 'book_ticket.html')
-
+def contactFrom(request):
+    return render(request, 'contactFrom.html')
 
 def add_funds(request):
-    # retrieve user and amount from request
     user = request.user
     amount = request.POST.get('amount')
-
-    # update user balance
     # user.balance += amount
     user.save()
-
-    # render response
     return render(request, 'add_funds.html', {
         # 'user_balance': user.balance,
         'amount': amount,
@@ -107,22 +125,15 @@ def make_payment(request):
     amount = request.POST.get('amount')
     payment_method = request.POST.get('payment_method')
 
-    # make payment
     if payment_method == 'credit_card':
-        # make payment using credit card
         pass
     elif payment_method == 'paypal':
-        # make payment using PayPal
         pass
     else:
-        # invalid payment method
         pass
-
     # update user balance
     # user.balance -= amount
     user.save()
-
-    # render response
     return render(request, 'make_payment.html', {
         # 'user_balance': user.balance,
         'amount': amount,
