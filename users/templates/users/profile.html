@@ -36,8 +36,36 @@
             {% endif %}
           </div>
         </div>
-        <div class="card mb-4 mb-lg-0 border-0">
-          
+        <div class="card mb-4 mb-lg-0 ">
+          <div class="card-body ">
+            <p class="mb-4"> Recent Top Ups
+                </p>
+                <hr>
+                {% for topup in topups %}
+                <div class="row">
+                  <div class="col-sm-2">
+                    <p class="mb-0">ID</p>
+                  </div>
+                  <div class="col-sm-6">
+                    <a href="#" class="text-info text-decoration-none" >
+
+                      <p class=" mb-0">
+                        {{topup.id}}
+                      </p>
+                    </a>
+                  </div>
+                  <div class="col-sm-4">
+                    <p class="text-muted mb-0">BHD{{topup.amount}}</p>
+                  </div>
+                </div>
+                <hr>
+                {% endfor %}
+                <p class="mb-4"> 
+                    <a href="#" class="text-info text-decoration-none" >
+                    View All topups
+                  </a>
+                </p>
+          </div>
         </div>
       </div>
       <div class="col-lg-8">

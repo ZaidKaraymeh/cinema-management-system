@@ -1,3 +1,4 @@
+import csv
 from payments.models import Topup
 from django.shortcuts import render, redirect
 from users.models import CustomUser
@@ -12,8 +13,10 @@ from django.http import HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 
 from rest_framework.decorators import api_view
-
-
+from django.apps import apps
+from django.contrib import admin
+from django.contrib.admin.sites import AlreadyRegistered
+from django.apps import apps
 def dashboard(request):
 
     return render(request, 'admin/dashboard.html')
@@ -275,3 +278,52 @@ def list_topups(request):
     }
 
     return render(request, 'admin/list_topups.html', context)
+
+
+
+def export(request):
+    core_models = apps.get_app_config('core').get_models()
+    payments_models = apps.get_app_config('payments').get_models()
+    users_models = apps.get_app_config('users').get_models()
+
+    choices = []
+    for model in core_models:
+        choices.append((model.__name__, model.__name__))
+
+    for model in payments_models:
+        choices.append((model.__name__, model.__name__))
+
+    for model in users_models:
+        choices.append((model.__name__, model.__name__))
+
+    if request.method == 'POST':
+        form = ExportForm(choices, request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            model_name = form.cleaned_data['choices']
+            model_obj = apps.get_model("core", model_name).objects.filter(
+                created_at__range=[
+                start_date, end_date]
+                )
+            print(model_obj)
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="topups.csv"'
+
+            writer = csv.writer(response)
+            writer.writerow([field.name for field in model_obj.model._meta.get_fields()])
+
+            for instance in model_obj:
+                # write all the instances
+                writer.writerow([getattr(instance, field.name) for field in instance._meta.get_fields()])
+            return response
+    else:
+        
+
+        form = ExportForm(choices=choices)
+    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'admin/export.html', context)

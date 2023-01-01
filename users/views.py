@@ -1,3 +1,4 @@
+from payments.models import Topup
 from .forms import RegisterForm, LoginForm, ProfileForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -39,10 +40,12 @@ def profile(request, user_id):
     user = CustomUser.objects.get(id=user_id)
     balance, created = Balance.objects.get_or_create(user=user)
     transactions = Transaction.objects.filter(user=user).order_by('-created_at')[:4]
+    topups = Topup.objects.filter(user=user).order_by('-created_at')[:4]
     context = {
         "user":user,
         "balance":balance,
-        "transactions":transactions
+        "transactions":transactions,
+        "topups":topups,
     }
 
     return render(request, "users/profile.html", context)
@@ -84,3 +87,27 @@ def edit_profile(request, user_id):
 
     return render(request, "users/edit_profile.html", context)
 
+
+# binary search
+def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+    mid = 0
+
+    while low <= high:
+        mid = (high + low) // 2
+
+        # If x is greater, ignore left half
+        if arr[mid] < x:
+            low = mid + 1
+
+        # If x is smaller, ignore right half
+        elif arr[mid] > x:
+            high = mid - 1
+
+        # means x is present at mid
+        else:
+            return mid
+
+    # If we reach here, then the element was not present
+    return -1
