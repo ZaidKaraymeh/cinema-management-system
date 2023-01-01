@@ -26,5 +26,7 @@ urlpatterns = [
     
 
     path('staff/halls', admin_views.list_halls, name="list_halls"),
-    path('staff/halls/add', admin_views.add_hall, name='add_hall')
+    path('staff/halls/add', admin_views.add_hall, name='add_hall'),
+    path('staff/customers/delete/<str:customer_id>', admin_views.delete_customer, name="delete_customer"),
+     path('staff/employees/delete/<str:employee_id>', admin_views.delete_employee, name="delete_employee"),
 ]

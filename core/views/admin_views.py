@@ -247,3 +247,20 @@ def add_hall(request):
     }
 
     return render(request, 'admin/add_hall.html', context)
+
+
+# delete customer
+def delete_customer(request, customer_id):
+    customer = CustomUser.objects.get(id=customer_id)
+    customer.delete()
+    messages.error(request, f"{customer.email} has been Deleted successfuly!")
+
+    return redirect('list_customers')
+
+# delete employee
+def delete_employee(request, employee_id):
+    employee = CustomUser.objects.get(id=employee_id)
+    employee.delete()
+    messages.error(request, f"{employee.email} has been Deleted successfuly!")
+
+    return redirect('list_employees')
