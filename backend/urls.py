@@ -32,6 +32,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path('register/', user_views.register, name="register"),
     path('profile/<str:user_id>', user_views.profile, name="profile"),
+    path('profile/<str:user_id>/edit', user_views.edit_profile, name="edit_profile"),
     # path('login_ajax/', user_views.login_ajax, name="login_ajax"),
     # path('userbalance/', payments_views.userbalance, name="userbalance" ),
     # path('payment_successful/', payments_views.payment_successful, name="payment_successful" ), 
