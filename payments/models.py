@@ -1,6 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User
-
+import uuid
+from users.models import CustomUser
 class balance(models.Model):
     pass
 
@@ -37,4 +38,14 @@ class TopUpRequest(models.Model):
 
 
 
+class Topup(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    balance = models.ForeignKey("core.Balance", on_delete=models.CASCADE)
 
+    amount = models.DecimalField(max_digits=6, decimal_places=3)
+    is_approved = models.BooleanField(default=False)
+    
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)

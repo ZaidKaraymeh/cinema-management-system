@@ -46,7 +46,7 @@
           width: 50px;
           font-size: 24px;
           }
-          .btn {
+          .cstm-btn {
           display: flex;
           align-items: center;
           width: 100%;
@@ -60,10 +60,10 @@
           color: #fff;
           cursor: pointer;
           }
-          .btn:hover {
+          .cstm-btn:hover {
           transform: scale(1.03);
           }
-          .btn span {
+          .cstm-btn span {
           font-size: 16px;
           }
           .paypal {
@@ -128,9 +128,23 @@
             
           </div>
           <div class="block-item right">
-            <button  ONCLICK="paypal()" class="btn paypal" ><i class="fab fa-paypal mr-2"></i><span>Paypal</span></button>
-            <button  ONCLICK="creditcard()" class="btn creditcard" ><i class="fas fa-credit-card mr-2"></i><span>Credit card</span></button>
-            <button  ONCLICK="debitcard()" class="btn debitcard" ><i class="fas fa-credit-card mr-2"></i><span>Debit card</span></button>              
+            <button   class="cstm-btn paypal" ><i class="fab fa-paypal mr-2"></i><span>Paypal</span></button>
+            <button   class="cstm-btn creditcard" ><i class="fas fa-credit-card mr-2"></i><span>Credit card</span></button>
+            <button   class="cstm-btn debitcard" ><i class="fas fa-credit-card mr-2"></i><span>Benefit Pay</span></button>
+            <div>
+                <h1 class="text-center my-3" >OR</h1>
+                <form method="post" >
+                    {% csrf_token %}
+                    
+                    <div class="form-outline">
+                        {{topup_form.amount}}
+                        <label class="form-label" for="id_amount">Amount</label>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input class="btn btn-primary" type="submit" value="Log In" />
+                    </div>
+                </form>
+            </div>
       </body>
     </html>
   </div>

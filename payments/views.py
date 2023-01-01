@@ -4,49 +4,52 @@ from core.models import Balance
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from .forms import TopUpForm
-from .models import TopUpRequest
+from users.models import CustomUser
+from payments.forms import TopUpForm
+from payments.models import Topup
+# from .forms import TopUpForm
+# from .models import TopUpRequest
 
-def top_up(request):
-    if request.method == 'POST':
-        form = TopUpForm(request.POST)
-        if form.is_valid():
-            top_up_request = TopUpRequest(amount=form.cleaned_data['amount'], payment_method=form.cleaned_data['payment_method'], user=request.user)
-            top_up_request.save()
-            return redirect('top_up_success')
-    else:
-        form = TopUpForm()
-    return render(request, 'top_up.html', {'form': form})
+# def top_up(request):
+#     if request.method == 'POST':
+#         form = TopUpForm(request.POST)
+#         if form.is_valid():
+#             top_up_request = TopUpRequest(amount=form.cleaned_data['amount'], payment_method=form.cleaned_data['payment_method'], user=request.user)
+#             top_up_request.save()
+#             return redirect('top_up_success')
+#     else:
+#         form = TopUpForm()
+#     return render(request, 'top_up.html', {'form': form})
 
-def top_up_success(request):
-    return render(request, 'top_up_success.html')
+# def top_up_success(request):
+#     return render(request, 'top_up_success.html')
 
-def top_up_admin(request):
-    top_up_requests = TopUpRequest.objects.filter(approved=False)
-    return render(request, 'top_up_admin.html', {'top_up_requests': top_up_requests})
+# def top_up_admin(request):
+#     top_up_requests = TopUpRequest.objects.filter(approved=False)
+#     return render(request, 'top_up_admin.html', {'top_up_requests': top_up_requests})
 
-def top_up_approve(request, top_up_request_id):
-    top_up_request = TopUpRequest.objects.get(id=top_up_request_id)
-    top_up_request.approved = True
-    top_up_request.save()
-    return redirect('top_up_admin')
+# def top_up_approve(request, top_up_request_id):
+#     top_up_request = TopUpRequest.objects.get(id=top_up_request_id)
+#     top_up_request.approved = True
+#     top_up_request.save()
+#     return redirect('top_up_admin')
 
 
-def ticket_confirmation(request, transaction_id):
-    return render(request, 'ticket_confirmation.html', {'transaction_id': transaction_id})
+# def ticket_confirmation(request, transaction_id):
+#     return render(request, 'ticket_confirmation.html', {'transaction_id': transaction_id})
 
-def payment_successful(request):
-    return render(request, 'payment_successful.html')
+# def payment_successful(request):
+#     return render(request, 'payment_successful.html')
 
-def userbalance(request):
-    if request.method=="POST":
-        id=request.POST.get('id') 
-        user=request.POST.get('user') 
-        balance=request.POST.get('balance') 
-        # amount=request.POST.get('amount')
-        print(id, user, balance)
-        user=Balance(id=id, user=user, balance=balance)
-        user.save()
+# def userbalance(request):
+#     if request.method=="POST":
+#         id=request.POST.get('id') 
+#         user=request.POST.get('user') 
+#         balance=request.POST.get('balance') 
+#         # amount=request.POST.get('amount')
+#         print(id, user, balance)
+#         user=Balance(id=id, user=user, balance=balance)
+#         user.save()
 
     # # retrieve user and amount from request
     # user = request.user
@@ -63,10 +66,38 @@ def userbalance(request):
     # })
     # # if request.method == 'POST':
     #     # form = PaymentMethod(request.POST)
-    return render(request, 'userbalance.html')
+    # return render(request, 'userbalance.html')
 
-def topUp(request): 
-    return render(request, 'topUp.html')
+def topup(request): 
+    user = CustomUser.objects.get(id=request.user.id)
+    balance, created = Balance.objects.get_or_create(user=user)
+    if request.method == "POST":
+        topup_form = TopUpForm(request.POST)
+        if topup_form.is_valid():
+            obj = topup_form.save(commit=False)
+            obj.balance = balance
+            obj.user = user
+            obj.save()
+    else:
+        topup_form = TopUpForm()
+    
+    context = {
+        "topup_form" :topup_form
+    }
+
+
+    return render(request, 'topup.html', context)
+
+
+
+def approve_topup(request, topup_id):
+    topup = Topup.objects.get(id=topup_id)
+
+    topup.is_approved = True
+    topup.balance.balance += topup.amount
+    topup.balance.save()
+    topup.save()
+    return redirect('list_topups')
 
 def checkout(request):
     return render(request, 'checkout.html')
@@ -119,26 +150,26 @@ def add_funds(request):
         'amount': amount,
     })
 
-def make_payment(request):
-    # retrieve user, amount, and payment method from request
-    user = request.user
-    amount = request.POST.get('amount')
-    payment_method = request.POST.get('payment_method')
+# def make_payment(request):
+#     # retrieve user, amount, and payment method from request
+#     user = request.user
+#     amount = request.POST.get('amount')
+#     payment_method = request.POST.get('payment_method')
 
-    if payment_method == 'credit_card':
-        pass
-    elif payment_method == 'paypal':
-        pass
-    else:
-        pass
-    # update user balance
-    # user.balance -= amount
-    user.save()
-    return render(request, 'make_payment.html', {
-        # 'user_balance': user.balance,
-        'amount': amount,
-        'payment_method': payment_method,
-    })
+#     if payment_method == 'credit_card':
+#         pass
+#     elif payment_method == 'paypal':
+#         pass
+#     else:
+#         pass
+#     # update user balance
+#     # user.balance -= amount
+#     user.save()
+#     return render(request, 'make_payment.html', {
+#         # 'user_balance': user.balance,
+#         'amount': amount,
+#         'payment_method': payment_method,
+#     })
 
 
 

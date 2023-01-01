@@ -1,7 +1,7 @@
 from django.urls import path
 
 from core.views import admin_views
-
+from payments import views as payment_views
 urlpatterns = [
     path('dashboard', admin_views.dashboard, name="dashboard"),
     path('staff/movies/add', admin_views.add_movie, name="add_movie"),
@@ -9,6 +9,9 @@ urlpatterns = [
          admin_views.edit_movie, name="edit_movie"),
     path('staff/movies/delete/<str:movie_id>',
          admin_views.delete_movie, name="delete_movie"),
+
+    path('staff/topups', admin_views.list_topups, name="list_topups"),
+
     path('staff/movies', admin_views.list_movies, name="list_movies"),
     path('staff/schedules/add', admin_views.schedule_movie, name="schedule_movie"),
     path('staff/schedules/edit/<str:schedule_id>',

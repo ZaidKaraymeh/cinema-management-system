@@ -1,25 +1,15 @@
-{% extends "sis/base.html" %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block content %}
-    <div class="content-section">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ user.username }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
-        </div>
-      </div>
-      {% comment %} exctype="multipart/form-data" to save the image {% endcomment %}
-      <form method="POST" exctype="multipart/form-data" >
-        {% csrf_token %}
+ {% block content %}
 
-        <fieldset class="form-group" > 
-            {{ userUpdateForm|crispy }}
-            {{ profileUpdateForm|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button type="submit" class="btn btn-outline-secondary" > Update </button>
-        </div>
-      </form>
-    </div>
-{% endblock content %}
+
+ <h2> You have been logged out </h2>
+ <div class="border-top pt-3" >
+    <small class="text-muted" > 
+         <a href="{% url 'login'  %}" >Log in Again </a>  
+    </small>
+<div>
+
+    
+
+{%endblock content %}

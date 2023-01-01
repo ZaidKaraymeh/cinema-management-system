@@ -1,0 +1,82 @@
+{% extends 'dashboard_base.html' %} {% block content_admin %}
+<section class="row">
+  <h2 class="text-center mt-4 py-0">Top Up Requests</h2>
+</section>
+<div class="table-responsive m-0 p-0">
+  <table class="table table-striped table-bordered border-dark">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center" scope="col">#</th>
+        <th class="text-center" scope="col">Email</th>
+        <th class="text-center" scope="col">Amount</th>
+        <th class="text-center" scope="col">Date Issued</th>
+        <th class="text-center" scope="col">Date Approved</th>
+        <th class="text-center" scope="col">Status</th>
+        <th class="text-center" scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for topup in topups %}
+      <tr>
+        <th class="text-center">{{forloop.counter}}</th>
+        <th class="text-center">
+          <a href="#d" class="text-info">
+            {{topup.user.email}}
+          </a>
+        </th>
+        <th class="text-center">{{topup.amount}}</th>
+        <th class="text-center">{{topup.created_at}}</th>
+        <th class="text-center">
+          {% if topup.is_approved %}
+            {{topup.modified_at}}
+          {% else %}
+            <b style="color:red" >-----</b>
+          {% endif %}
+        </th>
+        <th class="text-center">
+          {% if topup.is_approved %}
+            <b style="color:green" >Approved</b>
+          {% else %}
+            <b style="color:red" >Not Approved</b>
+          {% endif %}
+        </th>
+        <th class="text-center d-flex justify-content-center gap-2">
+          <div class="dropdown">
+          <a
+            class="btn btn-primary dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuLink"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Actions
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'approve_topup' topup.id %}">Approve Topup</a></li>
+          </ul>
+        </div>
+      </th>
+      </tr>
+  
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div
+    class="col d-flex align-items-center justify-content-center"
+    role="group"
+  >
+    {% if halls.has_previous %}
+    <a class="btn btn-dark mx-2" href="?page={{ halls.previous_page_number }}"
+      >Previous</a
+    >
+    {% endif %} {% if halls.has_next %}
+    <a class="btn btn-dark" href="?page={{ halls.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content_admin %}

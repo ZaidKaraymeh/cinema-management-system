@@ -1,3 +1,4 @@
+from payments.models import Topup
 from django.shortcuts import render, redirect
 from users.models import CustomUser
 from ..models import Movie
@@ -264,3 +265,13 @@ def delete_employee(request, employee_id):
     messages.error(request, f"{employee.email} has been Deleted successfuly!")
 
     return redirect('list_employees')
+
+
+def list_topups(request):
+    topups = Topup.objects.all().order_by('is_approved')
+
+    context = {
+        "topups": topups
+    }
+
+    return render(request, 'admin/list_topups.html', context)

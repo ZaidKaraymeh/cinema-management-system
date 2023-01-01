@@ -202,17 +202,7 @@ class Balance(models.Model):
         return f"{self.user.email}  {self.balance}"
 
 
-class Topup(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    balance = models.ForeignKey("core.Balance", on_delete=models.CASCADE)
 
-    amount = models.DecimalField(max_digits=6, decimal_places=3)
-    is_approved = models.BooleanField()
-    
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
 class Transaction(models.Model):
     id = models.UUIDField(
