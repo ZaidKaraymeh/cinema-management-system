@@ -19,6 +19,8 @@ from django.contrib.admin.sites import AlreadyRegistered
 from django.apps import apps
 from core.decorators import is_admin
 from django.contrib.contenttypes.models import ContentType
+from datetime import datetime
+from django.utils import timezone
 
 @is_admin
 def dashboard(request):
@@ -409,16 +411,20 @@ def export(request):
                         start_date, end_date]
                         )
                     response = HttpResponse(content_type='text/csv')
-                    response['Content-Disposition'] = f'attachment; filename="{model_name}s-{datetime.datetime.now()}.csv"'
+                    response['Content-Disposition'] = f'attachment; filename="{model_name}s-{datetime.now()}.csv"'
 
                     writer = csv.writer(response)
-                    writer.writerow([field.name for field in model_obj.model._meta.fields])
+                    headers = [
+                        field.name for field in model_obj.model._meta.fields]
+                    headers.append(timezone.now())
+                    writer.writerow(headers)
 
                     for instance in model_obj:
                         # write all the instances
                         writer.writerow([str(getattr(instance, field.name)) for field in instance._meta.fields])
                     return response
-                except:
+                except Exception as e:
+                    print(e)
                     continue
     else:
         
