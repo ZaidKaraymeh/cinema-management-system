@@ -384,7 +384,6 @@ def export(request):
     core_models = apps.get_app_config('core').get_models()
     payments_models = apps.get_app_config('payments').get_models()
     users_models = apps.get_app_config('users').get_models()
-
     choices = []
     for model in core_models:
         choices.append((model.__name__, model.__name__))
@@ -394,15 +393,13 @@ def export(request):
 
     for model in users_models:
         choices.append((model.__name__, model.__name__))
-
     if request.method == 'POST':
         form = ExportForm(choices, request.POST)
         if form.is_valid():
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             model_name = form.cleaned_data['choices']
-
-
+            
             app_labels = ['payments', 'core', 'users']
             for app in app_labels:
                 try:
@@ -414,8 +411,7 @@ def export(request):
                     response['Content-Disposition'] = f'attachment; filename="{model_name}s-{datetime.now()}.csv"'
 
                     writer = csv.writer(response)
-                    headers = [
-                        field.name for field in model_obj.model._meta.fields]
+                    headers = [field.name for field in model_obj.model._meta.fields]
                     headers.append(timezone.now())
                     writer.writerow(headers)
 

@@ -132,7 +132,8 @@ def contact(request):
         contact.save()
         if name and desc and phone and email:
             try:
-                send_mail(name, 'Your contact form was submitted successfully', 'cinema.admin.bh@gmail.com', ['xx@example.com'])
+                send_mail(name, 'Your contact form was submitted successfully',
+                          'newtestingtest1@gmail.com', [email])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
         return HttpResponseRedirect('/contact/')

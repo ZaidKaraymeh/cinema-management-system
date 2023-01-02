@@ -190,11 +190,11 @@ AUTH_BALANCE_MODEL = 'payments.balance'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 
-cloudinary.config(
-    cloud_name="hzlozofjp",
-    api_key="293651895622711",
-    api_secret="VWoDKs96pCdN1yBQRfXIWNm7XH4"
-)
+# cloudinary.config(
+#     cloud_name="hzlozofjp",
+#     api_key="293651895622711",
+#     api_secret="VWoDKs96pCdN1yBQRfXIWNm7XH4"
+# )
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": "hzlozofjp",
@@ -211,18 +211,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
 
 
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_PASSWORD = 'dsruckaldxuyykpc'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'cinema.adm.bh@gmail.com'
-SERVER_EMAIL = 'cinema.adm.bh@gmail.com'
-EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'cinema.adm.bh@gmail.com'
-EMAIL_HOST_PASSWORD = 'ttufmfddrqvrdphy'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'newtestingtest1@gmail.com'
+EMAIL_HOST_PASSWORD = 'mdazcnwpewsoweoo'
 
 TIME_ZONE = "Asia/Bahrain"

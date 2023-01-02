@@ -1,6 +1,6 @@
-{% extends 'dashboard_base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block content_admin %}
+{% block content %}
 <div class="container  h-100">
   <div class="row justify-content-center align-items-center h-100">
     <div class="col-12 col-lg-9 col-xl-7">
@@ -66,7 +66,7 @@
     </div>
   </div>
 </div>
-{%endblock content_admin %}
+{%endblock content %}
 {% block scripts %}
 <script>
   $('#id_genres').addClass('form-check');
