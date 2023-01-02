@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>Cineco</title>
 
     <!-- Bootstrap CSS CDN -->
     <link
@@ -27,8 +27,8 @@
       <!-- Sidebar  -->
       <nav id="sidebar">
         <div class="sidebar-header">
-          <h3>Bootstrap Sidebar</h3>
-          <strong>BS</strong>
+          <h3>Cinema Management System</h3>
+          <strong>CM</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -54,6 +54,9 @@
             </a>
             <a href="{% url 'list_topups' %}"
               ><i class="fa-regular fa-credit-card"></i> <span> Top Ups </span>
+            </a>
+            <a href="{% url 'list_transactions' %}"
+              ><i class="fa-solid fa-money-bills"></i> <span> Transactions </span>
             </a>
             <a href="{% url 'export' %}"
               > <i class="fa-solid fa-file-export"></i><span> Export </span>
@@ -90,6 +93,19 @@
             </button>
           </div>
         </nav>
+        {% if messages %} {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show m-0  text-center"
+        role="alert"
+      >
+        {{message}}
+        <button
+          type="button" class="close" data-dismiss="alert" aria-label="Close"
+        >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      {% endfor %} {% endif %} 
         {% block content_admin %}{% endblock content_admin %}
       </div>
     </div>

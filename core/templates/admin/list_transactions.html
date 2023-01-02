@@ -1,7 +1,7 @@
 {% extends 'dashboard_base.html' %} {% block content_admin %}
-<h2 class="text-center mt-4 py-0">Top Up Requests</h2>
+<h2 class="text-center mt-4 py-0">Transactions</h2>
 <form action="">
-        <input type="text" name="search" placeholder="Search by email" value="{{request.GET.title}}">
+        <input type="text" name="search" placeholder="Search by title" value="{{request.GET.title}}">
         <input class="btn btn-info" type="submit" value="Search">
     </form>
 <div class="table-responsive m-0 p-0">
@@ -9,6 +9,7 @@
     <thead class="table-dark">
       <tr>
         <th class="text-center" scope="col">#</th>
+        <th class="text-center" scope="col">Transaction</th>
         <th class="text-center" scope="col">Email</th>
         <th class="text-center" scope="col">Amount</th>
         <th class="text-center" scope="col">Date Issued</th>
@@ -18,28 +19,33 @@
       </tr>
     </thead>
     <tbody>
-      {% for topup in topups %}
+      {% for transaction in transactions %}
       <tr>
         <th class="text-center">{{forloop.counter}}</th>
         <th class="text-center">
-          <a href="{% url 'profile' topup.user.id %}" class="text-info text-decoration-none">
-            {{topup.user.email}}
+          <a href="{% url 'list_tickets' transaction.id %}" class="text-info text-decoration-none">
+            {{transaction.id}}
           </a>
         </th>
-        <th class="text-center">{{topup.amount}}</th>
-        <th class="text-center">{{topup.created_at}}</th>
         <th class="text-center">
-          {% if topup.is_approved %}
-            {{topup.modified_at}}
+          <a href="{% url 'profile' transaction.user.id %}" class="text-info text-decoration-none">
+            {{transaction.user.email}}
+          </a>
+        </th>
+        <th class="text-center">{{transaction.amount}}</th>
+        <th class="text-center">{{transaction.created_at}}</th>
+        <th class="text-center">
+          {% if transaction.isPaid %}
+            {{transaction.modified_at}}
           {% else %}
             <b style="color:red" >-----</b>
           {% endif %}
         </th>
         <th class="text-center">
-          {% if topup.is_approved %}
-            <b style="color:green" >Approved</b>
+          {% if transaction.isPaid %}
+            <b style="color:green" >Paid</b>
           {% else %}
-            <b style="color:red" >Not Approved</b>
+            <b style="color:red" >Not Paid</b>
           {% endif %}
         </th>
         <th class="text-center d-block justify-content-center gap-2">
@@ -56,7 +62,7 @@
           </a>
 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" href="{% url 'approve_topup' topup.id %}">Approve Topup</a></li>
+            <li><a class="dropdown-item" href="{% url 'approve_transaction' transaction.id %}">Approve transaction</a></li>
           </ul>
         </div>
       </th>
@@ -71,12 +77,12 @@
     class="col d-flex align-items-center justify-content-center"
     role="group"
   >
-    {% if halls.has_previous %}
-    <a class="btn btn-dark mx-2" href="?page={{ halls.previous_page_number }}"
+    {% if transactions.has_previous %}
+    <a class="btn btn-dark mx-2" href="?page={{ transactions.previous_page_number }}"
       >Previous</a
     >
-    {% endif %} {% if halls.has_next %}
-    <a class="btn btn-dark" href="?page={{ halls.next_page_number }}">Next</a>
+    {% endif %} {% if transactions.has_next %}
+    <a class="btn btn-dark" href="?page={{ transactions.next_page_number }}">Next</a>
     {% endif %}
   </div>
 </div>

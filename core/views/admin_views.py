@@ -28,6 +28,19 @@ def dashboard(request):
 
 @is_admin
 def list_movies(request):
+    if request.GET.get('search'):
+        try:
+            movies = Movie.objects.filter(
+                title__icontains=request.GET.get('search'))
+            paginator = Paginator(movies, 6)
+            page_number = request.GET.get('page') or 1
+            movies = paginator.get_page(page_number)
+            return render(request, 'admin/movies.html', {"movies": movies})
+        except Exception:
+            messages.error(
+                request, f"Employee with email {request.GET.get('search')} does not exist!")
+            return redirect('list_movies')
+
     list_movies = Movie.objects.all().order_by('created_at')
 
     paginator = Paginator(list_movies, 10)
@@ -98,6 +111,18 @@ def delete_movie(request, movie_id):
 
 @is_admin
 def list_schedule_movies(request):
+    if request.GET.get('search'):
+        try:
+            movie_schedules = MovieSchedule.objects.filter(
+                movie__title__icontains=request.GET.get('search'))
+            paginator = Paginator(movie_schedules, 6)
+            page_number = request.GET.get('page') or 1
+            movie_schedules = paginator.get_page(page_number)
+            return render(request, 'admin/list_movies_scheduled.html', {"movie_schedules": movie_schedules})
+        except Exception:
+            messages.error(
+                request, f"Employee with email {request.GET.get('search')} does not exist!")
+            return redirect('list_schedule_movies')
     movie_schedules = MovieSchedule.objects.all()
 
     paginator = Paginator(movie_schedules, 10)
@@ -200,8 +225,20 @@ def slots_available_json(request, hall_id, date):
 
 @is_admin
 def list_customers(request):
+    if request.GET.get('search'):
+        try:
+            customers = CustomUser.objects.filter(
+                email__icontains=request.GET.get('search'))
+            paginator = Paginator(customers, 6)
+            page_number = request.GET.get('page') or 1
+            customers = paginator.get_page(page_number)
+            return render(request, 'admin/list_customers.html', {"customers": customers})
+        except Exception:
+            messages.error(
+                request, f"Customer with email {request.GET.get('search')} does not exist!")
+            return redirect('list_customers')
     customers = CustomUser.objects.filter(user_type='CTM')
-    paginator = Paginator(customers, 10)
+    paginator = Paginator(customers, 7)
     page_number = request.GET.get('page')
     customers = paginator.get_page(page_number)
 
@@ -213,8 +250,21 @@ def list_customers(request):
 
 @is_admin
 def list_employees(request):
+    if request.GET.get('search'):
+        try:
+            employees = CustomUser.objects.filter(
+                email__icontains=request.GET.get('search'), user_type='ADM')
+            paginator = Paginator(employees, 6)
+            page_number = request.GET.get('page') or 1
+            employees = paginator.get_page(page_number)
+            return render(request, 'admin/list_employees.html', {"employees": employees})
+        except Exception:
+            messages.error(
+                request, f"Employee with email {request.GET.get('search')} does not exist!")
+            return redirect('list_employees')
+
     employees = CustomUser.objects.filter(user_type='ADM')
-    paginator = Paginator(employees, 10)
+    paginator = Paginator(employees, 7)
     page_number = request.GET.get('page')
     employees = paginator.get_page(page_number)
 
@@ -230,9 +280,20 @@ def view_customer_ticket_history(request):
 
 @is_admin
 def list_halls(request):
-
+    if request.GET.get('search'):
+        try:
+            halls = Hall.objects.filter(
+                name__icontains=request.GET.get('search'))
+            paginator = Paginator(halls, 6)
+            page_number = request.GET.get('page') or 1
+            halls = paginator.get_page(page_number)
+            return render(request, 'admin/list_halls.html', {"halls": halls})
+        except Exception:
+            messages.error(
+                request, f"Employee with email {request.GET.get('search')} does not exist!")
+            return redirect('list_halls')
     halls = Hall.objects.all()
-    paginator = Paginator(halls, 10)
+    paginator = Paginator(halls, 6)
     page_number = request.GET.get('page')
     halls = paginator.get_page(page_number)
 
@@ -294,6 +355,19 @@ def delete_employee(request, employee_id):
 
 @is_admin
 def list_topups(request):
+    if request.GET.get('search'):
+        try:
+            topups = Topup.objects.filter(
+                user__email__icontains=request.GET.get('search')).order_by('is_approved')
+            paginator = Paginator(topups, 6)
+            page_number = request.GET.get('page') or 1
+            topups = paginator.get_page(page_number)
+            return render(request, 'admin/list_topups.html', {"topups": topups})
+        except Exception:
+            messages.error(
+                request, f"Topup with email {request.GET.get('search')} does not exist!")
+            return redirect('list_topups')
+    
     topups = Topup.objects.all().order_by('is_approved')
 
     context = {
@@ -378,3 +452,86 @@ def export(request):
 
 #             continue
 #     model_fields("Ticket")
+
+
+# list transactions
+@is_admin
+def list_transactions(request):
+    if request.GET.get('search'):
+        try:
+            transactions = Transaction.objects.filter(user__email__icontains=request.GET.get('search'))
+            paginator = Paginator(transactions, 6)
+            page_number = request.GET.get('page') or 1
+            transactions = paginator.get_page(page_number)
+            return render(request, 'admin/list_transactions.html', {"transactions": transactions})
+        except Exception: 
+            messages.error(request, f"Transaction with id {request.GET.get('search')} does not exist!")
+            return redirect('list_transactions')
+
+    transactions = Transaction.objects.all().order_by('-created_at')
+    #pagination
+    paginator = Paginator(transactions, 6)
+    page_number = request.GET.get('page')
+    transactions = paginator.get_page(page_number)
+
+
+    context = {
+        "transactions": transactions
+    }
+
+    return render(request, 'admin/list_transactions.html', context)
+
+# approve transaction
+@is_admin
+def approve_transaction(request, transaction_id):
+    transaction = Transaction.objects.get(id=transaction_id)
+    if transaction.isPaid:
+        messages.error(request, f"{transaction.id} has already been approved!")
+        return redirect('list_transactions')
+    transaction.isPaid = True
+    transaction.save()
+    balance, created = Balance.objects.get_or_create(user=transaction.user)
+    balance.balance -= transaction.amount
+    balance.save()
+    messages.success(request, f"{transaction} has been approved successfuly!")
+
+    return redirect('list_transactions')
+
+# view transaction
+@is_admin
+def view_transaction(request, transaction_id):
+    transaction = Transaction.objects.get(id=transaction_id)
+    context = {
+        "transaction": transaction
+    }
+
+    return render(request, 'admin/view_transaction.html', context)
+
+# list tickets
+@is_admin
+def list_tickets(request, transaction_id):
+    transaction = Transaction.objects.get(id=transaction_id)
+    tickets = Ticket.objects.filter(transaction=transaction_id)
+    #pagination
+    paginator = Paginator(tickets, 7)
+    page_number = request.GET.get('page')
+    tickets = paginator.get_page(page_number)
+    
+
+
+    context = {
+        "tickets": tickets,
+        "transaction": transaction
+    }
+
+    return render(request, 'admin/list_tickets.html', context)
+
+
+# delete hall
+@is_admin
+def delete_hall(request, hall_id):
+    hall = Hall.objects.get(id=hall_id)
+    hall.delete()
+    messages.success(request, f"{hall.name} has been deleted successfuly!")
+
+    return redirect('list_halls')

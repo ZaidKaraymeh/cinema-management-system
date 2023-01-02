@@ -1,10 +1,15 @@
 {% extends 'dashboard_base.html' %} {% block content_admin %}
 <section class="row">
-  <h2 class="text-center my-4">Movie Schedules</h2>
-  <div class="col p-4 d-flex justify-content-end align-items-start gap-2">
+  <div class="col-8">
+    
+    <h2 class="text-center my-4">Movie Schedules </h2>
+    <form action="">
+        <input type="text" name="search" placeholder="Search by title" value="{{request.GET.title}}">
+        <input class="btn btn-info" type="submit" value="Search">
+    </form>
+  </div>
+  <div class="col-4 p-4 d-flex justify-content-end align-items-start gap-2">
     <a class="btn btn-dark mx-2" href="{% url 'schedule_movie' %}"> Add Movie Schedule</a>
-    <a class="btn btn-dark mr-2" href="#"> Export </a>
-    <a class="btn btn-primary" href="#"> Back </a>
   </div>
 </section>
 <div class="table-responsive m-0 p-0">
@@ -20,6 +25,7 @@
       </tr>
     </thead>
     <tbody>
+      
       {% for movie in movie_schedules %}
       <tr>
         <th class="text-center">{{forloop.counter}}</th>
@@ -27,10 +33,10 @@
         <th class="text-center">{{movie.slot.slot}}</th>
         <th class="text-center">{{movie.slot.date_reserved}}</th>
         <th class="text-center">{{movie.hall.name}}</th>
-        <th class="text-center d-flex justify-content-center gap-2">
+        <th class="text-center ">
             <div class="dropdown">
             <a
-              class="btn btn-primary dropdown-toggle"
+              class="btn btn-primary dropdown-toggle w-100"
               href="#"
               role="button"
               id="dropdownMenuLink"

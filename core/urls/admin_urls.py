@@ -9,8 +9,12 @@ urlpatterns = [
          admin_views.edit_movie, name="edit_movie"),
     path('staff/movies/delete/<str:movie_id>',
          admin_views.delete_movie, name="delete_movie"),
+     path('staff/hall/delete/<str:hall_id>', admin_views.delete_hall, name="delete_hall"),
 
     path('staff/topups', admin_views.list_topups, name="list_topups"),
+    path('staff/transactions', admin_views.list_transactions, name="list_transactions"),
+    path('staff/tickets/<str:transaction_id>', admin_views.list_tickets, name="list_tickets"),
+    path('staff/transaction/approve/<str:transaction_id>', admin_views.approve_transaction, name="approve_transaction"),
 
     path('staff/movies', admin_views.list_movies, name="list_movies"),
     path('staff/schedules/add', admin_views.schedule_movie, name="schedule_movie"),

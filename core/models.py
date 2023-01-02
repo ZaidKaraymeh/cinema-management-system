@@ -269,7 +269,7 @@ class Transaction(models.Model):
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.amount)
 
 class Review(models.Model):
     id = models.UUIDField(
@@ -302,7 +302,7 @@ class Genre(models.Model):
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 # class Coupon(models.Model):

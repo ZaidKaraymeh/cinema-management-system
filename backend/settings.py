@@ -211,9 +211,16 @@ CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
 
 
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_PASSWORD = 'dsruckaldxuyykpc'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'cinema.adm.bh@gmail.com'
+SERVER_EMAIL = 'cinema.adm.bh@gmail.com'
+EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cinema.adm.bh@gmail.com'
-EMAIL_HOST_PASSWORD = 'uqmitywohkspsxwr'
+EMAIL_HOST_PASSWORD = 'ttufmfddrqvrdphy'
