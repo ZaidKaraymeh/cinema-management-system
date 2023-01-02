@@ -68,8 +68,6 @@ class Slot(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    def __str__(self):
-        return self.slot
 
     """ def save(self, *args, **kwargs):
         self.object_list = Slot.objects.order_by('_id')
@@ -186,10 +184,10 @@ class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    @property
-    def get_price(self):
-        # type: ignore
-        return Decimal(3) if self.seat.type == "NRM" else Decimal(4.5)
+    # @property
+    # def get_price(self):
+    #     # type: ignore
+    #     return Decimal(3) if self.seat.type == "NRM" else Decimal(4.5)
 
     def __str__(self):
         return str(self.id)
@@ -227,8 +225,8 @@ class Balance(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    def __str__(self):
-        return f"{self.user.email}  {self.balance}"
+    # def __str__(self):
+    #     return f"{self.user.email}  {self.balance}"
     
     def __str__(self):
         return str(self.balance)

@@ -33,7 +33,7 @@
         border-bottom-left-radius: 8px;
     }
     .cardRight {
-        /* width: 6.5em; */
+        width: 15.5em;
         border-left: 0.18em dashed #fff;
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
@@ -134,34 +134,36 @@
 </style>
 {% endblock style %}
 {% block content %}
+
+{% for ticket in transaction.tickets.all %}
 <div class="card">
     <div class="cardWrap">
         <div class="ticketCard cardLeft">
             <h1 style="color: white;">CINECO</h1>
             <div class="title">
-                <h2>Peaky Blinders</h2>
+                <h2>{{ticket.movie_schedule.movie.title}}</h2>
                 <span>movie</span>
             </div>
             <div class="name">
-                <h2>Vladimir Kudinov</h2>
+                <h2>{{ticket.user.first_name}} {{ticket.user.last_name}}</h2>
                 <span>name</span>
             </div>
             <div class="row">
                 <div class="col-4">
                     <div class="seat">
-                        <h2>156</h2>
+                        <h2>{{ticket.movie_schedule.hall.name}}</h2>
                         <span>Hall</span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="seat">
-                        <h2>156</h2>
+                        <h2>{{ticket.seat.name}}</h2>
                         <span>seat</span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="time">
-                        <h2>12:00</h2>
+                        <h2>{{ticket.movie_schedule.slot.slot}}</h2>
                         <span>time</span>
                     </div>
                 </div>
@@ -172,13 +174,13 @@
             <div class="row">
                 <div class="col-6">
                     <div class="number">
-                        <h3>156</h3>
+                        <h3>{{ticket.movie_schedule.hall.name}}</h3>
                         <span>hall</span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="number">
-                        <h3>156</h3>
+                        <h3>{{ticket.seat.name}}</h3>
                         <span>seat</span>
                     </div>
                 </div>
@@ -189,14 +191,15 @@
             </div>
         </div>
     </div>
-
 </div>
+{% endfor %}
+
 {% endblock content %}
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     document.querySelector('body').style.background = '#fff';
-
+    
     new QRCode("qrcode", {
         text: "http://127.0.0.1:8000/ticket/",
         width: 128,

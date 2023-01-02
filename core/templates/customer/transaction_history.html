@@ -26,7 +26,11 @@
                           <td>{{ transaction.tickets.all.first.movie_schedule.movie.title}}</td>
                           <td>{{ transaction.created_at }}</td>
                           <td>{{ transaction.amount }}</td>
-                          <td></td>
+                          <td>
+                            <a href="{% url 'tickets' transaction.id %}" class="btn btn-info">
+                                View Tickets
+                            </a>
+                          </td>
                       </tr>
                       {% endfor %}
                   </tbody>
