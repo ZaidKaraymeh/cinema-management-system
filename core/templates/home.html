@@ -68,6 +68,16 @@
   <!-- Movies -->
   <div class="row p-2 pb-5">
       <h2 class="p-4 border-top border-dark border-2">Browse Movies</h2>
+      <form action="">
+        <div class="row my-2">
+          <div class="col d-flex gap-3">
+
+            <input class="form-control" type="text" name="search" placeholder="Search by title" value="{{request.GET.title}}">
+            <input class="btn btn-info" type="submit" value="Search">
+          </div>
+            
+        </div>
+      </form>
       {% for movie in movies_list %}
       <div class="col-xl-4 col-md-6 col-sm-12 py-2">
         <a href="{% url 'movie_details' movie.id %}" style="color:inherit">

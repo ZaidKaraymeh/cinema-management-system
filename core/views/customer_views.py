@@ -49,6 +49,7 @@ def book_ticket_json(request, schedule_id, user_id):
             total += Decimal(3.0)
     # balance.balance = Decimal(100)
     if total > balance.balance:
+        messages.error(request, 'Insufficient Balance')
         return JsonResponse({'error': 'Insufficient Balance'})
     
     transaction = Transaction.objects.create(
@@ -75,22 +76,22 @@ def book_ticket_json(request, schedule_id, user_id):
     if data['isOnline']:
         transaction.isPaid = True
         transaction.save()
-    html_message = loader.render_to_string(
-        'customer/email.html',
-        {
-            'user': user,
-            'transaction':  transaction,
-            "site": "http://127.0.0.1:8000"
-        }
-    )
-    send_mail(
-        f"Purchase Transaction ID: {transaction.id}", 
-        'Your contact form was submitted successfully',
-        'newtestingtest1@gmail.com',
-        [f'{user.email}'],
-        fail_silently=False,
-        html_message=html_message,
-        )
+    # html_message = loader.render_to_string(
+    #     'customer/email.html',
+    #     {
+    #         'user': user,
+    #         'transaction':  transaction,
+    #         "site": "http://127.0.0.1:8000"
+    #     }
+    # )
+    # send_mail(
+    #     f"Purchase Transaction ID: {transaction.id}", 
+    #     'Your contact form was submitted successfully',
+    #     'newtestingtest1@gmail.com',
+    #     [f'{user.email}'],
+    #     fail_silently=False,
+    #     html_message=html_message,
+    #     )
 
 
     return JsonResponse({'code': '200', 'balance': balance.balance})
@@ -138,3 +139,5 @@ def topup_history(request):
         'topups': topups
     }
     return render(request, 'customer/topup_history.html', context)
+
+

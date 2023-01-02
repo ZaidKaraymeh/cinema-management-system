@@ -288,9 +288,11 @@
       .then((data) => {
         console.log(data);
         if (data.code == '200'){
-          window.location.href = `http://localhost:8000/transaction/${data.transactionId}`
+          window.location.href = `http://localhost:8000/transactions`
         } else {
-          alert(data.message)
+          const invoice = document.querySelector("#error-message");
+          document.querySelector("#error-message").style.visibility = "visible";
+          invoice.innerHTML = "Insufficient Balance";
         }
       });
 

@@ -71,7 +71,7 @@
                 {% endif %}
                 {% elif request.user.user_type == 'ADM' %}
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'list_employees' %}">Dashboard</a>
                   </li>
                   {% endif %}
               {% if request.user.is_authenticated %}

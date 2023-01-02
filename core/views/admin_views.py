@@ -537,3 +537,17 @@ def delete_hall(request, hall_id):
     messages.success(request, f"{hall.name} has been deleted successfuly!")
 
     return redirect('list_halls')
+
+
+# highest watched movie
+@is_admin
+def highest_watched_movie(request):
+    movies = MovieSchedule.objects.all()
+    highest_watched_movie = movies.order_by('-watched').first()
+    context = {
+        "highest_watched_movie": highest_watched_movie
+    }
+
+    return render(request, 'admin/highest_watched_movie.html', context)
+
+

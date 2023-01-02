@@ -11,10 +11,22 @@ from django.http import HttpResponse
 from django.db import models
 
 def home(request):
+    movies_featured = Movie.objects.all().reverse()[:3]
+    if request.GET.get('search'):
+        try:
+            movies = Movie.objects.filter(
+                title__icontains=request.GET.get('search'))
+            paginator = Paginator(movies, 6)
+            page_number = request.GET.get('page') or 1
+            movies = paginator.get_page(page_number)
+            return render(request, 'home.html', {"movies_list": movies, 'movies': movies_featured, })
+        except Exception as e:
+            messages.error(
+                request, f"{e}")
+            return redirect('home')
     user = request.user
 
     # last 10 records of movies
-    movies_featured = Movie.objects.all().reverse()[:3]
     movies = Movie.objects.all()
 
     context = {
