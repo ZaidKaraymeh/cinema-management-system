@@ -8,7 +8,7 @@ from ..utils.helpers import *
 from ..models import *
 import json
 from django.http import HttpResponse 
-
+from django.db import models
 
 def home(request):
     user = request.user
@@ -21,7 +21,7 @@ def home(request):
         'movies':movies_featured,
         'movies_list': movies
     }
-
+    
     return render(request, "home.html", context)
 
 

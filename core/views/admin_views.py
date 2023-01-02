@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.admin.sites import AlreadyRegistered
 from django.apps import apps
 from core.decorators import is_admin
+from django.contrib.contenttypes.models import ContentType
 
 @is_admin
 def dashboard(request):
@@ -324,21 +325,27 @@ def export(request):
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             model_name = form.cleaned_data['choices']
-            model_obj = apps.get_model("core", model_name).objects.filter(
-                created_at__range=[
-                start_date, end_date]
-                )
-            print(model_obj)
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="topups.csv"'
 
-            writer = csv.writer(response)
-            writer.writerow([field.name for field in model_obj.model._meta.get_fields()])
 
-            for instance in model_obj:
-                # write all the instances
-                writer.writerow([getattr(instance, field.name) for field in instance._meta.get_fields()])
-            return response
+            app_labels = ['payments', 'core', 'users']
+            for app in app_labels:
+                try:
+                    model_obj = apps.get_model(app, model_name).objects.filter(
+                        created_at__range=[
+                        start_date, end_date]
+                        )
+                    response = HttpResponse(content_type='text/csv')
+                    response['Content-Disposition'] = f'attachment; filename="{model_name}s-{datetime.datetime.now()}.csv"'
+
+                    writer = csv.writer(response)
+                    writer.writerow([field.name for field in model_obj.model._meta.fields])
+
+                    for instance in model_obj:
+                        # write all the instances
+                        writer.writerow([str(getattr(instance, field.name)) for field in instance._meta.fields])
+                    return response
+                except:
+                    continue
     else:
         
 
@@ -349,3 +356,25 @@ def export(request):
     }
 
     return render(request, 'admin/export.html', context)
+
+
+# from django.apps import apps
+
+#     def model_fields(model_name):
+
+#         model_obj = apps.get_model("core", model_name).objects.filter()
+#         field_names = [field.name for field in model_obj.model._meta.get_fields()]
+#         print(field_names)
+#         for instance in model_obj:
+#             # field_values_str = [str(getattr(instance, field.name)) for field in instance._meta.get_fields()]
+#             field_values_class_type = [getattr(instance, field.name)  for field in instance._meta._get_fields(reverse=False, include_parents=False)]
+#             field_values = [getattr(instance, field.name) for field in instance._meta.get_fields()]
+#             # print(field_values_class_name)
+#             for index, field in enumerate(field_values_class_type):
+#                 # print(f"{index} {field} == ManyRelatedManager", field == 'ManyRelatedManager' )
+#                 if field.__class__.__name__ == 'ManyRelatedManager':
+#                     print(index)
+
+
+#             continue
+#     model_fields("Ticket")

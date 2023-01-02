@@ -8,7 +8,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 
-
 class Venue(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -31,17 +30,16 @@ class Hall(models.Model):
     name = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
-
-    def __str__(self):
-        return self.name
     
+    def __str__(self) -> str:
+        return str(self.name)
 
 class Slot(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    
+
     # _id = models.IntegerField()
-    
+
     EIGHT_AM = '8:00'
     ELEVEN_AM = "11:00"
     TWO_PM = '14:00'
@@ -57,8 +55,6 @@ class Slot(models.Model):
         (ELEVEN_PM, "23:00"),
     ]
 
-
-
     slot = models.CharField(
         max_length=8,
         choices=SLOT_TIME_CHOICES,
@@ -71,6 +67,7 @@ class Slot(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
     def __str__(self):
         return self.slot
 
@@ -81,17 +78,20 @@ class Slot(models.Model):
         else:
             self._id = self.object_list.last()._id + 1
         super(Slot, self).save() """
-        
 
+    def __str__(self) -> str:
+        return str(self.slot)
 
 class Movie(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
     trailer = models.FileField(upload_to='movies', max_length=100, null=True)
-    thumbnail = models.FileField(upload_to='thumbnail', max_length=100, null=False, default='undefined')
+    thumbnail = models.FileField(
+        upload_to='thumbnail', max_length=100, null=False, default='undefined')
 
-    release_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
+    release_date = models.DateField(
+        auto_now=False, auto_now_add=False, null=True)
     duration = models.CharField(max_length=4, default="60")
     genres = models.ManyToManyField("core.Genre")
     title = models.CharField(max_length=255)
@@ -102,7 +102,7 @@ class Movie(models.Model):
         increment n
     """
     rating_average = models.DecimalField(
-        default= Decimal(0), max_digits=2, decimal_places=1,
+        default=Decimal(0), max_digits=2, decimal_places=1,
         validators=[
             MaxValueValidator(5),
             MinValueValidator(0)
@@ -131,8 +131,7 @@ class Movie(models.Model):
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
-        return self.title
-    
+        return str(self.title)
 
 
 # schedule.hall.seats.all()
@@ -140,29 +139,33 @@ class MovieSchedule(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE, blank=True)
+    movie = models.ForeignKey(
+        "core.Movie", on_delete=models.CASCADE, blank=True)
     hall = models.ForeignKey("core.Hall", on_delete=models.CASCADE, blank=True)
     slot = models.ForeignKey("core.Slot", on_delete=models.CASCADE, null=True)
     reserved_seats = models.ManyToManyField("core.Seat", blank=True)
-    selected_seats = models.ManyToManyField("core.Seat", blank=True, related_name="selected_seats")
+    selected_seats = models.ManyToManyField(
+        "core.Seat", blank=True, related_name="selected_seats")
     #playtime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    def __str__(self):
+        return str(self.id)
 
-"""
 
-"""
 class Ticket(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    movie_schedule = models.ForeignKey("core.MovieSchedule", on_delete=models.CASCADE)
+    movie_schedule = models.ForeignKey(
+        "core.MovieSchedule", on_delete=models.CASCADE)
     seat = models.ForeignKey("core.Seat", on_delete=models.CASCADE, null=True)
 
-    price = models.DecimalField(max_digits=6, decimal_places=3, default= Decimal(0))
+    price = models.DecimalField(
+        max_digits=6, decimal_places=3, default=Decimal(0))
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -171,6 +174,11 @@ class Ticket(models.Model):
     def get_price(self):
         # type: ignore
         return Decimal(3) if self.seat.type == "NRM" else Decimal(4.5)
+
+    def __str__(self):
+        return str(self.id)
+
+
 class Seat(models.Model):
 
     id = models.UUIDField(
@@ -192,20 +200,22 @@ class Seat(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+
 class Balance(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    balance = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal('0'))
-
+    balance = models.DecimalField(
+        max_digits=6, decimal_places=3, default=Decimal('0'))
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return f"{self.user.email}  {self.balance}"
-
-
+    
+    def __str__(self):
+        return str(self.id)
 
 
 class Transaction(models.Model):
@@ -213,8 +223,9 @@ class Transaction(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(CustomUser,
                              on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal('0'))
-    
+    amount = models.DecimalField(
+        max_digits=6, decimal_places=3, default=Decimal('0'))
+
     tickets = models.ManyToManyField("core.Ticket")
 
     # If the user paid online or in person
@@ -240,7 +251,7 @@ class Transaction(models.Model):
     # @property
     # def final_price(self):
     #     """
-    #         VIP tickets are 1.5 more than normal tickets from Decimal(1.5) 
+    #         VIP tickets are 1.5 more than normal tickets from Decimal(1.5)
     #     """
 
     #     final : Decimal = Decimal('0')
@@ -251,11 +262,14 @@ class Transaction(models.Model):
     #             final += movie.price - movie.price * Decimal(self.discount.discount/100) * Decimal(1.5)
     #         else:
     #             final += movie.price - movie.price * Decimal(self.discount.discount/100)
-        
+
     #     return round(final, 3)
 
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return str(self.id)
 
 class Review(models.Model):
     id = models.UUIDField(
@@ -275,6 +289,8 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    def __str__(self):
+        return str(self.id)
 
 class Genre(models.Model):
     id = models.UUIDField(
@@ -286,13 +302,13 @@ class Genre(models.Model):
     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 
 # class Coupon(models.Model):
 #     id = models.UUIDField(
 #         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    
+
 #     code = models.CharField(max_length=20)
 #     discount = models.IntegerField(
 #         default=0,
