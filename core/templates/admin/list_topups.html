@@ -71,12 +71,12 @@
     class="col d-flex align-items-center justify-content-center"
     role="group"
   >
-    {% if halls.has_previous %}
-    <a class="btn btn-dark mx-2" href="?page={{ halls.previous_page_number }}"
+    {% if topups.has_previous %}
+    <a class="btn btn-dark mx-2" href="?page={{ topups.previous_page_number }}"
       >Previous</a
     >
-    {% endif %} {% if halls.has_next %}
-    <a class="btn btn-dark" href="?page={{ halls.next_page_number }}">Next</a>
+    {% endif %} {% if topups.has_next %}
+    <a class="btn btn-dark" href="?page={{ topups.next_page_number }}">Next</a>
     {% endif %}
   </div>
 </div>

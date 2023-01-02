@@ -8,15 +8,15 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 
-class Venue(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    name = models.CharField(max_length=20)
-    address = models.CharField(max_length=255)
-    movies = models.ManyToManyField("core.Movie")
+# class Venue(models.Model):
+#     id = models.UUIDField(
+#         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+#     name = models.CharField(max_length=20)
+#     address = models.CharField(max_length=255)
+#     movies = models.ManyToManyField("core.Movie")
 
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+#     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
 
 class Hall(models.Model):
@@ -101,14 +101,14 @@ class Movie(models.Model):
         ((n)*old_average + new_rating )/(n+1)
         increment n
     """
-    rating_average = models.DecimalField(
-        default=Decimal(0), max_digits=2, decimal_places=1,
-        validators=[
-            MaxValueValidator(5),
-            MinValueValidator(0)
-        ])
-    rating_count = models.IntegerField(default=0)
-    reviews = models.ManyToManyField("core.Review", blank=True)
+    # rating_average = models.DecimalField(
+    #     default=Decimal(0), max_digits=2, decimal_places=1,
+    #     validators=[
+    #         MaxValueValidator(5),
+    #         MinValueValidator(0)
+    #     ])
+    # rating_count = models.IntegerField(default=0)
+    # reviews = models.ManyToManyField("core.Review", blank=True)
     """
         Check if user found in users_rated, 
         if user not in users_rated, 
@@ -271,26 +271,26 @@ class Transaction(models.Model):
     def __str__(self):
         return str(self.amount)
 
-class Review(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+# class Review(models.Model):
+#     id = models.UUIDField(
+#         primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
-    user = models.ForeignKey(CustomUser,
-                             on_delete=models.CASCADE)
-    #movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
+#     user = models.ForeignKey(CustomUser,
+#                              on_delete=models.CASCADE)
+#     #movie = models.ForeignKey("core.Movie", on_delete=models.CASCADE)
 
-    rating = models.IntegerField(
-        validators=[
-            MaxValueValidator(5),
-            MinValueValidator(0)
-        ])
-    comment = models.TextField(max_length=500, null=True)
+#     rating = models.IntegerField(
+#         validators=[
+#             MaxValueValidator(5),
+#             MinValueValidator(0)
+#         ])
+#     comment = models.TextField(max_length=500, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
+#     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    def __str__(self):
-        return str(self.id)
+#     def __str__(self):
+#         return str(self.id)
 
 class Genre(models.Model):
     id = models.UUIDField(

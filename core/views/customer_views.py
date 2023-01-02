@@ -75,22 +75,22 @@ def book_ticket_json(request, schedule_id, user_id):
     if data['isOnline']:
         transaction.isPaid = True
         transaction.save()
-    # html_message = loader.render_to_string(
-    #     'customer/email.html',
-    #     {
-    #         'user': user,
-    #         'transaction':  transaction,
-    #         "site": "http://127.0.0.1:8000"
-    #     }
-    # )
-    # send_mail(
-    #     f"Purchase Transaction ID: {transaction.id}", 
-    #     'Your contact form was submitted successfully',
-    #     'cinema.admin.bh@gmail.com', 
-    #     [f'{user.email}'],
-    #     fail_silently=False,
-    #     html_message=html_message,
-    #     )
+    html_message = loader.render_to_string(
+        'customer/email.html',
+        {
+            'user': user,
+            'transaction':  transaction,
+            "site": "http://127.0.0.1:8000"
+        }
+    )
+    send_mail(
+        f"Purchase Transaction ID: {transaction.id}", 
+        'Your contact form was submitted successfully',
+        'newtestingtest1@gmail.com',
+        [f'{user.email}'],
+        fail_silently=False,
+        html_message=html_message,
+        )
 
 
     return JsonResponse({'code': '200', 'balance': balance.balance})
@@ -125,7 +125,7 @@ def tickets(request):
 
 # view transaction histor
 def transaction_history(request):
-    transactions = Transaction.objects.filter(user=request.user)
+    transactions = Transaction.objects.filter(user=request.user).order_by('-created_at')
     context = {
         'transactions': transactions
     }
@@ -133,7 +133,7 @@ def transaction_history(request):
 
 # topup history
 def topup_history(request):
-    topups = Topup.objects.filter(user=request.user)
+    topups = Topup.objects.filter(user=request.user).order_by('-created_at')
     context = {
         'topups': topups
     }

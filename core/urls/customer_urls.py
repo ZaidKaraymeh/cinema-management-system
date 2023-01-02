@@ -8,4 +8,5 @@ urlpatterns = [
     #path('tickets/<str:transaction_id>', customer_views.tickets, name="tickets"),
     path('tickets', customer_views.tickets, name="tickets"),
     path('transactions', customer_views.transaction_history, name="transactions"),
+    path('topups', customer_views.topup_history, name="topups"),
 ]

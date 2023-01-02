@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <div class="row">
+      <div class="card p-3">
+        <div class="card-body">
+          <div class="col-md-12">
+              <h1 class="text-center" >Topup History</h1>
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Topup ID</th>
+                          <th>Amount</th>
+                          <th>Date Issued</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for topup in topups %}
+                      <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{ topup.id }}</td>
+                          <td>{{ topup.amount}}</td>
+                          <td>{{ topup.created_at }}</td>
+                          <td>
+                            {% if topup.is_approved %}
+                                <b style="color:green" >Approved</b>
+                            {% else %}
+                                <b style="color:red" >Not Approved</b>
+                            {% endif %}
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}
