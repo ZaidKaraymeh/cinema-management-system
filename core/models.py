@@ -215,7 +215,7 @@ class Balance(models.Model):
         return f"{self.user.email}  {self.balance}"
     
     def __str__(self):
-        return str(self.id)
+        return str(self.balance)
 
 
 class Transaction(models.Model):
