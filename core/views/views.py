@@ -27,11 +27,13 @@ def home(request):
     user = request.user
 
     # last 10 records of movies
-    movies = Movie.objects.all()
+    movies = Movie.objects.filter(status="Running")
+    upcoming = Movie.objects.filter(status="Upcoming")
 
     context = {
         'movies':movies_featured,
-        'movies_list': movies
+        'movies_list': movies,
+        'upcoming': upcoming,
     }
     
     return render(request, "home.html", context)

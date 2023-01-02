@@ -1,6 +1,6 @@
-{% extends 'dashboard_base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
- {% block content_admin %}
+ {% block content %}
 
  <div class="container py-5 h-100">
     <div class="row justify-content-center align-items-center h-100">
@@ -46,6 +46,15 @@
                     </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    {{ status_form.status }}
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                </div>
+              </div>
   
               <div class="row">
                 <div class="col-md-6 mb-4" id="thumbnail">
@@ -68,7 +77,7 @@
       </div>
     </div>
   </div>
-  {%endblock content_admin %}
+  {%endblock content %}
   {% block scripts %}
   <script>
     $('#id_genres').addClass('form-check');

@@ -96,6 +96,22 @@ class Movie(models.Model):
     genres = models.ManyToManyField("core.Genre")
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1500, null=True)
+
+    RUNNING = 'Running'
+    UPCOMING = "Upcoming"
+    ARCHIVED = "Archived"
+    STATUS_TYPE_CHOICES = [
+        (RUNNING, "Running"),
+        (UPCOMING, "Upcoming"),
+        (ARCHIVED, "Archived"),
+    ]
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_TYPE_CHOICES,
+        default=ARCHIVED,
+
+    )
+    
     """
         Calculate Average
         ((n)*old_average + new_rating )/(n+1)

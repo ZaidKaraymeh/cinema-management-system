@@ -86,18 +86,22 @@ def edit_movie(request, movie_id):
 
     if request.method == "POST":
         movie_form = MovieForm(request.POST, instance=movie)
-        if movie_form.is_valid():
+        status_form = MovieStatusForm(request.POST)
+        if movie_form.is_valid() and status_form.is_valid():
             movie = movie_form.save(commit=False)
+            movie.status = status_form.cleaned_data['status']
             movie.save()
             messages.info(
                 request, f"{movie.title} has been Edited successfuly!")
             return redirect('list_movies')
     else:
         movie_form = MovieForm(instance=movie)
+        status_form = MovieStatusForm()
 
     context = {
         "form": movie_form,
         "movie": movie,
+        "status_form": status_form,
     }
     return render(request, "admin/edit_movie.html", context)
 
