@@ -78,9 +78,11 @@
                   </a>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="{% url 'profile' request.user.id %}">Profile</a>
+                    {% if request.user.user_type == 'CTM' %}
                     <a class="dropdown-item" href="{% url 'topup' %}">Top Up</a>
                     <a class="dropdown-item" href="{% url 'transactions' %}">Transaction History</a>
                     <a class="dropdown-item" href="{% url 'topups' %}">Topup History</a>
+                    {% endif %}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                   </div>

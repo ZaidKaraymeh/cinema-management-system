@@ -2,9 +2,11 @@
 <section class="row">
   <div class="col-8">
     <h2 class="text-center mt-4 py-0">Employees</h2>
-    <form action="">
-        <input type="text" name="search" placeholder="Search by email" value="{{request.GET.title}}">
-        <input class="btn btn-info" type="submit" value="Search">
+    <form action="" class="my-3">
+        <div class="col-6 d-flex gap-2 ">
+          <input class="form-control mr-3" type="text" name="search" placeholder="Search by email" value="{{request.GET.title}}">
+          <input class="btn btn-info" type="submit" value="Search">
+        </div>
     </form>
   </div>
   <div class="col-4 p-4 d-flex justify-content-end align-items-start gap-2 py-0">

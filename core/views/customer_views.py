@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.db import transaction
 from django.core.mail import send_mail
 from django.template import loader
-
+from core.decorators import is_admin, is_customer
 
 # Customer Movie Booking
 def customer_movie_booking(request, schedule_id):
@@ -35,6 +35,8 @@ def customer_movie_booking(request, schedule_id):
 @transaction.atomic
 def book_ticket_json(request, schedule_id, user_id):
     user = CustomUser.objects.get(id=user_id)
+    if user.user_type != "CTM":
+        return JsonResponse({"code":"403", "message":"Access Denied, Admin Cant Buy Tickets"})
     movie_schedule = MovieSchedule.objects.get(id=schedule_id)
     balance, created = Balance.objects.get_or_create(user=user)
 
@@ -48,7 +50,7 @@ def book_ticket_json(request, schedule_id, user_id):
         else:
             total += Decimal(3.0)
     # balance.balance = Decimal(100)
-    if total > balance.balance:
+    if total > balance.balance and data['isOnline']:
         messages.error(request, 'Insufficient Balance')
         return JsonResponse({'error': 'Insufficient Balance'})
     
@@ -93,7 +95,7 @@ def book_ticket_json(request, schedule_id, user_id):
     #     html_message=html_message,
     #     )
 
-
+    messages.success(request, 'Booking Successful')
     return JsonResponse({'code': '200', 'balance': balance.balance})
 
 #def tickets(request, transaction_id):
@@ -141,3 +143,10 @@ def topup_history(request):
     return render(request, 'customer/topup_history.html', context)
 
 
+# change ticket to is used
+@is_admin
+def change_ticket_to_used(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+    ticket.is_used = True
+    ticket.save()
+    return HttpResponse(f'<h1 style="color:green;" >Success - Ticket {ticket.id} Was Scanned </h1>')

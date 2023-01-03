@@ -1,5 +1,11 @@
 {% extends 'dashboard_base.html' %} {% block content_admin %}
-<h2 class="text-center mt-4 py-0">Tickets of {{transaction.id}}</h2>
+<h2 class="text-center mt-4 py-0">
+  Tickets of Transaction ID 
+  <span class="text-info"> 
+    
+    <small>{{transaction.id}}</small>
+  </span>
+</h2>
 <h3 class="text-center mt-4 py-0">{{transaction.created_at}}</h3>
 <h3 class="text-center mt-4 py-0">
   <a href="{% url 'profile' transaction.user.id %}" class="text-info text-decoration-none">
@@ -17,6 +23,7 @@
         <th class="text-center" scope="col">Seat</th>
         <th class="text-center" scope="col">Seat Class</th>
         <th class="text-center" scope="col">Timing</th>
+        <th class="text-center" scope="col">Tickets</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +36,9 @@
         <th class="text-center">{{ticket.seat.name}}</th>
         <th class="text-center">{{ticket.seat.type}}</th>
         <th class="text-center">{{ticket.movie_schedule.slot.slot}}</th>
+        <th class="text-center">
+          <a href="{% url 'tickets' transaction.id %}" class="btn btn-info">View</a>
+        </th>
       </tr>
       {% endfor %}
     </tbody>

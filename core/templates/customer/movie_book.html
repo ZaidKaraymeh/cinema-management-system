@@ -190,7 +190,7 @@
       document.querySelector("#error-message").style.visibility = "hidden";
     }
     seat.classList.toggle("selected");
-    console.log(seat);
+    // console.log(seat);
     if (seat.classList.contains("selected")) {
       selectedSeats.push({
         id: seat.id,
@@ -201,7 +201,7 @@
     } else {
       selectedSeats.splice(selectedSeats.indexOf(seat.id), 1);
     }
-    console.log(selectedSeats);
+    // console.log(selectedSeats);
     // Add seat name, type and price to invoice
     const invoice = document.querySelector("#invoice");
     invoice.innerHTML = "";
@@ -257,7 +257,7 @@
       document.querySelector("#cash").removeAttribute("disabled");
     }
 
-    console.log(JSON.stringify(selectedSeats))
+    // console.log(JSON.stringify(selectedSeats))
   };
 
   const pay = async () => {
@@ -286,10 +286,15 @@
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.code == '200'){
           window.location.href = `http://localhost:8000/transactions`
-        } else {
+        }else if (data.code == '403'){
+          const invoice = document.querySelector("#error-message");
+          document.querySelector("#error-message").style.visibility = "visible";
+          invoice.innerHTML = data.message;
+        }
+        else {
           const invoice = document.querySelector("#error-message");
           document.querySelector("#error-message").style.visibility = "visible";
           invoice.innerHTML = "Insufficient Balance";

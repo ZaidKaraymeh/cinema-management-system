@@ -187,7 +187,23 @@
             </div>
             <!-- <svg id="barcode"></svg> -->
             <div class="row">
-                <div id="qrcode" class="mt-3 d-flex justify-content-center"></div>
+                <div id="qrcode.{{ticket.id}}" class="mt-3 d-flex justify-content-center"></div>
+                {% block scripts %}
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script>
+                    document.querySelector('body').style.background = '#fff';
+                    
+                    new QRCode("qrcode.{{ticket.id}}", {
+                        text: "http://127.0.0.1:8000/ticket/",
+                        width: 128,
+                        height: 128,
+                        margin_top: 0,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.H
+                    });
+                </script>
+                {% endblock scripts %}
             </div>
         </div>
     </div>
@@ -195,19 +211,4 @@
 {% endfor %}
 
 {% endblock content %}
-{% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    document.querySelector('body').style.background = '#fff';
-    
-    new QRCode("qrcode", {
-        text: "http://127.0.0.1:8000/ticket/",
-        width: 128,
-        height: 128,
-        margin_top: 0,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
-</script>
-{% endblock scripts %}
+
