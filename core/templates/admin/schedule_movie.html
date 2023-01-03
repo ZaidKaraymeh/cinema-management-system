@@ -60,7 +60,7 @@ async function changeFunc(event) {
   var date = document.getElementById("id_date");
 
 
-  var res = await fetch(`http://localhost:8000/staff/slots/${selectedValue}/${date.value}`, {
+  var res = await fetch(`https://cinema-management-system-production.up.railway.app/staff/slots/${selectedValue}/${date.value}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
