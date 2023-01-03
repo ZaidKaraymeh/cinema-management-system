@@ -144,9 +144,9 @@ def list_schedule_movies(request):
 
 @is_admin
 def schedule_movie(request):
-    movies = Movie.objects.filter(status="Running")
+    # movies = Movie.objects.filter(status="Running")
     if request.method == "POST":
-        schedule_form = MovieScheduleForm(movies, request.POST)
+        schedule_form = MovieScheduleForm(request.POST)
         slot_form = SlotForm(request.POST)
 
         if schedule_form.is_valid():
@@ -160,7 +160,7 @@ def schedule_movie(request):
                 request, f"{movie_schedule.movie.title} has been scheduled successfuly!")
             return redirect('list_schedule_movies')
     else:
-        schedule_form = MovieScheduleForm(movies)
+        schedule_form = MovieScheduleForm()
         slot_form = SlotForm()
 
     context = {
