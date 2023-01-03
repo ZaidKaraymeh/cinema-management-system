@@ -18,7 +18,11 @@ import cloudinary.uploader
 import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '32cce319806e32'
+EMAIL_HOST_PASSWORD = '9b617ca50af769'
+EMAIL_PORT = '2525'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -50,6 +54,8 @@ INSTALLED_APPS = [
     'payments',
     'django_prometheus',
     'cloudinary',
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -97,9 +103,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-import dj_database_url
-DATABASES = {'default': dj_database_url.config(
-    default='postgresql://postgres:ngNG0q1yYg3l6JJf5NzM@containers-us-west-56.railway.app:6324/railway')}
+# import dj_database_url
+# DATABASES = {'default': dj_database_url.config(
+#     default='postgresql://postgres:ngNG0q1yYg3l6JJf5NzM@containers-us-west-56.railway.app:6324/railway')}
 
 # import dj_database_url
 # #SECURE_SSL_REDIRECT = True
@@ -109,6 +115,19 @@ DATABASES = {'default': dj_database_url.config(
 # db_config['ENGINE'] = 'django.db.backends.postgresql'
 # DATABASES = {
 #     "default": db_config
+# import dj_database_url
+# DATABASES = {'default': dj_database_url.config(
+#     default='postgresql://postgres:TestCase_12@cinema.cyasctqrrxl8.me-south-1.rds.amazonaws.com:5432/cinema')}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': "postgres",
+#         'USER': "postgres",
+#         'PASSWORD': "TestCase_12",
+#         'HOST': "cinema.cyasctqrrxl8.me-south-1.rds.amazonaws.com",
+#         'PORT': '5432',
+#     }   
 # }
 
 # Password validation
@@ -165,17 +184,17 @@ MESSAGE_TAGS = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = 'users.CustomUser'
-AUTH_BALANCE_MODEL = 'payments.balance'
+# AUTH_BALANCE_MODEL = 'payments.balance'
 
 """ AUTHENTICATION_BACKENDS = ["users.backends.EmailOrPhoneNumberModelBackend"] """
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 
-cloudinary.config(
-    cloud_name="hzlozofjp",
-    api_key="293651895622711",
-    api_secret="VWoDKs96pCdN1yBQRfXIWNm7XH4"
-)
+# cloudinary.config(
+#     cloud_name="hzlozofjp",
+#     api_key="293651895622711",
+#     api_secret="VWoDKs96pCdN1yBQRfXIWNm7XH4"
+# )
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": "hzlozofjp",
@@ -187,5 +206,14 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = ['https://cinema-management-system-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    'https://cinema-management-system-production.up.railway.app', 'http://127.0.0.1:8000']
 
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'newtestingtest1@gmail.com'
+EMAIL_HOST_PASSWORD = 'mdazcnwpewsoweoo'
+
+TIME_ZONE = "Asia/Bahrain"

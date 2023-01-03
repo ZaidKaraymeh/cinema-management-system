@@ -1,0 +1,310 @@
+{% extends 'base.html' %} {% block style %}
+<style>
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .seats-container {
+    perspective: 1000px;
+    /* margin-bottom: 30px; */
+  }
+
+  .seat {
+    background-color: rgb(179, 175, 175);
+    height: 28px;
+    width: 30px;
+    margin: 3px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .seat.selected {
+    background-color: #6f76da;
+  }
+
+  .seat.occupied {
+    background-color: #454545;
+  }
+
+  .seat:nth-of-type(2) {
+    margin-right: 18px;
+  }
+
+  .seat:nth-last-of-type(2) {
+    margin-left: 18px;
+  }
+
+  .seat:not(.occupied):hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+
+  .showcase .seat:not(.occupied):hover {
+    cursor: default;
+    transform: scale(1);
+  }
+
+  .showcase {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #777;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .showcase li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+  }
+
+  .showcase li small {
+    margin-left: 2px;
+  }
+
+  .seats-row {
+    display: flex;
+  }
+
+  .screen {
+    background-color: #fff;
+    height: 70px;
+    width: 90%;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+  }
+</style>
+{% endblock style %} {% block content %} {% load tags %}
+<div class="row mt-4">
+  <div class="col-6 d-flex justify-content-end">
+    <div class="layout">
+      <div class="movie-container my-4 h1">
+        <label>Choose your seat</label>
+      </div>
+
+      <ul class="showcase">
+        <li>
+          <div class="seat"></div>
+          <small>Available</small>
+        </li>
+        <li>
+          <div class="seat selected"></div>
+          <small>Selected</small>
+        </li>
+        <li>
+          <div class="seat occupied"></div>
+          <small>Occupied</small>
+        </li>
+      </ul>
+      <div class="seats-container">
+        <div class="screen ms-auto"></div>
+
+        {% for row in 'ABCDEF' %}
+        <div class="d-flex">
+          <div class="fs-3 mx-2">{{row}}</div>
+          <div class="seats-row ms-auto">
+            {% for seat in ordered_seats|in_row:forloop.counter %}
+            <div
+              data-type="{{seat.type}}"
+              data-name="{{seat.name}}"
+              data-price="{% if seat.type == 'VIP' %}4.5{% else %}3{%endif%}"
+              id="{{seat.id}}"
+              onclick="toggleSeat(this)"
+              class="seat {% if seat in movie_schedule.reserved_seats.all or movie_schedule.selected_seats.all %} occupied {% endif %}"
+            ></div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <!-- If no seats are selected -->
+        <div id="error-message" class="alert alert-danger" role="alert">
+          Please select at least one seat
+        </div>
+      </div>
+
+      <!-- <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="online"
+          disabled
+          checked
+        />
+        <label class="form-check-label" for="online">
+          Pay Online
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="cash"
+          disabled
+        />
+        <label class="form-check-label" for="cash">
+          Pay By Cash
+        </label>
+      </div>-->
+      <a class="btn btn-primary d-block disabled" onclick="pay()"> Pay </a>
+    </div> 
+  </div>
+
+  <div class="col-6 d-inline-flex justify-content-center">
+    <div class="card" style="width: 18rem; height: 5rem">
+      <ul id="invoice" class="list-group list-group-flush">
+        <li class="list-group-item text-muted danger">No Seats Selected</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock content %} 
+{% block scripts %}
+<script>
+  const selectedSeats = [];
+  const toggleSeat = (seat) => {
+    if (seat.classList.contains("occupied")) {
+      return;
+    }
+    // User can select only 5 seats
+    if (selectedSeats.length >= 5 && !seat.classList.contains("selected")) {
+      document.querySelector("#error-message").innerHTML =
+        "You can select only 5 seats";
+      document.querySelector("#error-message").style.visibility = "visible";
+      return;
+    } else {
+      document.querySelector("#error-message").innerHTML =
+        "Please select at least one seat";
+      document.querySelector("#error-message").style.visibility = "hidden";
+    }
+    seat.classList.toggle("selected");
+    // console.log(seat);
+    if (seat.classList.contains("selected")) {
+      selectedSeats.push({
+        id: seat.id,
+        name: seat.dataset.name,
+        type: seat.dataset.type,
+        price: seat.dataset.price,
+      });
+    } else {
+      selectedSeats.splice(selectedSeats.indexOf(seat.id), 1);
+    }
+    // console.log(selectedSeats);
+    // Add seat name, type and price to invoice
+    const invoice = document.querySelector("#invoice");
+    invoice.innerHTML = "";
+    selectedSeats.forEach((seat) => {
+      const li = document.createElement("li");
+      li.classList.add("list-group-item");
+      li.innerHTML = `
+          <div class="d-flex justify-content-between">
+            <div>
+              <span class="fw-bold">${seat.type}</span>
+              <span class="text-muted">${seat.name}</span>
+            </div>
+            <div>
+              <span class="fw-bold">${seat.price} BHD</span>
+            </div>
+          </div>
+        `;
+      invoice.appendChild(li);
+    });
+    // Add total price to invoice if there are seats selected
+    const totalPrice = selectedSeats.reduce(
+      (acc, seat) => acc + parseFloat(seat.price),
+      0
+    );
+    const totalLi = document.createElement("li");
+    totalLi.classList.add("list-group-item");
+    totalLi.innerHTML = `
+        <div class="d-flex justify-content-between fs-2">
+          <div>
+            <span class="fw-bold">Total</span>
+          </div>
+          <div>
+            <span class="fw-bold">${totalPrice} BHD</span>
+          </div>
+        </div>
+      `;
+    invoice.appendChild(totalLi);
+    // Reset total price card if no seats are selected
+    if (selectedSeats.length === 0) {
+      invoice.innerHTML =
+        '<li class="list-group-item text-muted danger">No Seats Selected</li>';
+    }
+
+    if (selectedSeats.length === 0) {
+      document.querySelector(".btn-primary").classList.add("disabled");
+      document.querySelector(".alert").style.visibility = "visible";
+      document.querySelector("#online").setAttribute("disabled", '');
+      document.querySelector("#cash").setAttribute("disabled", '');
+    } else {
+      document.querySelector(".btn-primary").classList.remove("disabled");
+      document.querySelector(".alert").style.visibility = "hidden";
+      document.querySelector("#online").removeAttribute("disabled");
+      document.querySelector("#cash").removeAttribute("disabled");
+    }
+
+    // console.log(JSON.stringify(selectedSeats))
+  };
+
+  const pay = async () => {
+    if (selectedSeats.length === 0) {
+      alert("Please select at least one seat");
+      return;
+    }
+    const url = new URL(window.location.href);
+    const movieSchedule = "{{movie_schedule.id}}";
+
+    // const isOnline = document.querySelector("#online").checked;
+    const isOnline = true;
+    const data = {
+      seats: selectedSeats,
+      isOnline: isOnline,
+    }
+      
+    var res = await fetch(
+      `http://localhost:8000/payment/${movieSchedule}/{{request.user.id}}`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.code == '200'){
+          window.location.href = `http://localhost:8000/transactions`
+        }else if (data.code == '403'){
+          const invoice = document.querySelector("#error-message");
+          document.querySelector("#error-message").style.visibility = "visible";
+          invoice.innerHTML = data.message;
+        }
+        else {
+          const invoice = document.querySelector("#error-message");
+          document.querySelector("#error-message").style.visibility = "visible";
+          invoice.innerHTML = "Insufficient Balance, please <a href='{% url 'topup' %}'>top-up</a>";
+        }
+      });
+
+  };
+
+  // Event listener of
+</script>
+
+{% endblock scripts %}

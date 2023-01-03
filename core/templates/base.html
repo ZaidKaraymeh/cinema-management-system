@@ -25,6 +25,8 @@
 
     <link rel="stylesheet" href="{% static 'main.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {% block style %}{% endblock style %}
     <title>Cineco</title>
     <base href="{% static '/' %}">
   </head>
@@ -49,38 +51,42 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Ticket Offers</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Link</a>
+                <a class="nav-link active" href="{% url 'contact' %}">Contact Us</a>
               </li>
             </ul>
             <ul class="navbar-nav d-flex">
               {% if not request.user.is_authenticated %}
-              {% if request.resolver_match.url_name != 'login' %}
+                {% if request.resolver_match.url_name != 'login' %}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+                  </li>
+                {% endif %}
+                {% if request.resolver_match.url_name != 'register' %}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'register' %}">Register</a>
+                  </li>
+                {% endif %}
+                {% elif request.user.user_type == 'ADM' %}
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
-                </li>
-              {% endif %}
-              {% if request.resolver_match.url_name != 'register' %}
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'register' %}">Register</a>
-                </li>
-              {% endif %}
-              {% elif request.user.user_type == 'ADM' %}
-              <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a>
-                </li>
+                    <a class="nav-link active" aria-current="page" href="{% url 'list_employees' %}">Dashboard</a>
+                  </li>
+                  {% endif %}
+              {% if request.user.is_authenticated %}
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"aria-expanded="false">
-                  Profile
-                </a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                </div>
-              </li>
+                  <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"aria-expanded="false">
+                    Account
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'profile' request.user.id %}">Profile</a>
+                    {% if request.user.user_type == 'CTM' %}
+                    <a class="dropdown-item" href="{% url 'topup' %}">Top Up</a>
+                    <a class="dropdown-item" href="{% url 'transactions' %}">Transaction History</a>
+                    <a class="dropdown-item" href="{% url 'topups' %}">Topup History</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+                </li>
               {% endif %}
             </ul>
           </div>

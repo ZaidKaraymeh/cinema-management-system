@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <div class="row">
+      <div class="card p-3">
+        <div class="card-body">
+          <div class="col-md-12">
+              <h1 class="text-center" >Transaction History</h1>
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Transaction ID</th>
+                          <th>Movie</th>
+                          <th>Date</th>
+                          <th>Price</th>
+                          <th>Tickets</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for transaction in transactions %}
+                      <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{ transaction.id }}</td>
+                          <td>{{ transaction.tickets.all.first.movie_schedule.movie.title}}</td>
+                          <td>{{ transaction.created_at }}</td>
+                          <td>{{ transaction.amount }}</td>
+                          <td>
+                            <a href="{% url 'tickets' transaction.id %}" class="btn btn-info">
+                                View Tickets
+                            </a>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}

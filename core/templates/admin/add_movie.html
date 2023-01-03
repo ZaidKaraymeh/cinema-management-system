@@ -1,11 +1,11 @@
-{% extends 'dashboard_base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block content_admin %}
-<div class="container py-5 h-100">
+{% block content %}
+<div class="container  h-100">
   <div class="row justify-content-center align-items-center h-100">
     <div class="col-12 col-lg-9 col-xl-7">
       <div class="card shadow-2-strong" style="border-radius: 15px">
-        <div class="card-body p-4 p-md-5">
+        <div class="card-body p-5 ">
           <p class="text-center h1 fw-bold mb-4 pb-2 pb-md-0 mb-md-5">
             Add a Movie
           </p>
@@ -66,7 +66,7 @@
     </div>
   </div>
 </div>
-{%endblock content_admin %}
+{%endblock content %}
 {% block scripts %}
 <script>
   $('#id_genres').addClass('form-check');

@@ -23,6 +23,27 @@ class LoginForm(AuthenticationForm):
         self.fields['password'].widget.attrs['class'] = 'form-control'
         
 
+class ProfileForm(forms.ModelForm):
+    full_name = forms.CharField(
+        max_length=155, 
+        widget=forms.TextInput(
+            attrs={
+                "style":"height:40px;",
+                "class":"form-control"
+            }
+            ))
+    class Meta:
+        model = CustomUser
+        fields = ['full_name',  "email", "phone_number"]
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['full_name'].widget.attrs['style'] = 'height:40px;'
+        self.fields['phone_number'].widget.attrs['style'] = 'height:40px;'
+        self.fields['email'].widget.attrs['style'] = 'height:40px;'
+        self.fields['full_name'].widget.attrs['class'] = 'form-control'
+        self.fields['phone_number'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
 
 class RegisterForm(UserCreationForm):
     class Meta:

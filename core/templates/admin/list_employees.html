@@ -1,10 +1,16 @@
 {% extends 'dashboard_base.html' %} {% block content_admin %}
 <section class="row">
-  <h2 class="text-center mt-4 py-0">Employees</h2>
-  <div class="col p-4 d-flex justify-content-end align-items-start gap-2 py-0">
+  <div class="col-8">
+    <h2 class="text-center mt-4 py-0">Employees</h2>
+    <form action="" class="my-3">
+        <div class="col-6 d-flex gap-2 ">
+          <input class="form-control mr-3" type="text" name="search" placeholder="Search by email" value="{{request.GET.title}}">
+          <input class="btn btn-info" type="submit" value="Search">
+        </div>
+    </form>
+  </div>
+  <div class="col-4 p-4 d-flex justify-content-end align-items-start gap-2 py-0">
     <a class="btn btn-dark mx-2" href="{% url 'register' %}"> Add Employee </a>
-    <a class="btn btn-dark mr-2" href="#"> Export </a>
-    <a class="btn btn-primary" href="#"> Back </a>
   </div>
 </section>
 <div class="table-responsive m-0 p-0">
@@ -12,8 +18,8 @@
     <thead class="table-dark">
       <tr>
         <th class="text-center" scope="col">#</th>
-        <th class="text-center" scope="col">Name</th>
         <th class="text-center" scope="col">Email</th>
+        <th class="text-center" scope="col">Name</th>
         <th class="text-center" scope="col">Phone Number</th>
         <th class="text-center" scope="col">Actions</th>
       </tr>
@@ -23,14 +29,18 @@
       <tr>
         <th class="text-center">{{forloop.counter}}</th>
         <th class="text-center">
+          <a href="{% url 'profile' employee.id %}" class="text-decoration-none text-info">
+            {{employee.email}}
+          </a>
+        </th>
+        <th class="text-center">
           {{employee.first_name}} {{employee.last_name}}
         </th>
-        <th class="text-center">{{employee.email}}</th>
         <th class="text-center">{{employee.phone_number}}</th>
-        <th class="text-center d-flex justify-content-center gap-2">
+        <th class="text-center ">
           <div class="dropdown">
             <a
-              class="btn btn-primary dropdown-toggle"
+              class="btn btn-primary dropdown-toggle w-100"
               href="#"
               role="button"
               id="dropdownMenuLink"
@@ -77,7 +87,7 @@
               >
                 Close
               </button>
-              <a href="" class="btn btn-primary">Delete</a>
+              <a href="{% url 'delete_employee' employee.id %}" class="btn btn-primary">Delete</a>
             </div>
           </div>
         </div>

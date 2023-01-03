@@ -1,0 +1,62 @@
+{% extends 'dashboard_base.html' %} {% block content_admin %}
+<h2 class="text-center mt-4 py-0">
+  Tickets of Transaction ID 
+  <span class="text-info"> 
+    
+    <small>{{transaction.id}}</small>
+  </span>
+</h2>
+<h3 class="text-center mt-4 py-0">{{transaction.created_at}}</h3>
+<h3 class="text-center mt-4 py-0">
+  <a href="{% url 'profile' transaction.user.id %}" class="text-info text-decoration-none">
+    {{transaction.user.email}}
+  </a>
+</h3>
+<div class="table-responsive m-0 p-0">
+  <table class="table table-striped table-bordered border-dark">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center" scope="col">#</th>
+        <th class="text-center" scope="col">ID</th>
+        <th class="text-center" scope="col">Movie</th>
+        <th class="text-center" scope="col">Hall</th>
+        <th class="text-center" scope="col">Seat</th>
+        <th class="text-center" scope="col">Seat Class</th>
+        <th class="text-center" scope="col">Timing</th>
+        <th class="text-center" scope="col">Tickets</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ticket in tickets %}
+      <tr>
+        <th class="text-center">{{forloop.counter}}</th>
+        <th class="text-center">{{ticket.id}}</th>
+        <th class="text-center">{{ticket.movie_schedule.movie.title}}</th>
+        <th class="text-center">{{ticket.movie_schedule.hall.name}}</th>
+        <th class="text-center">{{ticket.seat.name}}</th>
+        <th class="text-center">{{ticket.seat.type}}</th>
+        <th class="text-center">{{ticket.movie_schedule.slot.slot}}</th>
+        <th class="text-center">
+          <a href="{% url 'tickets' transaction.id %}" class="btn btn-info">View</a>
+        </th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div
+    class="col d-flex align-items-center justify-content-center"
+    role="group"
+  >
+    {% if transactions.has_previous %}
+    <a class="btn btn-dark mx-2" href="?page={{ transactions.previous_page_number }}"
+      >Previous</a
+    >
+    {% endif %} {% if transactions.has_next %}
+    <a class="btn btn-dark" href="?page={{ transactions.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content_admin %}

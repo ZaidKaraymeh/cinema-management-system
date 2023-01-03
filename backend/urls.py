@@ -31,22 +31,20 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name="users/login.html", form_class=LoginForm), name="login"),
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path('register/', user_views.register, name="register"),
+    path('profile/<str:user_id>', user_views.profile, name="profile"),
+    path('profile/<str:user_id>/edit', user_views.edit_profile, name="edit_profile"),
     # path('login_ajax/', user_views.login_ajax, name="login_ajax"),
-    path('userbalance/', payments_views.userbalance, name="userbalance" ),
-    path('payment_successful/', payments_views.payment_successful, name="payment_successful" ), 
-    path('topUp/', payments_views.topUp, name="topUp" ),   
+    # path('userbalance/', payments_views.userbalance, name="userbalance" ),
+    # path('payment_successful/', payments_views.payment_successful, name="payment_successful" ), 
     path('checkout/', payments_views.checkout, name="checkout" ), 
     path('userfeedback/', payments_views.userfeedback, name="userfeedback" ),
     path('contact/', payments_views.contact, name="contact" ),
     path('', include('django_prometheus.urls')),
-    path('purchase_ticket/', payments_views.purchase_ticket, name="purchase_ticket" ),
-    path('add_funds/', payments_views.add_funds, name="add_funds" ),
-    path('make_payment/', payments_views.make_payment, name="make_payment" ),
-
-
-    
+    # path('make_payment/', payments_views.make_payment, name="make_payment" ),
+    path('', include('payments.urls')),
     path('', include('core.urls.urls')),
     path('', include('core.urls.admin_urls')),
+    path('', include('core.urls.customer_urls')),
     #path('profile/', user_views.profile, name="profile"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

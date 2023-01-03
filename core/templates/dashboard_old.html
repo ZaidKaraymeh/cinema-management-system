@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Cineco</title>
+  </head>
+
+  <body class=" m-0 overflow-hidden " >
+    <main class="container-fluid m-0 " >
+      <div class="row " style="height: 100vh" >
+        <div class="col-2 p-0 bg-dark" >
+          <nav class="header">
+            <div class="border-bottom text-wrap text-center p-3">
+              <h3>
+                <a
+                  class="text-decoration-none text-light"
+                  href="{% url 'dashboard' %}"
+                  >Cinema Management System
+                </a>
+              </h3>
+            </div>
+            <div
+              class="d-flex flex-column align-items-center space-evenly mb-3 text-decoration-none text-white header-items"
+            >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_customers' %}"
+                >Customers</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_employees' %}"
+                >Employees</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_movies' %}"
+                >Movies</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_halls' %}"
+                >Hall</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_schedule_movies' %}"
+                >Movie Schedules</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'list_topups' %}"
+                >Top Ups</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'export' %}"
+                >Export</a
+              >
+              <a class="text-decoration-none text-light p-4" href="{% url 'home' %}"
+                >User View</a
+              >
+              {% if request.user.is_authenticated %}
+              <a
+                class="text-decoration-none text-light p-4"
+                href="{% url 'logout' %}"
+                >Log out</a
+              >
+              {% else %}
+                <a
+                class="text-decoration-none text-light p-4"
+                href="{% url 'login' %}"
+                >Log In</a
+              >
+              {% endif %}
+            </div>
+          </nav>
+        </div>
+        <div class="col-10 p-0 bg-light overflow-hidden">
+          {% if messages %} {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{message}}</div>
+          {% endfor %} {% endif %}
+          <div class="row p-0 m-0  " style="overflow-y: scroll; height:100vh;" >
+            {% block content_admin %}{% endblock content_admin %}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Main -->
+    <!-- <main id="main" class="p-0 m-0 overflow-hidden">
+      {% if messages %} {% for message in messages %}
+      <div
+        id="alert-cstm"
+        class="alert alert-{{ message.tags }} alert-dismissible fade show m-0"
+        role="alert text-center"
+      >
+        {{message}}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+    </div>
+      {% endfor %} {% endif %} 
+      
+      {% block content %} {% endblock content %}
+    </main> -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- MDB -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+    ></script>
+    <script src="{% static 'script.js' %}" defer></script>
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    {% block scripts %} {% endblock scripts %}
+  </body>
+</html>

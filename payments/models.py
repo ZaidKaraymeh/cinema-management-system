@@ -1,7 +1,8 @@
 from django.db import models
+# from django.contrib.auth.models import User
+import uuid
+from users.models import CustomUser
 
-class balance(models.Model):
-    pass
 
 class Contact(models.Model):
     msg_id = models.AutoField(primary_key=True)
@@ -27,4 +28,23 @@ class feedback(models.Model):
     comment = models.CharField(max_length=1000)
 
 
+# class TopUpRequest(models.Model):
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     payment_method = models.CharField(max_length=50)
+#     # user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     approved = models.BooleanField(default=False)
 
+
+
+
+class Topup(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    balance = models.ForeignKey("core.Balance", on_delete=models.CASCADE)
+
+    amount = models.DecimalField(max_digits=6, decimal_places=3)
+    is_approved = models.BooleanField(default=False)
+    
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    modified_at = models.DateTimeField(auto_now_add=False, auto_now=True)

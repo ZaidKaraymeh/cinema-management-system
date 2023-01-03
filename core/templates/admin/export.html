@@ -1,0 +1,16 @@
+{% extends 'dashboard_base.html' %} {% block content_admin %}
+<section class="row">
+  <h2 class="text-center mt-4 py-0">Export</h2>
+  
+</section>
+<div class="table-responsive m-0 p-0">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Export</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content_admin %}

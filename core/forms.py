@@ -67,4 +67,33 @@ class MovieScheduleForm(forms.ModelForm):
         }
     
 
-        
+class HallForm(forms.ModelForm):
+
+    class Meta:
+        model = Hall
+        fields = ['name']
+
+
+class ExportForm(forms.Form):
+    start_date = forms.DateField(widget=DateInput())
+    end_date = forms.DateField(widget=DateInput())
+    choices = forms.ChoiceField(widget=forms.Select())
+
+    def __init__(self, choices=[], *args, **kwargs):
+        super(ExportForm, self).__init__(*args, **kwargs)
+        self.fields['start_date'].widget.attrs['style'] = 'width:100%; height:40px;'
+        self.fields['end_date'].widget.attrs['style'] = 'width:100%; height:40px;'
+        self.fields['start_date'].widget.attrs['class'] = 'form-control'
+        self.fields['end_date'].widget.attrs['class'] = 'form-control'
+        self.fields['choices'].choices = choices
+
+
+class MovieStatusForm(forms.Form):
+    status = forms.ChoiceField(widget=forms.Select(), choices=[(
+        'Archived', 'Archived'), ('Running', 'Running'), ('Upcoming', 'Upcoming')])
+
+    
+    def __init__(self, *args, **kwargs):
+        super(MovieStatusForm, self).__init__(*args, **kwargs)
+        self.fields['status'].widget.attrs['style'] = 'width:100%; height:50px;'
+        self.fields['status'].widget.attrs['class'] = 'form-select'
