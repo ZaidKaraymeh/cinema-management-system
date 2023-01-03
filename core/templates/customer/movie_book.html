@@ -133,7 +133,7 @@
         </div>
       </div>
 
-      <!-- <div class="form-check">
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
@@ -157,7 +157,7 @@
         <label class="form-check-label" for="cash">
           Pay By Cash
         </label>
-      </div>-->
+      </div>
       <a class="btn btn-primary d-block disabled" onclick="pay()"> Pay </a>
     </div> 
   </div>
@@ -268,8 +268,8 @@
     const url = new URL(window.location.href);
     const movieSchedule = "{{movie_schedule.id}}";
 
-    // const isOnline = document.querySelector("#online").checked;
-    const isOnline = true;
+    const isOnline = document.querySelector("#online").checked;
+    // const isOnline = true;
     const data = {
       seats: selectedSeats,
       isOnline: isOnline,

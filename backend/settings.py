@@ -109,7 +109,7 @@ DATABASES = {
 }
 import dj_database_url
 DATABASES = {'default': dj_database_url.config(
-    default='postgresql://postgres:ngNG0q1yYg3l6JJf5NzM@containers-us-west-56.railway.app:6324/railway')}
+    default=os.environ.get('DATABASE_URL'))}
 
 # import dj_database_url
 # #SECURE_SSL_REDIRECT = True
