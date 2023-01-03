@@ -133,7 +133,7 @@
         </div>
       </div>
 
-      <div class="form-check">
+      <!-- <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
@@ -159,7 +159,7 @@
         </label>
       </div>
       <a class="btn btn-primary d-block disabled" onclick="pay()"> Pay </a>
-    </div>
+    </div> -->
   </div>
 
   <div class="col-6 d-inline-flex justify-content-center">
@@ -268,7 +268,8 @@
     const url = new URL(window.location.href);
     const movieSchedule = "{{movie_schedule.id}}";
 
-    const isOnline = document.querySelector("#online").checked;
+    // const isOnline = document.querySelector("#online").checked;
+    const isOnline = true;
     const data = {
       seats: selectedSeats,
       isOnline: isOnline,
@@ -297,7 +298,7 @@
         else {
           const invoice = document.querySelector("#error-message");
           document.querySelector("#error-message").style.visibility = "visible";
-          invoice.innerHTML = "Insufficient Balance";
+          invoice.innerHTML = "Insufficient Balance, please top-up";
         }
       });
 
