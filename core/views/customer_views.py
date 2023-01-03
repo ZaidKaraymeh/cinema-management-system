@@ -17,7 +17,7 @@ from core.decorators import is_admin, is_customer
 from django.contrib.auth.decorators import login_required
 
 # Customer Movie Booking
-@login_required
+@login_required(login_url='login')
 def customer_movie_booking(request, schedule_id):
     movie_schedule = MovieSchedule.objects.get(id=schedule_id)
     ordered_seats = movie_schedule.hall.seats.all().order_by('name')
