@@ -66,6 +66,16 @@ class MovieScheduleForm(forms.ModelForm):
             'hall': forms.Select(attrs={'onchange': 'changeFunc(this.value);'}),
         }
     
+    def __init__(self, choices=[], *args, **kwargs):
+        super(MovieScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['movie'].widget.attrs['style'] = 'width:100%; height:60px;'
+        self.fields['hall'].widget.attrs['style'] = 'width:100%; height:60px;'
+        self.fields['date'].widget.attrs['style'] = 'width:100%; height:60px;'
+        self.fields['movie'].widget.attrs['class'] = 'form-select'
+        self.fields['movie'].choices = choices
+        self.fields['hall'].widget.attrs['class'] = 'form-select'
+        self.fields['date'].widget.attrs['class'] = 'form-select'
+    
 
 class HallForm(forms.ModelForm):
 
