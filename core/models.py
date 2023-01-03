@@ -106,9 +106,11 @@ class Movie(models.Model):
     status = models.CharField(
         max_length=10,
         choices=STATUS_TYPE_CHOICES,
-        default=ARCHIVED,
+        default=RUNNING,
 
     )
+
+    # sdasd
     
     """
         Calculate Average
