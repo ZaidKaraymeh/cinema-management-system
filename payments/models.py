@@ -2,7 +2,8 @@ from django.db import models
 # from django.contrib.auth.models import User
 import uuid
 from users.models import CustomUser
-
+from django.core.validators import MinValueValidator, MaxValueValidator
+from decimal import Decimal
 
 class Contact(models.Model):
     msg_id = models.AutoField(primary_key=True)
@@ -43,7 +44,7 @@ class Topup(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     balance = models.ForeignKey("core.Balance", on_delete=models.CASCADE)
 
-    amount = models.DecimalField(max_digits=6, decimal_places=3)
+    amount = models.DecimalField(max_digits=6, decimal_places=3, validators=[MinValueValidator(Decimal('1')), MaxValueValidator(Decimal('25'))])
     is_approved = models.BooleanField(default=False)
     
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
