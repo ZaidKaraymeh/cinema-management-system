@@ -88,7 +88,7 @@ def topup(request):
     }
 
 
-    return render(request, 'topup.html', context)
+    return render(request, 'topUp.html', context)
 
 
 
