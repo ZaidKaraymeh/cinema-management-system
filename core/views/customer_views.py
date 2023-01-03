@@ -69,6 +69,7 @@ def book_ticket_json(request, schedule_id, user_id):
         ticket.save()
         transaction.tickets.add(ticket)
         movie_schedule.reserved_seats.add(seat)
+        
 
     transaction.amount = Decimal(total)
     transaction.save()
