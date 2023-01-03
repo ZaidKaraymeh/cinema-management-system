@@ -118,7 +118,7 @@
               data-price="{% if seat.type == 'VIP' %}4.5{% else %}3{%endif%}"
               id="{{seat.id}}"
               onclick="toggleSeat(this)"
-              class="seat {% if seat in movie_schedule.reserved_seats.all or movie_schedule.selected_seats.all %} occupied {% endif %}"
+              class="seat {% if seat in movie_schedule.reserved_seats.all  %} occupied {% endif %}"
             ></div>
             {% endfor %}
           </div>
