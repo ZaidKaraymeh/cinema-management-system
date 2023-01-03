@@ -298,7 +298,7 @@
         else {
           const invoice = document.querySelector("#error-message");
           document.querySelector("#error-message").style.visibility = "visible";
-          invoice.innerHTML = "Insufficient Balance, please top-up";
+          invoice.innerHTML = "Insufficient Balance, please <a href='{% url 'topup' %}'>top-up</a>";
         }
       });
 
