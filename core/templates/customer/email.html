@@ -37,17 +37,12 @@
               </li>
               <li class="text-black mt-1">{{transaction.created_at}}</li>
             </ul>
-            
-            <hr />
-            <div class="col-xl-10">
-                <p>Pro Package</p>
-            </div>
-            <div class="col-xl-2">
-                <p class="float-end">$199.00</p>
-            </div>
             <hr />
         </div>
         <div class="row">
+          <a href="{{link_to_tickes}}">View Tickets</a>
+        </div>
+        <!-- <div class="row">
             {% for ticket in transaction.tickets.all %}
               <div class="col-xl-10">
                   <p>{{ticket.movie_schedule.movie.title}}</p>
@@ -72,7 +67,7 @@
               <p class="float-end fw-bold">Total: BHD{{transaction.amount}}</p>
             </div>
             <hr style="border: 2px solid black" />
-          </div>
+          </div>  -->
           <!-- <div class="text-center" style="margin-top: 90px">
             <a><u class="text-info">View in browser</u></a>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
