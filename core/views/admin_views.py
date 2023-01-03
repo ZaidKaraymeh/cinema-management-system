@@ -27,6 +27,12 @@ def dashboard(request):
 
     return render(request, 'admin/dashboard.html')
 
+@is_admin
+def change_ticket_to_used(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+    ticket.is_used = True
+    ticket.save()
+    return HttpResponse(f'<h1 style="color:green;" >Success - Ticket {ticket.id} Was Scanned </h1>')
 
 @is_admin
 def list_movies(request):
@@ -417,7 +423,9 @@ def export(request):
 
                     writer = csv.writer(response)
                     headers = [field.name for field in model_obj.model._meta.fields]
-                    headers.append(timezone.now())
+                    headers.append(f"Date of Report: {timezone.now()}")
+                    headers.append(f"From Date: {start_date}")
+                    headers.append(f"To Date: {start_date}")
                     writer.writerow(headers)
 
                     for instance in model_obj:
@@ -556,3 +564,18 @@ def highest_watched_movie(request):
     return render(request, 'admin/highest_watched_movie.html', context)
 
 
+# transaction_history
+@is_admin
+def transaction_history(request, customer_id):
+    customer = CustomUser.objects.get(id=customer_id)
+    transactions = Transaction.objects.filter(user=customer)
+    #pagination
+    paginator = Paginator(transactions, 7)
+    page_number = request.GET.get('page')
+    transactions = paginator.get_page(page_number)
+    context = {
+        "transactions": transactions,
+        "customer": customer
+    }
+
+    return render(request, 'customer/transaction_history.html', context)

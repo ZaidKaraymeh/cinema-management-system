@@ -16,19 +16,23 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '32cce319806e32'
-EMAIL_HOST_PASSWORD = '9b617ca50af769'
-EMAIL_PORT = '2525'
+# EMAIL_HOST = 'smtp.mailtrap.io'
+# EMAIL_HOST_USER = '32cce319806e32'
+# EMAIL_HOST_PASSWORD = '9b617ca50af769'
+# EMAIL_PORT = '2525'
 
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!!-!wx3%to%_w7m%(oy(=c!ofzjb4f$ve)6ejh94s7h=5_)xjf'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -197,9 +201,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 # )
 
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "hzlozofjp",
-    "API_KEY": "293651895622711",
-    "API_SECRET": "VWoDKs96pCdN1yBQRfXIWNm7XH4"
+    "CLOUD_NAME": os.environ.get('CLOUD_NAME'),
+    "API_KEY": os.environ.get('API_KEY'),
+    "API_SECRET": os.environ.get('API_SECRET')
 }
 
 STATIC_URL = '/static/'
@@ -213,7 +217,7 @@ CSRF_TRUSTED_ORIGINS = [
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'newtestingtest1@gmail.com'
-EMAIL_HOST_PASSWORD = 'mdazcnwpewsoweoo'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 TIME_ZONE = "Asia/Bahrain"

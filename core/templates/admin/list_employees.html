@@ -4,13 +4,13 @@
     <h2 class="text-center mt-4 py-0">Employees</h2>
     <form action="" class="my-3">
         <div class="col-6 d-flex gap-2 ">
-          <input class="form-control mr-3" type="text" name="search" placeholder="Search by email" value="{{request.GET.title}}">
+          <input class=" mr-3" type="text" name="search" placeholder="Search by email" value="{{request.GET.title}}">
           <input class="btn btn-info" type="submit" value="Search">
         </div>
     </form>
   </div>
   <div class="col-4 p-4 d-flex justify-content-end align-items-start gap-2 py-0">
-    <a class="btn btn-dark mx-2" href="{% url 'register' %}"> Add Employee </a>
+    <a class="btn btn-dark mx-2" href="{% url 'register' %}?user_type=ADM"> Add Employee </a>
   </div>
 </section>
 <div class="table-responsive m-0 p-0">
@@ -51,8 +51,7 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Edit</a></li>
-              <li><a class="dropdown-item" href="#">Delete</a></li>
+              <li><a class="dropdown-item" href="{% url 'delete_employee' employee.id %}">Delete</a></li>
             </ul>
           </div>
         </th>
