@@ -33,6 +33,7 @@ urlpatterns = [
     path('staff/employees',
          admin_views.list_employees, name="list_employees"),
     
+    path('ticket/<str:ticket_id>', admin_views.change_ticket_to_used, name="change_ticket_to_used"),
 
     path('staff/halls', admin_views.list_halls, name="list_halls"),
     path('staff/halls/add', admin_views.add_hall, name='add_hall'),

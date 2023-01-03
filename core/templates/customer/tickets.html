@@ -194,7 +194,7 @@
                     document.querySelector('body').style.background = '#fff';
                     
                     new QRCode("qrcode.{{ticket.id}}", {
-                        text: "http://127.0.0.1:8000/ticket/",
+                        text: "https://cinema-management-system-production.up.railway.app/ticket/{{ticket.id}}",
                         width: 128,
                         height: 128,
                         margin_top: 0,

@@ -27,6 +27,12 @@ def dashboard(request):
 
     return render(request, 'admin/dashboard.html')
 
+@is_admin
+def change_ticket_to_used(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+    ticket.is_used = True
+    ticket.save()
+    return HttpResponse(f'<h1 style="color:green;" >Success - Ticket {ticket.id} Was Scanned </h1>')
 
 @is_admin
 def list_movies(request):
