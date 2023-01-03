@@ -423,7 +423,9 @@ def export(request):
 
                     writer = csv.writer(response)
                     headers = [field.name for field in model_obj.model._meta.fields]
-                    headers.append(timezone.now())
+                    headers.append(f"Date of Report: {timezone.now()}")
+                    headers.append(f"From Date: {start_date}")
+                    headers.append(f"To Date: {start_date}")
                     writer.writerow(headers)
 
                     for instance in model_obj:
