@@ -51,7 +51,7 @@ def list_movies(request):
 
     list_movies = Movie.objects.all().order_by('created_at')
 
-    paginator = Paginator(list_movies, 10)
+    paginator = Paginator(list_movies, 6)
     page_number = request.GET.get('page')
     movies = paginator.get_page(page_number)
 
@@ -137,7 +137,7 @@ def list_schedule_movies(request):
             return redirect('list_schedule_movies')
     movie_schedules = MovieSchedule.objects.all()
 
-    paginator = Paginator(movie_schedules, 10)
+    paginator = Paginator(movie_schedules, 6)
     page_number = request.GET.get('page')
     movie_schedules = paginator.get_page(page_number)
 
