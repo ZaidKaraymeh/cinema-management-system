@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="card mb-4 mb-lg-0 ">
-          {% if request.user.user_type == 'CTM' %}
+          {% if user.user_type == 'CTM' %}
           <div class="card-body ">
             <p class="mb-4"> Recent Top Ups
                 </p>
@@ -101,7 +101,7 @@
             </div>
             <hr>
 
-            {% if request.user.user_type == 'CTM' %}
+            {% if user.user_type == 'CTM' %}
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">Balance</p>
@@ -117,7 +117,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {% if request.user.user_type == 'CTM' %}
+            {% if user.user_type == 'CTM' %}
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
                 <p class="mb-4"> Recent Transactions
