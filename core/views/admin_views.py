@@ -556,3 +556,18 @@ def highest_watched_movie(request):
     return render(request, 'admin/highest_watched_movie.html', context)
 
 
+# transaction_history
+@is_admin
+def transaction_history(request, customer_id):
+    customer = CustomUser.objects.get(id=customer_id)
+    transactions = Transaction.objects.filter(user=customer)
+    #pagination
+    paginator = Paginator(transactions, 7)
+    page_number = request.GET.get('page')
+    transactions = paginator.get_page(page_number)
+    context = {
+        "transactions": transactions,
+        "customer": customer
+    }
+
+    return render(request, 'customer/transaction_history.html', context)

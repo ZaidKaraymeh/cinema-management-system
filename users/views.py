@@ -8,16 +8,31 @@ import json
 from django.conf import settings
 from users.models import CustomUser
 from core.models import Balance, Transaction
+
 def register(request):
+    user_type = request.GET.get('user_type')
+    print(user_type)
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.email
+            if user_type == "ADM":
+                user.user_type = "ADM"
+            else:
+                messages.success(
+                    request, f"Your account has been created! You are now able to log in ")
             user.save()
-            messages.success(
-                request, f"Your account has been created! You are now able to log in ")
-            return redirect("login")
+            if user_type == "ADM":
+                messages.success(request, f"Employee registered successfully!")
+                return redirect("list_employees")
+            else:
+                return redirect("login")
+        else:
+            if user_type == "ADM":
+                return redirect("list_employees")
+            else:
+                return redirect("register")
 
     else:
         form = RegisterForm()
@@ -87,3 +102,10 @@ def edit_profile(request, user_id):
 
     return render(request, "users/edit_profile.html", context)
 
+
+# delete admin
+def delete_employee(request, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    user.delete()
+    messages.success(request, "Employee Deleted Successfully")
+    return redirect("list_employees")

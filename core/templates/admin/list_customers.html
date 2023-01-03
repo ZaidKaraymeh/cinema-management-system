@@ -17,7 +17,7 @@
         <th class="text-center" scope="col">Name</th>
         <th class="text-center" scope="col">Email</th>
         <th class="text-center" scope="col">Phone Number</th>
-        <th class="text-center" scope="col">Ticket History</th>
+        <th class="text-center" scope="col">Transactions History</th>
         <th class="text-center" scope="col">Actions</th>
       </tr>
     </thead>
@@ -35,7 +35,7 @@
         </th>
         <th class="text-center">{{customer.phone_number}}</th>
         <th class="text-center">
-          <a class="btn btn-dark text-center" href="#"> View History </a>
+          <a class="btn btn-dark text-center" href="{% url 'customer_transactions' customer.id %}"> View History </a>
         </th>
         <th class="text-center ">
           <div class="dropdown">
@@ -51,7 +51,7 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Delete</a></li>
+              <li><a class="dropdown-item" href="{% url 'delete_customer' customer.id %}">Delete</a></li>
             </ul>
           </div>
         </th>

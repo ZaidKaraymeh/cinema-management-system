@@ -28,6 +28,8 @@ urlpatterns = [
          admin_views.slots_available_json, name="slots_available_json"),
     path('staff/customers',
          admin_views.list_customers, name="list_customers"),
+    path('transactions/<str:customer_id>', admin_views.transaction_history, name="customer_transactions"),
+
     path('staff/employees',
          admin_views.list_employees, name="list_employees"),
     
@@ -37,4 +39,8 @@ urlpatterns = [
     path('staff/customers/delete/<str:customer_id>', admin_views.delete_customer, name="delete_customer"),
      path('staff/employees/delete/<str:employee_id>', admin_views.delete_employee, name="delete_employee"),
      path('staff/export', admin_views.export, name="export"),
+     path('staff/employees/delete/<str:employee_id>', admin_views.delete_employee, name="delete_employee"),
+     # delete customer
+     path('staff/customers/delete/<str:customer_id>', admin_views.delete_customer, name="delete_customer"),
+
 ]
