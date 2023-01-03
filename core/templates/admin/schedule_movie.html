@@ -1,90 +1,117 @@
-{% extends 'dashboard_base.html' %}
-{% load crispy_forms_tags %}
-{% block content_admin %}
+{% extends 'dashboard_base.html' %} {% load crispy_forms_tags %} {% block
+content_admin %}
 
-<div class="" style="" >
-    {% if schedule_form.errors %}
-        <div class="alert alert-danger">
-            {{ schedule_form.errors }}
-            {{ schedule_form.non_field_errors }}
-        </div>
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
+<div class="" style="">
+  {% if schedule_form.errors %}
+  <div class="alert alert-danger">
+    {{ schedule_form.errors }} {{ schedule_form.non_field_errors }}
+  </div>
+  {% endif %}
+  <form method="POST">
+    {% csrf_token %}
 
-        <fieldset class="form-group" > 
-            <legend> Add Movie Schedule </legend>
-            <div class="row">
-                <div class="col-12">
-                    {{schedule_form.movie|as_crispy_field}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    {{schedule_form.date|as_crispy_field}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    {{schedule_form.hall|as_crispy_field}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    {{slot_form.slots|as_crispy_field}}
-                </div>
-            </div>
-        </fieldset>
-        <div class="form-group">
-            <button type="submit" class="btn btn-outline-info" > Add Movie </button>
-        </div>
-    </form>
+    <fieldset class="form-group">
+      <legend>Add Movie Schedule</legend>
+      <div class="row">
+        <div class="col-12">{{schedule_form.movie|as_crispy_field}}</div>
+      </div>
+      <div class="row">
+        <div class="col-12">{{schedule_form.date|as_crispy_field}}</div>
+      </div>
+      <div class="row">
+        <div class="col-12">{{schedule_form.hall|as_crispy_field}}</div>
+      </div>
+      <div class="row">
+        <div class="col-12">{{slot_form.slots|as_crispy_field}}</div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <button type="submit" class="btn btn-outline-info">Add Movie</button>
+    </div>
+  </form>
 </div>
 
-{% endblock content_admin %}
-
-{% block scripts %}
 <script>
-    var slotsBox = document.getElementById("id_slots");
-var opt = document.createElement('option')
-opt.value = "---------";
-opt.innerHTML = "---------"
-slotsBox.appendChild(opt)
+  var slotsBox = document.getElementById("id_slots");
+  var opt = document.createElement("option");
+  opt.value = "---------";
+  opt.innerHTML = "---------";
+  slotsBox.appendChild(opt);
 
+  async function changeFunc(event) {
+    var selectBox = document.getElementById("id_hall");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    console.log("fired");
+    var date = document.getElementById("id_date");
 
-
-async function changeFunc(event) {
-  var selectBox = document.getElementById("id_hall");
-  var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  console.log("fired")
-  var date = document.getElementById("id_date");
-
-
-  var res = await fetch(`https://cinema-management-system-production.up.railway.app/staff/slots/${selectedValue}/${date.value}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      var slotsBox = document.getElementById("id_slots");
-      slotsBox.innerHTML = ''
-      var opt = document.createElement("option");
-      opt.value = "---------";
-      opt.innerHTML = "---------";
-      slotsBox.appendChild(opt);
-      for (var propertyName in json){
-        var opt = document.createElement('option')
-        console.log(typeof propertyName)
-        opt.value = propertyName
-        opt.innerHTML = json[propertyName]
-        slotsBox.appendChild(opt)
+    var res = await fetch(
+      `https://cinema-management-system-production.up.railway.app/staff/slots/${selectedValue}/${date.value}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
       }
-    });
-
-
-}
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        var slotsBox = document.getElementById("id_slots");
+        slotsBox.innerHTML = "";
+        var opt = document.createElement("option");
+        opt.value = "---------";
+        opt.innerHTML = "---------";
+        slotsBox.appendChild(opt);
+        for (var propertyName in json) {
+          var opt = document.createElement("option");
+          console.log(typeof propertyName);
+          opt.value = propertyName;
+          opt.innerHTML = json[propertyName];
+          slotsBox.appendChild(opt);
+        }
+      });
+  }
 </script>
-{% endblock scripts %}
+{% endblock content_admin %} 
 
+<!-- {% block scripts %}
+<script>
+  var slotsBox = document.getElementById("id_slots");
+  var opt = document.createElement("option");
+  opt.value = "---------";
+  opt.innerHTML = "---------";
+  slotsBox.appendChild(opt);
+
+  async function changeFunc(event) {
+    var selectBox = document.getElementById("id_hall");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    console.log("fired");
+    var date = document.getElementById("id_date");
+
+    var res = await fetch(
+      `https://cinema-management-system-production.up.railway.app/staff/slots/${selectedValue}/${date.value}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        var slotsBox = document.getElementById("id_slots");
+        slotsBox.innerHTML = "";
+        var opt = document.createElement("option");
+        opt.value = "---------";
+        opt.innerHTML = "---------";
+        slotsBox.appendChild(opt);
+        for (var propertyName in json) {
+          var opt = document.createElement("option");
+          console.log(typeof propertyName);
+          opt.value = propertyName;
+          opt.innerHTML = json[propertyName];
+          slotsBox.appendChild(opt);
+        }
+      });
+  }
+</script>
+{% endblock scripts %} -->
