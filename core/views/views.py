@@ -12,6 +12,7 @@ from django.db import models
 
 def home(request):
     movies_featured = Movie.objects.all().reverse()[:3]
+    url = request.META.get('HTTP_REFERER')
     if request.GET.get('search'):
         try:
             movies = Movie.objects.filter(
@@ -34,6 +35,7 @@ def home(request):
         'movies':movies_featured,
         'movies_list': movies,
         'upcoming': upcoming,
+        "url_from": url,
     }
     
     return render(request, "home.html", context)

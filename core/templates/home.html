@@ -1,5 +1,21 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
+  {% if url_from == 'https://cinema-management-system-production.up.railway.app/login/' %}
+  <div
+        id="alert-cstm"
+        class="alert text-center alert-success alert-dismissible fade show m-0"
+        role="alert text-center"
+      >
+        {{message}}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+    </div>
+  
+  {% endif %}
   <!-- Corousel -->
   <div id="carouselExampleCaptions" class="carousel slide w-100 mt-5" data-bs-ride="carousel">
     <div class="carousel-indicators">
